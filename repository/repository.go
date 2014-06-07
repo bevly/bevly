@@ -13,10 +13,10 @@ type Repository interface {
 
 	// TODO
 	// SetBeverageMenu(provider model.MenuProvider, menu []model.Beverage)
-	// SetBeverage(beverage model.Beverage)
+	// SaveBeverage(beverage model.Beverage)
 	// BeverageByName(name string)
 
-	// Clear()
+	// ClearMenus()
 }
 
 func DefaultRepository() Repository {

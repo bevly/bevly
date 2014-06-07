@@ -1,6 +1,7 @@
 package model
 
 type MenuProvider interface {
+	Id() string
 	Name() string
 	Url() string
 	MenuFormat() string
@@ -9,6 +10,8 @@ type MenuProvider interface {
 type Beverage interface {
 	DisplayName() string
 	Type() string
+	SetType(bevType string)
+
 	Brewer() string
 	SetBrewer(brewer string)
 	Link() string
@@ -49,7 +52,7 @@ func (r *beverageRating) PercentageRating() int {
 }
 
 func CreateRating(source string, rating int) Rating {
-	return &beverageRating{source: source, rating: rating}
+	return &beverageRating{source: source, percentageRating: rating}
 }
 
 // stats
@@ -87,6 +90,10 @@ func (b *beverageData) AddRating(rating Rating) {
 	b.ratings = append(b.ratings, rating)
 }
 
+func (b *beverageData) ClearRatings() {
+	b.ratings = []Rating{}
+}
+
 func (b *beverageData) SetBrewer(brewer string) {
 	b.brewer = brewer
 }
@@ -101,6 +108,10 @@ func (b *beverageData) DisplayName() string {
 
 func (b *beverageData) Type() string {
 	return b.bevType
+}
+
+func (b *beverageData) SetType(bevType string) {
+	b.bevType = bevType
 }
 
 func (b *beverageData) Link() string {
@@ -120,8 +131,9 @@ func CreateBeverage(name string) Beverage {
 }
 
 func CreateBeverageAbvTypeRatingLink(name string, abv float64, bevType string,
-	rating int, ratingSource string, link string) {
+	rating int, ratingSource string, link string) Beverage {
 	beverage := CreateBeverage(name)
+	beverage.SetType(bevType)
 	beverage.SetAbv(abv)
 	beverage.AddRating(CreateRating(ratingSource, rating))
 	beverage.SetLink(link)
@@ -129,13 +141,18 @@ func CreateBeverageAbvTypeRatingLink(name string, abv float64, bevType string,
 }
 
 type menuProvider struct {
+	id         string
 	name       string
 	url        string
 	menuFormat string
 }
 
-func CreateMenuProvider(name string, url string, format string) MenuProvider {
-	return &menuProvider{name: name, url: url, menuFormat: format}
+func CreateMenuProvider(id string, name string, url string, format string) MenuProvider {
+	return &menuProvider{id: id, name: name, url: url, menuFormat: format}
+}
+
+func (m *menuProvider) Id() string {
+	return m.id
 }
 
 func (m *menuProvider) Name() string {

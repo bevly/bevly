@@ -10,10 +10,11 @@ type Repository interface {
 	ProviderById(id string) model.MenuProvider
 	ProviderBeverages(provider model.MenuProvider) []model.Beverage
 	ProviderIdBeverages(providerName string) []model.Beverage
+	BeveragesNeedingSync() []model.Beverage
 
 	// TODO
-	// SetBeverageMenu(provider model.MenuProvider, menu []model.Beverage)
-	// SaveBeverage(beverage model.Beverage)
+	SetBeverageMenu(provider model.MenuProvider, menu []model.Beverage)
+	SaveBeverage(beverage model.Beverage)
 	// BeverageByName(name string)
 
 	// ClearMenus()
@@ -67,4 +68,14 @@ func (s *stubRepository) ProviderBeverages(prov model.MenuProvider) []model.Beve
 
 func (s *stubRepository) ProviderIdBeverages(provId string) []model.Beverage {
 	return s.ProviderBeverages(s.ProviderById(provId))
+}
+
+func (s *stubRepository) BeveragesNeedingSync() []model.Beverage {
+	return []model.Beverage{}
+}
+
+func (s *stubRepository) SetBeverageMenu(prov model.MenuProvider, beverages []model.Beverage) {
+}
+
+func (s *stubRepository) SaveBeverage(beverage model.Beverage) {
 }

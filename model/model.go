@@ -16,6 +16,10 @@ type Beverage interface {
 	SetBrewer(brewer string)
 	Link() string
 	SetLink(link string)
+	Attribute(name string) string
+	Attributes() map[string]string
+	SetAttributes(attr map[string]string)
+	SetAttribute(name, value string)
 
 	BeverageStats
 }
@@ -62,8 +66,31 @@ type BeverageData struct {
 	bevType     string
 	brewer      string
 	abv         float64
+	attr        map[string]string
 	ratings     []Rating
 	link        string
+}
+
+func (b *BeverageData) Attribute(name string) string {
+	if b.attr == nil {
+		return ""
+	}
+	return b.attr[name]
+}
+
+func (b *BeverageData) Attributes() map[string]string {
+	return b.attr
+}
+
+func (b *BeverageData) SetAttributes(attr map[string]string) {
+	b.attr = attr
+}
+
+func (b *BeverageData) SetAttribute(name, value string) {
+	if b.attr == nil {
+		b.attr = map[string]string{}
+	}
+	b.attr[name] = value
 }
 
 func (b *BeverageData) HasAbv() bool {
@@ -120,6 +147,10 @@ func (b *BeverageData) Link() string {
 
 func (b *BeverageData) SetLink(link string) {
 	b.link = link
+}
+
+func (b *BeverageData) String() string {
+	return b.DisplayName()
 }
 
 func CreateBeverageBrewer(name string, brewer string) Beverage {

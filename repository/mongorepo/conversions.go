@@ -18,6 +18,7 @@ func repoBeverageModel(repoBev *repoBeverage) model.Beverage {
 	bev.SetBrewer(repoBev.Brewer)
 	bev.SetLink(repoBev.Link)
 	bev.SetAbv(repoBev.Abv)
+	bev.SetAttributes(repoBev.Attributes)
 	for _, rating := range repoBev.Ratings {
 		bev.AddRating(model.CreateRating(rating.Source, rating.PercentageRating))
 	}
@@ -31,6 +32,7 @@ func beverageModelToRepo(bev model.Beverage) *repoBeverage {
 	repoBev.Brewer = bev.Brewer()
 	repoBev.Link = bev.Link()
 	repoBev.Abv = bev.Abv()
+	repoBev.Attributes = bev.Attributes()
 
 	for _, rating := range bev.Ratings() {
 		repoBev.Ratings = append(repoBev.Ratings,
@@ -57,6 +59,12 @@ func updateRepoBev(repoBev *repoBeverage, bev model.Beverage) {
 	}
 	for _, rating := range bev.Ratings() {
 		addRepoBevRating(repoBev, rating)
+	}
+	if repoBev.Attributes == nil {
+		repoBev.Attributes = map[string]string{}
+	}
+	for attr, value := range bev.Attributes() {
+		repoBev.Attributes[attr] = value
 	}
 }
 

@@ -34,14 +34,15 @@ type repoProvider struct {
 }
 
 type repoBeverage struct {
-	Id          bson.ObjectId `bson:"_id"`
-	DisplayName string        `bson:"displayName"`
-	BevType     string        `bson:"bevType"`
-	Brewer      string        `bson:"brewer"`
-	Abv         float64       `bson:"abv"`
-	Ratings     []repoRating  `bson:"ratings"`
-	Link        string        `bson:"link"`
-	UpdatedAt   time.Time     `bson:"updatedAt"`
+	Id          bson.ObjectId     `bson:"_id"`
+	DisplayName string            `bson:"displayName"`
+	BevType     string            `bson:"bevType"`
+	Brewer      string            `bson:"brewer"`
+	Abv         float64           `bson:"abv"`
+	Attributes  map[string]string `bson:"attributes"`
+	Ratings     []repoRating      `bson:"ratings"`
+	Link        string            `bson:"link"`
+	UpdatedAt   time.Time         `bson:"updatedAt"`
 }
 
 type repoRating struct {

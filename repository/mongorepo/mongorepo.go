@@ -9,6 +9,7 @@ import (
 	"log"
 	"os"
 	"sync"
+	"time"
 )
 
 const BeverageDbName = "bevly"
@@ -40,6 +41,7 @@ type repoBeverage struct {
 	Abv         float64       `bson:"abv"`
 	Ratings     []repoRating  `bson:"ratings"`
 	Link        string        `bson:"link"`
+	UpdatedAt   time.Time     `bson:"updatedAt"`
 }
 
 type repoRating struct {
@@ -101,6 +103,21 @@ func (repo *mongoRepo) Purge() {
 	}
 }
 
+func (repo *mongoRepo) GarbageCollect() {
+	referencedBeverageIds := repo.beverageIdsReferencedInMenus()
+	discardThresholdTime := policy.BeverageDiscardThresholdTime()
+	changes, err := repo.beverages.RemoveAll(
+		bson.M{
+			"_id":       bson.M{"$nin": referencedBeverageIds},
+			"updatedAt": bson.M{"$lt": discardThresholdTime},
+		})
+	if err != nil {
+		log.Printf("GarbageCollect(older:%v): error %s\n", discardThresholdTime, err)
+	} else {
+		log.Printf("GarbageCollect(older:%v): removed %d beverages\n", discardThresholdTime, changes.Removed)
+	}
+}
+
 func (repo *mongoRepo) MenuProviders() []model.MenuProvider {
 	return repository.StubRepository().MenuProviders()
 }
@@ -127,13 +144,17 @@ func (repo *mongoRepo) ProviderIdBeverages(id string) []model.Beverage {
 }
 
 func (repo *mongoRepo) BeveragesNeedingSync() []model.Beverage {
+	referencedBeverageIds := repo.beverageIdsReferencedInMenus()
 	staleUpdateTime := policy.BeverageResyncThresholdTime()
 	var beverages []repoBeverage
 	err := repo.beverages.Find(
-		bson.M{"$or": []interface{}{
-			bson.M{"syncTime": nil},
-			bson.M{"syncTime": bson.M{"$lt": staleUpdateTime}},
-		}}).All(&beverages)
+		bson.M{
+			"_id": bson.M{"$in": referencedBeverageIds},
+			"$or": []interface{}{
+				bson.M{"syncTime": nil},
+				bson.M{"syncTime": bson.M{"$lt": staleUpdateTime}},
+			},
+		}).All(&beverages)
 	if err != nil {
 		log.Printf("Error looking up beverages needing sync: %s\n", err)
 	}
@@ -208,10 +229,13 @@ func (repo *mongoRepo) saveBeverages(beverages []model.Beverage) ([]bson.ObjectI
 func (repo *mongoRepo) saveBeverage(beverage model.Beverage) (bson.ObjectId, error) {
 	// Update or insert
 	repoBev, err := repo.findBeverageByName(beverage.DisplayName())
+
+	updateTime := time.Now()
 	if err == nil { // found existing object
 		updateRepoBev(repoBev, beverage)
 		log.Printf("Updating beverage %s with id %s",
 			repoBev.DisplayName, repoBev.Id)
+		repoBev.UpdatedAt = updateTime
 		_, err := repo.beverages.UpsertId(repoBev.Id, repoBev)
 		if err != nil {
 			return bson.ObjectId(""), err
@@ -220,6 +244,7 @@ func (repo *mongoRepo) saveBeverage(beverage model.Beverage) (bson.ObjectId, err
 	} else {
 		repoBev = beverageModelToRepo(beverage)
 		repoBev.Id = bson.NewObjectId()
+		repoBev.UpdatedAt = updateTime
 		log.Printf("Inserting beverage %s with id %s",
 			repoBev.DisplayName, repoBev.Id)
 		err = repo.beverages.Insert(repoBev)
@@ -256,4 +281,21 @@ func (repo *mongoRepo) findProvider(prov model.MenuProvider) (*repoProvider, err
 
 func providerQuery(prov model.MenuProvider) bson.M {
 	return bson.M{"providerId": prov.Id()}
+}
+
+func (repo *mongoRepo) beverageIdsReferencedInMenus() []bson.ObjectId {
+	providerIter := repo.providers.Find(nil).Iter()
+	provider := repoProvider{}
+	referencedBeverageIds := map[bson.ObjectId]bool{}
+	for providerIter.Next(&provider) {
+		for _, beverageId := range provider.BeverageIds {
+			referencedBeverageIds[beverageId] = true
+		}
+	}
+
+	result := make([]bson.ObjectId, 0, len(referencedBeverageIds))
+	for id, _ := range referencedBeverageIds {
+		result = append(result, id)
+	}
+	return result
 }

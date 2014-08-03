@@ -4,15 +4,44 @@ import (
 	"github.com/bevly/bevly/fetch/menu"
 	"github.com/bevly/bevly/fetch/metadata"
 	"github.com/bevly/bevly/repository"
-	"github.com/bevly/bevly/repository/mongorepo"
 	"log"
 )
 
-var syncChannel chan bool = make(chan bool)
+type Syncer struct {
+	Repo        repository.Repository
+	SyncChannel chan struct{}
+}
 
-func Sync() []error {
+func CreateSyncer(repo repository.Repository) Syncer {
+	syncer := Syncer{
+		Repo:        repo,
+		SyncChannel: make(chan struct{}),
+	}
+	syncer.startSyncJob()
+	return syncer
+}
+
+func (s *Syncer) startSyncJob() {
+	go s.syncJob()
+}
+
+func (s *Syncer) syncJob() {
+	for {
+		<-s.SyncChannel
+		Sync(s.Repo)
+	}
+}
+
+func (s *Syncer) TriggerSync() {
+	log.Println("Triggering beverage sync")
+	select {
+	case s.SyncChannel <- struct{}{}:
+	default:
+	}
+}
+
+func Sync(repo repository.Repository) []error {
 	errors := []error{}
-	repo := mongorepo.DefaultRepository()
 	for _, provider := range repo.MenuProviders() {
 		beverages, err := menu.FetchMenu(provider)
 		if err != nil {
@@ -31,23 +60,4 @@ func Sync() []error {
 		repo.SaveBeverage(beverage)
 	}
 	return errors
-}
-
-func init() {
-	go syncJob()
-}
-
-func TriggerSync() {
-	log.Println("Triggering beverage sync")
-	select {
-	case syncChannel <- true:
-	default:
-	}
-}
-
-func syncJob() {
-	for {
-		<-syncChannel
-		Sync()
-	}
 }

@@ -18,6 +18,9 @@ type Repository interface {
 	SaveBeverage(beverage model.Beverage)
 	// BeverageByName(name string)
 
+	// Discard unreferenced beverages
+	GarbageCollect()
+
 	// Delete everything in the repository
 	Purge()
 }
@@ -82,6 +85,9 @@ func (s *stubRepository) SetBeverageMenu(prov model.MenuProvider, beverages []mo
 }
 
 func (s *stubRepository) SaveBeverage(beverage model.Beverage) {
+}
+
+func (*stubRepository) GarbageCollect() {
 }
 
 func (*stubRepository) Purge() {

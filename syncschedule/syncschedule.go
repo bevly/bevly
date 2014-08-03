@@ -1,28 +1,30 @@
 package syncschedule
 
 import (
+	"github.com/bevly/bevly/repository"
 	bevsync "github.com/bevly/bevly/sync"
 	"github.com/robfig/cron"
 	"log"
-	"sync"
 )
-
-var syncChron *cron.Cron
-var syncMutex *sync.Mutex = &sync.Mutex{}
 
 const syncInterval = "31m"
 
-func ScheduleSyncs() {
-	syncMutex.Lock()
-	defer syncMutex.Unlock()
+type SyncScheduler struct {
+	syncChron *cron.Cron
+	Sync      bevsync.Syncer
+}
 
-	// Trigger an immediate sync, then schedule the recurring sync.
-	bevsync.TriggerSync()
-
-	if syncChron == nil {
-		syncChron = cron.New()
-		log.Printf("Scheduling sync every %s\n", syncInterval)
-		syncChron.AddFunc("@every "+syncInterval, bevsync.TriggerSync)
-		syncChron.Start()
+func CreateSyncScheduler(repo repository.Repository) *SyncScheduler {
+	scheduler := SyncScheduler{
+		syncChron: cron.New(),
+		Sync:      bevsync.CreateSyncer(repo),
 	}
+	// Trigger an immediate sync, then schedule the recurring sync.
+	scheduler.Sync.TriggerSync()
+
+	log.Printf("Scheduling sync every %s\n", syncInterval)
+	scheduler.syncChron.AddFunc("@every "+syncInterval, scheduler.Sync.TriggerSync)
+	scheduler.syncChron.Start()
+
+	return &scheduler
 }

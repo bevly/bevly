@@ -23,6 +23,9 @@ func (b *beverageInfo) Model() model.Beverage {
 
 var beverageInfos = []beverageInfo{
 	{"Anchor IPA", 4.54, "IPA", 90, "BA", "http://cow.org"},
+	{"Bear Republic Racer V", 4.7, "IPA", 95, "BA", "http://ba.org"},
+	{"Jolly Pumpkin Oro de Calabaza", 6.0, "Bière de Garde", 92, "BA",
+		"http://www.beeradvocate.com/beer/profile/9897/18975/"},
 }
 
 func saveDefaultBeverage() {
@@ -59,4 +62,18 @@ func TestSaveBeverageUpdate(t *testing.T) {
 		assert.Equal(t, "RateBeer", bev.Ratings()[1].Source(),
 			"Ratebeer source should be saved")
 	}
+}
+
+func TestSaveMenu(t *testing.T) {
+	repo.Purge()
+	frisco := repo.ProviderById("frisco")
+	bevs := make([]model.Beverage, len(beverageInfos))
+	for i, bevInfo := range beverageInfos {
+		bevs[i] = bevInfo.Model()
+	}
+	repo.SetBeverageMenu(frisco, bevs)
+
+	savedBevs := repo.ProviderIdBeverages("frisco")
+	assert.Equal(t, 3, len(savedBevs), "three beverages should be saved")
+	assert.Equal(t, "Bear Republic Racer V", savedBevs[1].DisplayName())
 }

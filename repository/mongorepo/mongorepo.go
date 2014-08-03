@@ -144,7 +144,7 @@ func (repo *mongoRepo) BeveragesNeedingSync() []model.Beverage {
 func (repo *mongoRepo) SetBeverageMenu(prov model.MenuProvider, beverages []model.Beverage) {
 	beverageIds, err := repo.saveBeverages(beverages)
 	if err != nil {
-		log.Printf("Failed to save beverages for %s: %s", prov.Name(), err)
+		log.Printf("Failed to save beverages for %s: %v", prov.Name(), err)
 		return
 	}
 	err = repo.saveProviderMenu(prov, beverageIds)
@@ -176,6 +176,7 @@ func (repo *mongoRepo) saveProviderMenu(prov model.MenuProvider, beverageIds []b
 		return err
 	} else {
 		provider = &repoProvider{
+			Id:          bson.NewObjectId(),
 			ProviderId:  prov.Id(),
 			Name:        prov.Name(),
 			Url:         prov.Url(),
@@ -198,10 +199,10 @@ func (repo *mongoRepo) saveBeverages(beverages []model.Beverage) ([]bson.ObjectI
 		}
 		beverageIds = append(beverageIds, id)
 	}
-	if !errors.IsError() {
-		errors = nil
+	if errors.IsError() {
+		return beverageIds, errors
 	}
-	return beverageIds, errors
+	return beverageIds, nil
 }
 
 func (repo *mongoRepo) saveBeverage(beverage model.Beverage) (bson.ObjectId, error) {

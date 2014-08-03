@@ -11,20 +11,24 @@ type Repository interface {
 	ProviderBeverages(provider model.MenuProvider) []model.Beverage
 	ProviderIdBeverages(providerName string) []model.Beverage
 	BeveragesNeedingSync() []model.Beverage
+	BeverageByName(name string) model.Beverage
 
 	// TODO
 	SetBeverageMenu(provider model.MenuProvider, menu []model.Beverage)
 	SaveBeverage(beverage model.Beverage)
 	// BeverageByName(name string)
 
-	// ClearMenus()
+	// Delete everything in the repository
+	Purge()
 }
 
-func DefaultRepository() Repository {
+func StubRepository() Repository {
 	return &stubRepository{}
 }
 
 type stubRepository struct{}
+
+var _ Repository = &stubRepository{}
 
 func (s *stubRepository) MenuProviders() []model.MenuProvider {
 	return []model.MenuProvider{
@@ -78,4 +82,11 @@ func (s *stubRepository) SetBeverageMenu(prov model.MenuProvider, beverages []mo
 }
 
 func (s *stubRepository) SaveBeverage(beverage model.Beverage) {
+}
+
+func (*stubRepository) Purge() {
+}
+
+func (*stubRepository) BeverageByName(name string) model.Beverage {
+	return nil
 }

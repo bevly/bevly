@@ -57,7 +57,7 @@ func CreateRating(source string, rating int) Rating {
 
 // stats
 
-type beverageData struct {
+type BeverageData struct {
 	displayName string
 	bevType     string
 	brewer      string
@@ -66,68 +66,68 @@ type beverageData struct {
 	link        string
 }
 
-func (b *beverageData) HasAbv() bool {
+func (b *BeverageData) HasAbv() bool {
 	return b.abv > 0.0
 }
 
-func (b *beverageData) Abv() float64 {
+func (b *BeverageData) Abv() float64 {
 	return b.abv
 }
 
-func (b *beverageData) SetAbv(abv float64) {
+func (b *BeverageData) SetAbv(abv float64) {
 	b.abv = abv
 }
 
-func (b *beverageData) HasRating() bool {
+func (b *BeverageData) HasRating() bool {
 	return len(b.ratings) > 0
 }
 
-func (b *beverageData) Ratings() []Rating {
+func (b *BeverageData) Ratings() []Rating {
 	return b.ratings
 }
 
-func (b *beverageData) AddRating(rating Rating) {
+func (b *BeverageData) AddRating(rating Rating) {
 	b.ratings = append(b.ratings, rating)
 }
 
-func (b *beverageData) ClearRatings() {
+func (b *BeverageData) ClearRatings() {
 	b.ratings = []Rating{}
 }
 
-func (b *beverageData) SetBrewer(brewer string) {
+func (b *BeverageData) SetBrewer(brewer string) {
 	b.brewer = brewer
 }
 
-func (b *beverageData) Brewer() string {
+func (b *BeverageData) Brewer() string {
 	return b.brewer
 }
 
-func (b *beverageData) DisplayName() string {
+func (b *BeverageData) DisplayName() string {
 	return b.displayName
 }
 
-func (b *beverageData) Type() string {
+func (b *BeverageData) Type() string {
 	return b.bevType
 }
 
-func (b *beverageData) SetType(bevType string) {
+func (b *BeverageData) SetType(bevType string) {
 	b.bevType = bevType
 }
 
-func (b *beverageData) Link() string {
+func (b *BeverageData) Link() string {
 	return b.link
 }
 
-func (b *beverageData) SetLink(link string) {
+func (b *BeverageData) SetLink(link string) {
 	b.link = link
 }
 
 func CreateBeverageBrewer(name string, brewer string) Beverage {
-	return &beverageData{displayName: name, brewer: brewer}
+	return &BeverageData{displayName: name, brewer: brewer}
 }
 
 func CreateBeverage(name string) Beverage {
-	return &beverageData{displayName: name}
+	return &BeverageData{displayName: name}
 }
 
 func CreateBeverageAbvTypeRatingLink(name string, abv float64, bevType string,

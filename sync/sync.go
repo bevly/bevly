@@ -4,6 +4,7 @@ import (
 	"github.com/bevly/bevly/fetch/menu"
 	"github.com/bevly/bevly/fetch/metadata"
 	"github.com/bevly/bevly/repository"
+	"github.com/bevly/bevly/repository/mongorepo"
 	"log"
 )
 
@@ -11,7 +12,7 @@ var syncChannel chan bool = make(chan bool)
 
 func Sync() []error {
 	errors := []error{}
-	repo := repository.DefaultRepository()
+	repo := mongorepo.DefaultRepository()
 	for _, provider := range repo.MenuProviders() {
 		beverages, err := menu.FetchMenu(provider)
 		if err != nil {

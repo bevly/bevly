@@ -21,6 +21,10 @@ func Agent() *httpagent.HttpAgent {
 	return agent
 }
 
+func IsFrisco(bev model.Beverage) bool {
+	return bev.Attribute(ProfileURLProperty) != ""
+}
+
 func FetchMetadata(bev model.Beverage) error {
 	friscoProfile := bev.Attribute(ProfileURLProperty)
 	if friscoProfile == "" {

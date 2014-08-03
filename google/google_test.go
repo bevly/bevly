@@ -3,7 +3,6 @@ package google
 import (
 	"github.com/bevly/bevly/httpfilestub"
 	"github.com/stretchr/testify/assert"
-	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
 	"testing"

@@ -17,7 +17,7 @@ func FetchMetadata(beverage model.Beverage) error {
 	log.Printf("FetchMetadata: %s", beverage)
 
 	err := beeradvocate.FetchMetadata(beverage)
-	if err != nil && IsFrisco(beverage) {
+	if err != nil && frisco.IsFrisco(beverage) {
 		err = frisco.FetchMetadata(beverage)
 	}
 	return err

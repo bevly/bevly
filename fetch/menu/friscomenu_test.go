@@ -1,6 +1,7 @@
 package menu
 
 import (
+	"github.com/bevly/bevly/fetch/metadata/frisco"
 	"github.com/bevly/bevly/model"
 	"github.com/stretchr/testify/assert"
 	"io/ioutil"
@@ -36,5 +37,5 @@ func TestFriscoMenu(t *testing.T) {
 	assert.Equal(t, "Union Double Duckpin", beverages[54].DisplayName(),
 		"must strip embedded double spaces")
 	assert.Equal(t, ts.URL+"/beer_details.php?beer_id=3468",
-		beverages[54].Attribute("friscoDetailUrl"), "must save detail URL")
+		beverages[54].Attribute(frisco.ProfileURLProperty), "must save detail URL")
 }

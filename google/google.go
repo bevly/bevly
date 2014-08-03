@@ -34,7 +34,7 @@ func Search(terms string) ([]Result, error) {
 			if err == nil {
 				results = append(results, Result{
 					URL:  parsedURL,
-					Text: text.NormalizeName(anchor.Text()),
+					Text: text.Normalize(anchor.Text()),
 				})
 			}
 		}

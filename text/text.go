@@ -7,6 +7,6 @@ import (
 
 var whitespaceRegex = regexp.MustCompile(`\s{2,}`)
 
-func NormalizeName(name string) string {
+func Normalize(name string) string {
 	return whitespaceRegex.ReplaceAllString(strings.TrimSpace(name), " ")
 }

@@ -15,6 +15,8 @@ func repoBeverageModels(repoBevs []repoBeverage) []model.Beverage {
 func repoBeverageModel(repoBev *repoBeverage) model.Beverage {
 	bev := model.CreateBeverage(repoBev.DisplayName)
 	bev.SetType(repoBev.BevType)
+	bev.SetName(repoBev.Name)
+	bev.SetDescription(repoBev.Description)
 	bev.SetBrewer(repoBev.Brewer)
 	bev.SetLink(repoBev.Link)
 	bev.SetAbv(repoBev.Abv)
@@ -28,6 +30,8 @@ func repoBeverageModel(repoBev *repoBeverage) model.Beverage {
 func beverageModelToRepo(bev model.Beverage) *repoBeverage {
 	repoBev := &repoBeverage{}
 	repoBev.DisplayName = bev.DisplayName()
+	repoBev.Name = bev.Name()
+	repoBev.Description = bev.Description()
 	repoBev.BevType = bev.Type()
 	repoBev.Brewer = bev.Brewer()
 	repoBev.Link = bev.Link()
@@ -47,6 +51,12 @@ func beverageModelToRepo(bev model.Beverage) *repoBeverage {
 func updateRepoBev(repoBev *repoBeverage, bev model.Beverage) {
 	if bev.Type() != "" {
 		repoBev.BevType = bev.Type()
+	}
+	if bev.Name() != "" {
+		repoBev.Name = bev.Name()
+	}
+	if bev.Description() != "" {
+		repoBev.Description = bev.Description()
 	}
 	if bev.Brewer() != "" {
 		repoBev.Brewer = bev.Brewer()

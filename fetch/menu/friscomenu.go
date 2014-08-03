@@ -2,7 +2,7 @@ package menu
 
 import (
 	"github.com/PuerkitoBio/goquery"
-	"github.com/bevly/bevly/httpagent"
+	"github.com/bevly/bevly/fetch/metadata/frisco"
 	"github.com/bevly/bevly/model"
 	"github.com/bevly/bevly/text"
 	"log"
@@ -15,8 +15,7 @@ func init() {
 }
 
 func friscoMenu(provider model.MenuProvider) ([]model.Beverage, error) {
-	agent := httpagent.Agent()
-	agent.ForceEncoding = "latin1"
+	agent := frisco.Agent()
 	response, err := agent.Get(provider.Url())
 	if err != nil {
 		log.Printf("friscoMenu: Get(%s) failed: %s", provider.Url(), err)
@@ -37,12 +36,12 @@ func friscoDrafts(doc *goquery.Document, url *url.URL) ([]model.Beverage, error)
 	beers := []model.Beverage{}
 	doc.Find("#drafts a").Each(func(i int, s *goquery.Selection) {
 		href, _ := s.Attr("href")
-		beerName := text.NormalizeName(s.Text())
+		beerName := text.Normalize(s.Text())
 		if strings.Contains(href, "beer_details") && beerName != "" {
 			beer := model.CreateBeverage(beerName)
 			hrefUrl, err := url.Parse(href)
 			if err == nil {
-				beer.SetAttribute("friscoDetailUrl", hrefUrl.String())
+				beer.SetAttribute(frisco.ProfileURLProperty, hrefUrl.String())
 			}
 			beers = append(beers, beer)
 		}

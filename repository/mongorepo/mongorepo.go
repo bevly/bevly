@@ -36,6 +36,8 @@ type repoProvider struct {
 type repoBeverage struct {
 	Id          bson.ObjectId     `bson:"_id"`
 	DisplayName string            `bson:"displayName"`
+	Name        string            `bson:"name"`
+	Description string            `bson:"description"`
 	BevType     string            `bson:"bevType"`
 	Brewer      string            `bson:"brewer"`
 	Abv         float64           `bson:"abv"`

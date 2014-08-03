@@ -47,6 +47,8 @@ func TestSaveBeverageUpdate(t *testing.T) {
 
 	bevModel := beverageInfos[0].Model()
 	bevModel.SetAbv(0.0)
+	bevModel.SetDescription("Hii")
+	bevModel.SetAttribute("cow", "moo")
 	bevModel.AddRating(model.CreateRating("BA", 95))
 	bevModel.AddRating(model.CreateRating("RateBeer", 87))
 	repo.SaveBeverage(bevModel)
@@ -61,6 +63,8 @@ func TestSaveBeverageUpdate(t *testing.T) {
 			"Ratebeer rating should be saved")
 		assert.Equal(t, "RateBeer", bev.Ratings()[1].Source(),
 			"Ratebeer source should be saved")
+		assert.Equal(t, "Hii", bev.Description(), "description")
+		assert.Equal(t, "moo", bev.Attribute("cow"), "attribute:cow")
 	}
 }
 

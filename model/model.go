@@ -12,6 +12,12 @@ type Beverage interface {
 	Type() string
 	SetType(bevType string)
 
+	Name() string
+	SetName(name string)
+
+	Description() string
+	SetDescription(desc string)
+
 	Brewer() string
 	SetBrewer(brewer string)
 	Link() string
@@ -38,6 +44,7 @@ type BeverageStats interface {
 type Rating interface {
 	Source() string
 	PercentageRating() int
+	SetPercentageRating(rating int)
 }
 
 // rating
@@ -55,6 +62,12 @@ func (r *beverageRating) PercentageRating() int {
 	return r.percentageRating
 }
 
+func (r *beverageRating) SetPercentageRating(rating int) {
+	if rating > 0 {
+		r.percentageRating = rating
+	}
+}
+
 func CreateRating(source string, rating int) Rating {
 	return &beverageRating{source: source, percentageRating: rating}
 }
@@ -63,12 +76,30 @@ func CreateRating(source string, rating int) Rating {
 
 type BeverageData struct {
 	displayName string
+	name        string
+	description string
 	bevType     string
 	brewer      string
 	abv         float64
 	attr        map[string]string
 	ratings     []Rating
 	link        string
+}
+
+func (b *BeverageData) Name() string {
+	return b.name
+}
+
+func (b *BeverageData) SetName(name string) {
+	b.name = name
+}
+
+func (b *BeverageData) Description() string {
+	return b.description
+}
+
+func (b *BeverageData) SetDescription(description string) {
+	b.description = description
 }
 
 func (b *BeverageData) Attribute(name string) string {
@@ -114,6 +145,15 @@ func (b *BeverageData) Ratings() []Rating {
 }
 
 func (b *BeverageData) AddRating(rating Rating) {
+	if rating.PercentageRating() == 0 {
+		return
+	}
+	for _, existingRating := range b.ratings {
+		if existingRating.Source() == rating.Source() {
+			existingRating.SetPercentageRating(rating.PercentageRating())
+			return
+		}
+	}
 	b.ratings = append(b.ratings, rating)
 }
 

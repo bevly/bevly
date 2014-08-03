@@ -1,6 +1,7 @@
 package google
 
 import (
+	"github.com/bevly/bevly/httpfilestub"
 	"github.com/stretchr/testify/assert"
 	"io/ioutil"
 	"net/http"
@@ -11,21 +12,11 @@ import (
 var racer5Query = "site:beeradvocate.com bear republic racer v"
 
 func googleStubServer() *httptest.Server {
-	return httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		query := r.URL.Query()
-		if len(query["q"]) != 1 || query["q"][0] != racer5Query {
-			w.WriteHeader(http.StatusBadRequest)
-			return
-		}
-
-		bytes, err := ioutil.ReadFile("google_racerv_test.html")
-		if err != nil {
-			w.WriteHeader(http.StatusInternalServerError)
-			w.Write([]byte(err.Error()))
-		} else {
-			w.Write(bytes)
-		}
-	}))
+	return httpfilestub.ServerValidated("google_racerv_test.html",
+		func(r *http.Request) bool {
+			query := r.URL.Query()
+			return len(query["q"]) == 1 && query["q"][0] == racer5Query
+		})
 }
 
 func TestSearch(t *testing.T) {

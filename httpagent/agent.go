@@ -5,6 +5,7 @@ import (
 	_ "code.google.com/p/go-charset/data"
 	"errors"
 	"fmt"
+	"github.com/PuerkitoBio/goquery"
 	"io"
 	"net/http"
 	"net/url"
@@ -38,6 +39,14 @@ func (h *HttpAgent) Get(requrl string) (*http.Response, error) {
 		},
 	}
 	return h.Translate(h.Client.Do(&req))
+}
+
+func (h *HttpAgent) GetDoc(requrl string) (*goquery.Document, error) {
+	res, err := h.Get(requrl)
+	if err != nil {
+		return nil, err
+	}
+	return goquery.NewDocumentFromResponse(res)
 }
 
 func (h *HttpAgent) Translate(res *http.Response, err error) (*http.Response, error) {

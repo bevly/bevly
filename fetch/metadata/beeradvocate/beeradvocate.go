@@ -18,14 +18,45 @@ var ErrNotBABeer = errors.New("not a beer on BA")
 
 func FetchMetadata(bev model.Beverage) error {
 	bev.SetLink(google.SearchURL(bev.DisplayName()))
-	results, err := google.Search("site:beeradvocate.com " + bev.DisplayName())
+
+	baUrl, err := FindProfile(bev)
 	if err != nil {
 		return err
 	}
-	if len(results) > 0 {
-		return fetchBAMetadata(bev, results[0].URL.String())
+	return fetchBAMetadata(bev, baUrl)
+}
+
+func FindProfile(bev model.Beverage) (string, error) {
+	baUrl, err := baGoogle("site:beeradvocate.com " + bev.DisplayName())
+	if err != nil {
+		return "", err
 	}
-	return ErrNoResults
+	if baUrl == "" {
+		baUrl, err = baGoogle("beeradvocate " + bev.DisplayName())
+		if err != nil {
+			return "", err
+		}
+	}
+	if baUrl == "" {
+		return "", ErrNoResults
+	}
+	return baUrl, nil
+}
+
+func baGoogle(search string) (string, error) {
+	results, err := google.Search(search)
+	if err != nil {
+		return "", err
+	}
+	if len(results) > 0 {
+		for _, result := range results {
+			urlString := result.URL.String()
+			if strings.Contains(urlString, "beeradvocate.com") {
+				return urlString, nil
+			}
+		}
+	}
+	return "", nil
 }
 
 func fetchBAMetadata(bev model.Beverage, metaURL string) error {

@@ -29,7 +29,9 @@ var beverageInfos = []beverageInfo{
 }
 
 func saveDefaultBeverage() {
-	repo.SaveBeverage(beverageInfos[0].Model())
+	bev := beverageInfos[0].Model()
+	bev.SetLink("http://foo")
+	repo.SaveBeverage(bev)
 }
 
 func TestSaveBeverage(t *testing.T) {
@@ -51,6 +53,7 @@ func TestSaveBeverageUpdate(t *testing.T) {
 	bevModel.SetAttribute("cow", "moo")
 	bevModel.AddRating(model.CreateRating("BA", 95))
 	bevModel.AddRating(model.CreateRating("RateBeer", 87))
+	bevModel.SetLink("http://google.com")
 	repo.SaveBeverage(bevModel)
 
 	bev := repo.BeverageByName(bevModel.DisplayName())
@@ -65,6 +68,7 @@ func TestSaveBeverageUpdate(t *testing.T) {
 			"Ratebeer source should be saved")
 		assert.Equal(t, "Hii", bev.Description(), "description")
 		assert.Equal(t, "moo", bev.Attribute("cow"), "attribute:cow")
+		assert.Equal(t, "http://google.com", bev.Link(), "link")
 	}
 }
 

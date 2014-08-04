@@ -50,9 +50,12 @@ func baGoogle(search string) (string, error) {
 	if err != nil {
 		return "", err
 	}
+	log.Printf("baGoogle(%s): %d results\n", search, len(results))
 	if len(results) > 0 {
 		for _, result := range results {
 			urlString := result.URL.String()
+			log.Printf("baGoogle(%s): considering %s (%s)\n",
+				result.Text, result.URL)
 			if strings.Contains(urlString, "beeradvocate.com/beer") {
 				return urlString, nil
 			}

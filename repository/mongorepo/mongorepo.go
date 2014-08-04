@@ -45,6 +45,7 @@ type repoBeverage struct {
 	Ratings     []repoRating      `bson:"ratings"`
 	Link        string            `bson:"link"`
 	UpdatedAt   time.Time         `bson:"updatedAt"`
+	SyncTime    time.Time         `bson:"syncTime"`
 }
 
 type repoRating struct {

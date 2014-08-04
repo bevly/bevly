@@ -1,5 +1,7 @@
 package model
 
+import "time"
+
 type MenuProvider interface {
 	Id() string
 	Name() string
@@ -26,6 +28,8 @@ type Beverage interface {
 	Attributes() map[string]string
 	SetAttributes(attr map[string]string)
 	SetAttribute(name, value string)
+	SyncTime() time.Time
+	SetSyncTime(newtime time.Time)
 
 	BeverageStats
 }
@@ -84,6 +88,7 @@ type BeverageData struct {
 	attr        map[string]string
 	ratings     []Rating
 	link        string
+	syncTime    time.Time
 }
 
 func (b *BeverageData) Name() string {
@@ -92,6 +97,14 @@ func (b *BeverageData) Name() string {
 
 func (b *BeverageData) SetName(name string) {
 	b.name = name
+}
+
+func (b *BeverageData) SyncTime() time.Time {
+	return b.syncTime
+}
+
+func (b *BeverageData) SetSyncTime(newTime time.Time) {
+	b.syncTime = newTime
 }
 
 func (b *BeverageData) Description() string {

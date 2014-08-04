@@ -5,6 +5,7 @@ import (
 	"github.com/bevly/bevly/fetch/metadata/frisco"
 	"github.com/bevly/bevly/model"
 	"log"
+	"time"
 )
 
 // FetchMetadata fetches metadata for a beverage, from whatever
@@ -16,6 +17,7 @@ import (
 func FetchMetadata(beverage model.Beverage) error {
 	log.Printf("FetchMetadata: %s", beverage)
 
+	beverage.SetSyncTime(time.Now())
 	err := beeradvocate.FetchMetadata(beverage)
 	if err != nil && frisco.IsFrisco(beverage) {
 		err = frisco.FetchMetadata(beverage)

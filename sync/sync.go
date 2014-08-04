@@ -32,17 +32,23 @@ func (s *Syncer) syncJob() {
 	}
 }
 
-func (s *Syncer) TriggerSync() {
+func (s *Syncer) TriggerSync(blocking bool) {
 	log.Println("Triggering beverage sync")
-	select {
-	case s.SyncChannel <- struct{}{}:
-	default:
+	if blocking {
+		s.SyncChannel <- struct{}{}
+	} else {
+		select {
+		case s.SyncChannel <- struct{}{}:
+		default:
+		}
 	}
 }
 
 func Sync(repo repository.Repository) []error {
 	errors := []error{}
+	log.Println("Syncing all providers")
 	for _, provider := range repo.MenuProviders() {
+		log.Printf("Syncing provider: %s\n", provider)
 		beverages, err := menu.FetchMenu(provider)
 		if err != nil {
 			errors = append(errors, err)

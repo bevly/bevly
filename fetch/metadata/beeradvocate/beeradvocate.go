@@ -51,7 +51,7 @@ func baGoogle(search string) (string, error) {
 	if len(results) > 0 {
 		for _, result := range results {
 			urlString := result.URL.String()
-			if strings.Contains(urlString, "beeradvocate.com") {
+			if strings.Contains(urlString, "beeradvocate.com/beer") {
 				return urlString, nil
 			}
 		}

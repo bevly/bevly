@@ -20,10 +20,12 @@ func CreateSyncScheduler(repo repository.Repository) *SyncScheduler {
 		Sync:      bevsync.CreateSyncer(repo),
 	}
 	// Trigger an immediate sync, then schedule the recurring sync.
-	scheduler.Sync.TriggerSync()
+	scheduler.Sync.TriggerSync(true)
 
 	log.Printf("Scheduling sync every %s\n", syncInterval)
-	scheduler.syncChron.AddFunc("@every "+syncInterval, scheduler.Sync.TriggerSync)
+	scheduler.syncChron.AddFunc("@every "+syncInterval, func() {
+		scheduler.Sync.TriggerSync(false)
+	})
 	scheduler.syncChron.Start()
 
 	return &scheduler

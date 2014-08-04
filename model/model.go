@@ -237,3 +237,7 @@ func (m *menuProvider) Url() string {
 func (m *menuProvider) MenuFormat() string {
 	return m.menuFormat
 }
+
+func (m *menuProvider) String() string {
+	return m.id
+}

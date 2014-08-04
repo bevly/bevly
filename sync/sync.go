@@ -5,6 +5,8 @@ import (
 	"github.com/bevly/bevly/fetch/metadata"
 	"github.com/bevly/bevly/repository"
 	"log"
+	"math/rand"
+	"time"
 )
 
 type Syncer struct {
@@ -58,6 +60,10 @@ func Sync(repo repository.Repository) []error {
 	}
 
 	for _, beverage := range repo.BeveragesNeedingSync() {
+		dur := randSleepInterval()
+		log.Printf("Sleeping %dms before metadata fetch for %s\n",
+			int64(dur)/1000, beverage)
+		time.Sleep(dur)
 		err := metadata.FetchMetadata(beverage)
 		if err != nil {
 			errors = append(errors, err)
@@ -66,4 +72,12 @@ func Sync(repo repository.Repository) []error {
 		repo.SaveBeverage(beverage)
 	}
 	return errors
+}
+
+func randSleepInterval() time.Duration {
+	return time.Duration(randRange(1500, 12500)) * time.Millisecond
+}
+
+func randRange(low, hi int) int {
+	return low + rand.Intn(hi-low+1)
 }

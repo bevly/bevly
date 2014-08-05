@@ -1,9 +1,9 @@
 package beeradvocate
 
 import (
-	"github.com/bevly/bevly/google"
 	"github.com/bevly/bevly/httpfilestub"
 	"github.com/bevly/bevly/model"
+	"github.com/bevly/bevly/websearch/duckduckgo"
 	"github.com/stretchr/testify/assert"
 	"net/http"
 	"net/http/httptest"
@@ -30,7 +30,7 @@ func TestBAMetadata(t *testing.T) {
 	assert.Equal(t, "BAbro", beer.Ratings()[1].Source(), "BA bro rating name")
 }
 
-func googleSearchStub() *httptest.Server {
+func webSearchStub() *httptest.Server {
 	return httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		query := r.URL.Query()
 		search, exists := query["q"]
@@ -38,12 +38,8 @@ func googleSearchStub() *httptest.Server {
 			w.WriteHeader(http.StatusBadRequest)
 			return
 		}
-		if search[0] == "site:beeradvocate.com test" {
-			httpfilestub.WriteFile(w, "google_site_search_test.html")
-			return
-		}
-		if search[0] == "beeradvocate test" {
-			httpfilestub.WriteFile(w, "google_keyword_search_test.html")
+		if search[0] == "test" {
+			httpfilestub.WriteFile(w, "boulder_duck.js")
 			return
 		}
 		w.WriteHeader(http.StatusInternalServerError)
@@ -51,11 +47,11 @@ func googleSearchStub() *httptest.Server {
 }
 
 func TestFindProfile(t *testing.T) {
-	ts := googleSearchStub()
+	ts := webSearchStub()
 	defer ts.Close()
 
-	google.SearchBaseURL = ts.URL
-	profile, err := FindProfile(model.CreateBeverage("test"))
+	search := duckduckgo.SearchWithURL(ts.URL)
+	profile, err := FindProfile(model.CreateBeverage("test"), search)
 	assert.Nil(t, err, "FindProfile error")
 	assert.Equal(t, "http://www.beeradvocate.com/beer/profile/130/36468/",
 		profile, "find cold-hop british")

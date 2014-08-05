@@ -7,7 +7,6 @@ import (
 	"github.com/bevly/bevly/model"
 	"github.com/bevly/bevly/text"
 	"github.com/bevly/bevly/websearch"
-	"github.com/bevly/bevly/websearch/duckduckgo"
 	"log"
 	"regexp"
 	"strconv"
@@ -17,12 +16,11 @@ import (
 var ErrNoResults = errors.New("no results for beverage")
 var ErrNotBABeer = errors.New("not a beer on BA")
 
-func FetchMetadata(bev model.Beverage) error {
-	s := duckduckgo.DefaultSearch()
-	bev.SetLink(s.SearchURL(bev.DisplayName()))
+func FetchMetadata(bev model.Beverage, search websearch.Search) error {
+	bev.SetLink(search.SearchURL(bev.DisplayName()))
 
 	log.Printf("Searching for BA profile for %s", bev)
-	baUrl, err := FindProfile(bev, s)
+	baUrl, err := FindProfile(bev, search)
 	if err != nil {
 		log.Printf("BA profile error for %s: %s", bev, err)
 		return err

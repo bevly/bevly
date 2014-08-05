@@ -4,7 +4,7 @@ import (
 	"github.com/bevly/bevly/fetch/metadata/beeradvocate"
 	"github.com/bevly/bevly/fetch/metadata/frisco"
 	"github.com/bevly/bevly/model"
-	"github.com/bevly/bevly/websearch/duckduckgo"
+	"github.com/bevly/bevly/websearch/google"
 	"log"
 	"time"
 )
@@ -19,7 +19,7 @@ func FetchMetadata(beverage model.Beverage) error {
 	log.Printf("FetchMetadata: %s", beverage)
 
 	beverage.SetSyncTime(time.Now())
-	err := beeradvocate.FetchMetadata(beverage, duckduckgo.DefaultSearch())
+	err := beeradvocate.FetchMetadata(beverage, google.DefaultSearch())
 	if err != nil && frisco.IsFrisco(beverage) {
 		err = frisco.FetchMetadata(beverage)
 	}

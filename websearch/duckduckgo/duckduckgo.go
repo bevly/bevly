@@ -37,7 +37,8 @@ func (s *DuckSearch) Search(terms string) ([]websearch.Result, error) {
 }
 
 func (s *DuckSearch) SearchURL(terms string) string {
-	return s.BaseURL + "?" + url.Values{"q": {terms}}.Encode()
+	return s.BaseURL + "?" +
+		url.Values{"q": {terms}, "l": {"us-en"}, "p": {"1"}, "s": {"0"}}.Encode()
 }
 
 func extractJsonResults(res *http.Response) ([]websearch.Result, error) {

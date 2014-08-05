@@ -2,7 +2,7 @@ package policy
 
 import "time"
 
-const BeverageResyncIntervalDays = 30
+const BeverageResyncIntervalDays = 3
 const BeverageDiscardThresholdDays = 35
 
 type Clock interface {

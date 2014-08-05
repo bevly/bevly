@@ -3,10 +3,11 @@ package beeradvocate
 import (
 	"errors"
 	"github.com/PuerkitoBio/goquery"
-	"github.com/bevly/bevly/google"
 	"github.com/bevly/bevly/httpagent"
 	"github.com/bevly/bevly/model"
 	"github.com/bevly/bevly/text"
+	"github.com/bevly/bevly/websearch"
+	"github.com/bevly/bevly/websearch/duckduckgo"
 	"log"
 	"regexp"
 	"strconv"
@@ -17,10 +18,11 @@ var ErrNoResults = errors.New("no results for beverage")
 var ErrNotBABeer = errors.New("not a beer on BA")
 
 func FetchMetadata(bev model.Beverage) error {
-	bev.SetLink(google.SearchURL(bev.DisplayName()))
+	s := duckduckgo.DefaultSearch()
+	bev.SetLink(s.SearchURL(bev.DisplayName()))
 
 	log.Printf("Searching for BA profile for %s", bev)
-	baUrl, err := FindProfile(bev)
+	baUrl, err := FindProfile(bev, s)
 	if err != nil {
 		log.Printf("BA profile error for %s: %s", bev, err)
 		return err
@@ -28,16 +30,10 @@ func FetchMetadata(bev model.Beverage) error {
 	return fetchBAMetadata(bev, baUrl)
 }
 
-func FindProfile(bev model.Beverage) (string, error) {
-	baUrl, err := baGoogle("site:beeradvocate.com " + bev.DisplayName())
+func FindProfile(bev model.Beverage, s websearch.Search) (string, error) {
+	baUrl, err := baSearch(bev.DisplayName(), s)
 	if err != nil {
 		return "", err
-	}
-	if baUrl == "" {
-		baUrl, err = baGoogle("beeradvocate " + bev.DisplayName())
-		if err != nil {
-			return "", err
-		}
 	}
 	if baUrl == "" {
 		return "", ErrNoResults
@@ -45,16 +41,16 @@ func FindProfile(bev model.Beverage) (string, error) {
 	return baUrl, nil
 }
 
-func baGoogle(search string) (string, error) {
-	results, err := google.Search(search)
+func baSearch(terms string, search websearch.Search) (string, error) {
+	results, err := search.Search(terms)
 	if err != nil {
 		return "", err
 	}
-	log.Printf("baGoogle(%s): %d results\n", search, len(results))
+	log.Printf("baSearch(%s): %d results\n", search, len(results))
 	if len(results) > 0 {
 		for _, result := range results {
-			urlString := result.URL.String()
-			log.Printf("baGoogle(%s): considering %s (%s)\n",
+			urlString := result.URL
+			log.Printf("baSearch(%s): considering %s (%s)\n",
 				search, result.Text, result.URL)
 			if strings.Contains(urlString, "beeradvocate.com/beer") {
 				return urlString, nil

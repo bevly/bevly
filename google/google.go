@@ -4,18 +4,26 @@ import (
 	"github.com/PuerkitoBio/goquery"
 	"github.com/bevly/bevly/httpagent"
 	"github.com/bevly/bevly/text"
+	"github.com/bevly/bevly/websearch"
 	"net/url"
 )
 
-type Result struct {
-	URL  *url.URL
-	Text string
+const SearchBaseURL = "https://www.google.com/search"
+
+type GoogleSearch struct {
+	BaseURL string
 }
 
-var SearchBaseURL = "https://www.google.com/search"
+func DefaultSearch() websearch.Search {
+	return &GoogleSearch{BaseURL: SearchBaseURL}
+}
 
-func Search(terms string) ([]Result, error) {
-	response, err := httpagent.Agent().Get(SearchURL(terms))
+func SearchWithURL(baseURL string) websearch.Search {
+	return &GoogleSearch{BaseURL: baseURL}
+}
+
+func (g *GoogleSearch) Search(terms string) ([]websearch.Result, error) {
+	response, err := httpagent.Agent().Get(g.SearchURL(terms))
 	if err != nil {
 		return nil, err
 	}
@@ -25,15 +33,14 @@ func Search(terms string) ([]Result, error) {
 		return nil, err
 	}
 
-	results := []Result{}
+	results := []websearch.Result{}
 	doc.Find(".srg li.g").Each(func(i int, s *goquery.Selection) {
 		anchor := s.Find(".r a")
 		href, exists := anchor.Attr("href")
 		if exists {
-			parsedURL, err := url.Parse(href)
 			if err == nil {
-				results = append(results, Result{
-					URL:  parsedURL,
+				results = append(results, websearch.Result{
+					URL:  href,
 					Text: text.Normalize(anchor.Text()),
 				})
 			}
@@ -42,6 +49,6 @@ func Search(terms string) ([]Result, error) {
 	return results, nil
 }
 
-func SearchURL(terms string) string {
-	return SearchBaseURL + "?" + url.Values{"q": {terms}}.Encode()
+func (g *GoogleSearch) SearchURL(terms string) string {
+	return g.BaseURL + "?" + url.Values{"q": {terms}}.Encode()
 }

@@ -50,12 +50,18 @@ func baSearch(terms string, search websearch.Search) (string, error) {
 			urlString := result.URL
 			log.Printf("baSearch(%s): considering %s (%s)\n",
 				search, result.Text, result.URL)
-			if strings.Contains(urlString, "beeradvocate.com/beer") {
+			if IsBeerAdvocateProfile(urlString) {
 				return urlString, nil
 			}
 		}
 	}
 	return "", nil
+}
+
+var rBeerAdvocateProfileURL = regexp.MustCompile(`beeradvocate.*?/beer/\d+/\d+`)
+
+func IsBeerAdvocateProfile(url string) bool {
+	return rBeerAdvocateProfileURL.FindString(url) != ""
 }
 
 func fetchBAMetadata(bev model.Beverage, metaURL string) error {

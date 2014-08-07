@@ -5,6 +5,7 @@ import (
 	"github.com/bevly/bevly/httpagent"
 	"github.com/bevly/bevly/text"
 	"github.com/bevly/bevly/websearch"
+	"log"
 	"net/url"
 )
 
@@ -23,7 +24,9 @@ func SearchWithURL(baseURL string) websearch.Search {
 }
 
 func (g *GoogleSearch) Search(terms string) ([]websearch.Result, error) {
-	response, err := httpagent.Agent().Get(g.SearchURL(terms))
+	url := g.SearchURL(terms)
+	log.Printf("GoogleSearch(%s): GET %s", terms, url)
+	response, err := httpagent.Agent().Get(url)
 	if err != nil {
 		return nil, err
 	}
@@ -34,19 +37,27 @@ func (g *GoogleSearch) Search(terms string) ([]websearch.Result, error) {
 	}
 
 	results := []websearch.Result{}
-	doc.Find(".srg li.g").Each(func(i int, s *goquery.Selection) {
-		anchor := s.Find(".r a")
+	results = addBodySearchResults(doc, results)
+
+	log.Printf("GoogleSearch(%s): %d results\n", terms, len(results))
+	for i, result := range results {
+		log.Printf("%2d) %s (%s)\n", i+1, result.Text, result.URL)
+	}
+	return results, nil
+}
+
+func addBodySearchResults(doc *goquery.Document, results []websearch.Result) []websearch.Result {
+	doc.Find("li.g").Each(func(i int, s *goquery.Selection) {
+		anchor := s.Find(".r a").First()
 		href, exists := anchor.Attr("href")
 		if exists {
-			if err == nil {
-				results = append(results, websearch.Result{
-					URL:  href,
-					Text: text.Normalize(anchor.Text()),
-				})
-			}
+			results = append(results, websearch.Result{
+				URL:  href,
+				Text: text.Normalize(anchor.Text()),
+			})
 		}
 	})
-	return results, nil
+	return results
 }
 
 func (g *GoogleSearch) SearchURL(terms string) string {

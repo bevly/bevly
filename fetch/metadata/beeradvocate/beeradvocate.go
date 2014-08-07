@@ -58,7 +58,7 @@ func baSearch(terms string, search websearch.Search) (string, error) {
 	return "", nil
 }
 
-var rBeerAdvocateProfileURL = regexp.MustCompile(`beeradvocate.*?/beer/\d+/\d+`)
+var rBeerAdvocateProfileURL = regexp.MustCompile(`beeradvocate.*?/beer/profile/\d+/\d+`)
 
 func IsBeerAdvocateProfile(url string) bool {
 	return rBeerAdvocateProfileURL.FindString(url) != ""

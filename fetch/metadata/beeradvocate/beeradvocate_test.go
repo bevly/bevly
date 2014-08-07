@@ -14,6 +14,11 @@ func beerAdvocateStub() *httptest.Server {
 	return httpfilestub.Server("ba_racer5_test.html")
 }
 
+func TestIsBeerAdvocateProfile(t *testing.T) {
+	assert.True(t, IsBeerAdvocateProfile("http://www.beeradvocate.com/beer/profile/2743/34085/"), "is ba profile")
+	assert.False(t, IsBeerAdvocateProfile("http://www.beeradvocate.com/beer/profile/2743/"), "is NOT ba profile")
+}
+
 func TestBAMetadata(t *testing.T) {
 	ts := beerAdvocateStub()
 	defer ts.Close()
@@ -38,7 +43,7 @@ func webSearchStub() *httptest.Server {
 			w.WriteHeader(http.StatusBadRequest)
 			return
 		}
-		if search[0] == "test" {
+		if search[0] == "beeradvocate test" {
 			httpfilestub.WriteFile(w, "boulder_duck.js")
 			return
 		}

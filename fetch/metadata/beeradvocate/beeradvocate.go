@@ -60,11 +60,11 @@ func baSearch(name string, search websearch.Search) (string, error) {
 				confidence := text.NameMatchConfidence(cleansedText, name)
 				if confidence < 0.13 {
 					log.Printf("baSearch(%s): rejecting %s (confidence: %.2f%%)\n",
-						search, cleansedText, confidence)
+						search, cleansedText, confidence*100)
 					continue
 				}
 				log.Printf("baSearch(%s): accepting %s (confidence: %.2f%%)\n",
-					search, cleansedText, confidence)
+					search, cleansedText, confidence*100)
 				return urlString, nil
 			}
 		}

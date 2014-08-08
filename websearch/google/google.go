@@ -47,8 +47,8 @@ func (g *GoogleSearch) Search(terms string) ([]websearch.Result, error) {
 }
 
 func addBodySearchResults(doc *goquery.Document, results []websearch.Result) []websearch.Result {
-	doc.Find("li.g").Each(func(i int, s *goquery.Selection) {
-		anchor := s.Find(".r a").First()
+	doc.Find("h3.r").Each(func(i int, s *goquery.Selection) {
+		anchor := s.Find("a").First()
 		href, exists := anchor.Attr("href")
 		if exists {
 			results = append(results, websearch.Result{

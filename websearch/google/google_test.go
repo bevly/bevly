@@ -26,7 +26,7 @@ func TestSearchWithEmphasizedResult(t *testing.T) {
 	search := SearchWithURL(ts.URL)
 	results, err := search.Search("beeradvocate Green Flash West Coast IPA")
 	assert.Nil(t, err, "search success")
-	assert.Equal(t, 7, len(results), "results")
+	assert.Equal(t, 9, len(results), "results")
 	assert.Equal(t, "Green Flash West Coast IPA - Beer Advocate",
 		results[0].Text, "link text")
 	assert.Equal(t, "http://www.beeradvocate.com/beer/profile/2743/22505/",

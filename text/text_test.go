@@ -24,4 +24,9 @@ func TestMatchConfidence(t *testing.T) {
 			"Push Ob\"session\"",
 			"Green Flash Hop Head Red Ale - Beer Advocate") > 0.25,
 		"push")
+	assert.True(t,
+		NameMatchConfidence(
+			"Lagunitas Sucks",
+			"Lagunitas Sucks (Brown ...") > 0.25,
+		"sucks")
 }

@@ -39,6 +39,10 @@ func FindProfile(bev model.Beverage, s websearch.Search) (string, error) {
 	return baUrl, nil
 }
 
+func stripBAName(text string) string {
+	return strings.Replace(text, "Beer Advocate", "", 1)
+}
+
 func baSearch(name string, search websearch.Search) (string, error) {
 	terms := "beeradvocate " + name
 	results, err := search.Search(terms)
@@ -52,14 +56,15 @@ func baSearch(name string, search websearch.Search) (string, error) {
 			log.Printf("baSearch(%s): considering %s (%s)\n",
 				search, result.Text, result.URL)
 			if IsBeerAdvocateProfile(urlString) {
-				confidence := text.NameMatchConfidence(result.Text, name)
+				cleansedText := stripBAName(result.Text)
+				confidence := text.NameMatchConfidence(cleansedText, name)
 				if confidence < 0.13 {
 					log.Printf("baSearch(%s): rejecting %s (confidence: %.2f%%)\n",
-						search, result.Text, confidence)
+						search, cleansedText, confidence)
 					continue
 				}
 				log.Printf("baSearch(%s): accepting %s (confidence: %.2f%%)\n",
-					search, result.Text, confidence)
+					search, cleansedText, confidence)
 				return urlString, nil
 			}
 		}

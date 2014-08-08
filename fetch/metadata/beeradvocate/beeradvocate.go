@@ -56,7 +56,10 @@ func baSearch(name string, search websearch.Search) (string, error) {
 				if confidence < 0.2 {
 					log.Printf("baSearch(%s): rejecting %s (confidence: %.2f%%)\n",
 						search, result.Text, confidence)
+					continue
 				}
+				log.Printf("baSearch(%s): accepting %s (confidence: %.2f%%)\n",
+					search, result.Text, confidence)
 				return urlString, nil
 			}
 		}

@@ -53,7 +53,7 @@ func baSearch(name string, search websearch.Search) (string, error) {
 				search, result.Text, result.URL)
 			if IsBeerAdvocateProfile(urlString) {
 				confidence := text.NameMatchConfidence(result.Text, name)
-				if confidence < 0.2 {
+				if confidence < 0.13 {
 					log.Printf("baSearch(%s): rejecting %s (confidence: %.2f%%)\n",
 						search, result.Text, confidence)
 					continue

@@ -29,7 +29,7 @@ func FetchMetadata(bev model.Beverage, search websearch.Search) error {
 }
 
 func FindProfile(bev model.Beverage, s websearch.Search) (string, error) {
-	baUrl, err := baSearch("beeradvocate "+bev.DisplayName(), s)
+	baUrl, err := baSearch(bev.DisplayName(), s)
 	if err != nil {
 		return "", err
 	}
@@ -39,7 +39,8 @@ func FindProfile(bev model.Beverage, s websearch.Search) (string, error) {
 	return baUrl, nil
 }
 
-func baSearch(terms string, search websearch.Search) (string, error) {
+func baSearch(name string, search websearch.Search) (string, error) {
+	terms := "beeradvocate " + name
 	results, err := search.Search(terms)
 	if err != nil {
 		return "", err
@@ -51,6 +52,11 @@ func baSearch(terms string, search websearch.Search) (string, error) {
 			log.Printf("baSearch(%s): considering %s (%s)\n",
 				search, result.Text, result.URL)
 			if IsBeerAdvocateProfile(urlString) {
+				confidence := text.NameMatchConfidence(result.Text, name)
+				if confidence < 0.2 {
+					log.Printf("baSearch(%s): rejecting %s (confidence: %.2f%%)\n",
+						search, result.Text, confidence)
+				}
 				return urlString, nil
 			}
 		}

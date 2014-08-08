@@ -1,6 +1,7 @@
 package text
 
 import (
+	"math"
 	"regexp"
 	"strings"
 )
@@ -42,7 +43,9 @@ func NameMatchConfidence(a, b string) float64 {
 			}
 		}
 	}
-	return float64(nIntersect*nIntersect) / float64(len(wordsA)*len(wordsB))
+	return math.Max(
+		float64(nIntersect)/float64(len(wordsA)),
+		float64(nIntersect)/float64(len(wordsB)))
 }
 
 func SplitWords(text string) []string {

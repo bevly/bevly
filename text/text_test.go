@@ -29,4 +29,9 @@ func TestMatchConfidence(t *testing.T) {
 			"Lagunitas Sucks",
 			"Lagunitas Sucks (Brown ...") > 0.25,
 		"sucks")
+	assert.True(t,
+		NameMatchConfidence(
+			"marstons pedigree CASK",
+			"Pedigree | Marston, Thompson & Evershed, Plc. | Burton-on ...") > 0.25,
+		"marston")
 }

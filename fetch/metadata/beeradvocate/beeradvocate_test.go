@@ -43,7 +43,7 @@ func webSearchStub() *httptest.Server {
 			w.WriteHeader(http.StatusBadRequest)
 			return
 		}
-		if search[0] == "beeradvocate test" {
+		if search[0] == "beeradvocate boulder cold hop english ipa" {
 			httpfilestub.WriteFile(w, "boulder_duck.js")
 			return
 		}
@@ -56,7 +56,7 @@ func TestFindProfile(t *testing.T) {
 	defer ts.Close()
 
 	search := duckduckgo.SearchWithURL(ts.URL)
-	profile, err := FindProfile(model.CreateBeverage("test"), search)
+	profile, err := FindProfile(model.CreateBeverage("boulder cold hop english ipa"), search)
 	assert.Nil(t, err, "FindProfile error")
 	assert.Equal(t, "http://www.beeradvocate.com/beer/profile/130/36468/",
 		profile, "find cold-hop british")

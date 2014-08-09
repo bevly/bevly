@@ -14,10 +14,18 @@ func BeverageServerBlocking(repo repository.Repository) {
 	m.Use(gzip.All())
 	m.Use(render.Renderer())
 
-	m.Get("/:source/drink/", func(par martini.Params, r render.Render) {
+	m.Get("/:source/drink/", func(par martini.Params, r render.Render, res http.ResponseWriter) {
+		NoCache(res)
 		r.JSON(http.StatusOK, bevListJsonModel(repo.ProviderIdBeverages(par["source"])))
 	})
 	m.Run()
+}
+
+func NoCache(res http.ResponseWriter) {
+	headers := res.Header()
+	headers.Set("Cache-Control", "no-cache, no-store, must-revalidate")
+	headers.Set("Pragma", "no-cache")
+	headers.Set("Expires", "0")
 }
 
 func bevListJsonModel(beverages []model.Beverage) interface{} {

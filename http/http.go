@@ -4,6 +4,7 @@ import (
 	"github.com/bevly/bevly/model"
 	"github.com/bevly/bevly/repository"
 	"github.com/go-martini/martini"
+	"github.com/martini-contrib/gzip"
 	"github.com/martini-contrib/render"
 	"net/http"
 )
@@ -11,6 +12,7 @@ import (
 func BeverageServerBlocking(repo repository.Repository) {
 	m := martini.Classic()
 	m.Use(render.Renderer())
+	m.Use(gzip.All())
 
 	m.Get("/:source/drink/", func(par martini.Params, r render.Render) {
 		r.JSON(http.StatusOK, bevListJsonModel(repo.ProviderIdBeverages(par["source"])))

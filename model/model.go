@@ -11,6 +11,7 @@ type MenuProvider interface {
 
 type Beverage interface {
 	DisplayName() string
+	SetDisplayName(name string)
 	Type() string
 	SetType(bevType string)
 
@@ -184,6 +185,10 @@ func (b *BeverageData) Brewer() string {
 
 func (b *BeverageData) DisplayName() string {
 	return b.displayName
+}
+
+func (b *BeverageData) SetDisplayName(name string) {
+	b.displayName = name
 }
 
 func (b *BeverageData) Type() string {

@@ -18,13 +18,13 @@ func friscoMenu(provider model.MenuProvider) ([]model.Beverage, error) {
 	agent := frisco.Agent()
 	response, err := agent.Get(provider.Url())
 	if err != nil {
-		log.Printf("friscoMenu: Get(%s) failed: %s", provider.Url(), err)
+		log.Printf("friscoMenu: Get(%s) failed: %s\n", provider.Url(), err)
 		return nil, err
 	}
 
 	doc, err := goquery.NewDocumentFromResponse(response)
 	if err != nil {
-		log.Printf("friscoMenu: Failed to create document from %s: %s", provider.Url(), err)
+		log.Printf("friscoMenu: Failed to create document from %s: %s\n", provider.Url(), err)
 		return nil, err
 	}
 	beverages, err := friscoDrafts(doc, response.Request.URL)
@@ -46,5 +46,8 @@ func friscoDrafts(doc *goquery.Document, url *url.URL) ([]model.Beverage, error)
 			beers = append(beers, beer)
 		}
 	})
+	if len(beers) == 0 {
+		return nil, ErrEmptyMenu
+	}
 	return beers, nil
 }

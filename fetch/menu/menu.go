@@ -1,9 +1,12 @@
 package menu
 
 import (
+	"errors"
 	"github.com/bevly/bevly/model"
 	"log"
 )
+
+var ErrEmptyMenu = errors.New("empty menu")
 
 type menuFetcher func(model.MenuProvider) ([]model.Beverage, error)
 

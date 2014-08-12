@@ -48,16 +48,22 @@ func TestSaveBeverageUpdate(t *testing.T) {
 	saveDefaultBeverage()
 
 	bevModel := beverageInfos[0].Model()
+	bevModel.SetType("cow")
+	repo.SaveBeverage(bevModel)
+
+	bevModel = beverageInfos[0].Model()
 	bevModel.SetAbv(0.0)
 	bevModel.SetDescription("Hii")
 	bevModel.SetAttribute("cow", "moo")
 	bevModel.AddRating(model.CreateRating("BA", 95))
 	bevModel.AddRating(model.CreateRating("RateBeer", 87))
 	bevModel.SetLink("http://google.com")
+	bevModel.SetType("IPA")
 	repo.SaveBeverage(bevModel)
 
 	bev := repo.BeverageByName(bevModel.DisplayName())
 	if assert.NotNil(t, bev, "Updated beverage should be discovered") {
+		assert.Equal(t, "IPA", bev.Type(), "type")
 		assert.Equal(t, 4.54, bev.Abv(), "ABV should be unmodified")
 		assert.Equal(t, 2, len(bev.Ratings()), "Rating count should be 2")
 		assert.Equal(t, 95, bev.Ratings()[0].PercentageRating(),

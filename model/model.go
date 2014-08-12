@@ -18,6 +18,9 @@ type Beverage interface {
 	Name() string
 	SetName(name string)
 
+	NeedSync() bool
+	SetNeedSync(needSync bool)
+
 	Description() string
 	SetDescription(desc string)
 
@@ -90,6 +93,7 @@ type BeverageData struct {
 	ratings     []Rating
 	link        string
 	syncTime    time.Time
+	needSync    bool
 }
 
 func (b *BeverageData) Name() string {
@@ -98,6 +102,14 @@ func (b *BeverageData) Name() string {
 
 func (b *BeverageData) SetName(name string) {
 	b.name = name
+}
+
+func (b *BeverageData) NeedSync() bool {
+	return b.needSync
+}
+
+func (b *BeverageData) SetNeedSync(needSync bool) {
+	b.needSync = needSync
 }
 
 func (b *BeverageData) SyncTime() time.Time {

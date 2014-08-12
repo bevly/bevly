@@ -64,12 +64,14 @@ func Sync(repo repository.Repository) []error {
 		log.Printf("Sleeping %dms before metadata fetch for %s\n",
 			int64(dur)/1000, beverage)
 		time.Sleep(dur)
+		beverage.SetNeedSync(false)
 		err := metadata.FetchMetadata(beverage)
 		if err != nil {
 			errors = append(errors, err)
-			continue
 		}
-		repo.SaveBeverage(beverage)
+		if beverage.NeedSync() {
+			repo.SaveBeverage(beverage)
+		}
 	}
 	return errors
 }

@@ -59,6 +59,7 @@ func TestSaveBeverageUpdate(t *testing.T) {
 	bevModel.AddRating(model.CreateRating("RateBeer", 87))
 	bevModel.SetLink("http://google.com")
 	bevModel.SetType("IPA")
+	bevModel.SetAccuracyScore(10)
 	repo.SaveBeverage(bevModel)
 
 	bev := repo.BeverageByName(bevModel.DisplayName())
@@ -76,6 +77,15 @@ func TestSaveBeverageUpdate(t *testing.T) {
 		assert.Equal(t, "moo", bev.Attribute("cow"), "attribute:cow")
 		assert.Equal(t, "http://google.com", bev.Link(), "link")
 	}
+
+	bevModel.SetAccuracyScore(0)
+	bevModel.SetAbv(1.1)
+	bevModel.SetType("cowboy")
+	repo.SaveBeverage(bevModel)
+	bev = repo.BeverageByName(bevModel.DisplayName())
+	assert.Equal(t, 10, bev.AccuracyScore(), "score")
+	assert.Equal(t, 4.54, bev.Abv(), "ABV preserve")
+	assert.Equal(t, "IPA", bev.Type(), "type preserve")
 }
 
 func TestSaveMenu(t *testing.T) {

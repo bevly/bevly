@@ -24,6 +24,9 @@ type Beverage interface {
 	Description() string
 	SetDescription(desc string)
 
+	AccuracyScore() int
+	SetAccuracyScore(accuracy int)
+
 	Brewer() string
 	SetBrewer(brewer string)
 	Link() string
@@ -83,17 +86,18 @@ func CreateRating(source string, rating int) Rating {
 // stats
 
 type BeverageData struct {
-	displayName string
-	name        string
-	description string
-	bevType     string
-	brewer      string
-	abv         float64
-	attr        map[string]string
-	ratings     []Rating
-	link        string
-	syncTime    time.Time
-	needSync    bool
+	accuracyScore int
+	displayName   string
+	name          string
+	description   string
+	bevType       string
+	brewer        string
+	abv           float64
+	attr          map[string]string
+	ratings       []Rating
+	link          string
+	syncTime      time.Time
+	needSync      bool
 }
 
 func (b *BeverageData) Name() string {
@@ -102,6 +106,14 @@ func (b *BeverageData) Name() string {
 
 func (b *BeverageData) SetName(name string) {
 	b.name = name
+}
+
+func (b *BeverageData) AccuracyScore() int {
+	return b.accuracyScore
+}
+
+func (b *BeverageData) SetAccuracyScore(accuracy int) {
+	b.accuracyScore = accuracy
 }
 
 func (b *BeverageData) NeedSync() bool {

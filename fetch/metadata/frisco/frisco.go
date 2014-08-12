@@ -48,6 +48,7 @@ var rDesc = regexp.MustCompile(`(?s)Description: (.*)`)
 
 func setFriscoMetadata(bev model.Beverage, doc *goquery.Document) {
 	desc := doc.Find("[data-role='page'] [data-role='content']").Text()
+	bev.SetAccuracyScore(2)
 	bev.SetNeedSync(true)
 	setExtractedText(rBrewery, desc, bev.SetBrewer)
 	setExtractedText(rName, desc, bev.SetName)

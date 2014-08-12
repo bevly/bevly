@@ -94,6 +94,7 @@ func fetchBAMetadata(bev model.Beverage, metaURL string) error {
 	}
 
 	bev.SetNeedSync(true)
+	bev.SetAccuracyScore(10)
 	bev.SetLink(metaURL)
 	setBATitleBrewer(bev, doc)
 	setBATypeAbv(bev, doc)

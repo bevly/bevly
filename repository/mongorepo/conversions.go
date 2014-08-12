@@ -22,6 +22,7 @@ func repoBeverageModel(repoBev *repoBeverage) model.Beverage {
 	bev.SetAbv(repoBev.Abv)
 	bev.SetSyncTime(repoBev.SyncTime)
 	bev.SetAttributes(repoBev.Attributes)
+	bev.SetAccuracyScore(repoBev.AccuracyScore)
 	for _, rating := range repoBev.Ratings {
 		bev.AddRating(model.CreateRating(rating.Source, rating.PercentageRating))
 	}
@@ -39,6 +40,7 @@ func beverageModelToRepo(bev model.Beverage) *repoBeverage {
 	repoBev.Abv = bev.Abv()
 	repoBev.Attributes = bev.Attributes()
 	repoBev.SyncTime = bev.SyncTime()
+	repoBev.AccuracyScore = bev.AccuracyScore()
 
 	for _, rating := range bev.Ratings() {
 		repoBev.Ratings = append(repoBev.Ratings,
@@ -51,25 +53,23 @@ func beverageModelToRepo(bev model.Beverage) *repoBeverage {
 }
 
 func updateRepoBev(repoBev *repoBeverage, bev model.Beverage) {
+	overwrite := bev.AccuracyScore() >= repoBev.AccuracyScore
+
+	set := func(oldVal *string, newVal string) {
+		if newVal != "" && (overwrite || *oldVal == "") {
+			*oldVal = newVal
+		}
+	}
+
 	if !bev.SyncTime().IsZero() {
 		repoBev.SyncTime = bev.SyncTime()
 	}
-	if bev.Type() != "" {
-		repoBev.BevType = bev.Type()
-	}
-	if bev.Name() != "" {
-		repoBev.Name = bev.Name()
-	}
-	if bev.Description() != "" {
-		repoBev.Description = bev.Description()
-	}
-	if bev.Brewer() != "" {
-		repoBev.Brewer = bev.Brewer()
-	}
-	if bev.Link() != "" {
-		repoBev.Link = bev.Link()
-	}
-	if bev.Abv() > 0.0 {
+	set(&repoBev.BevType, bev.Type())
+	set(&repoBev.Name, bev.Name())
+	set(&repoBev.Description, bev.Description())
+	set(&repoBev.Brewer, bev.Brewer())
+	set(&repoBev.Link, bev.Link())
+	if bev.Abv() > 0.0 && (overwrite || repoBev.Abv == 0.0) {
 		repoBev.Abv = bev.Abv()
 	}
 	for _, rating := range bev.Ratings() {
@@ -79,7 +79,12 @@ func updateRepoBev(repoBev *repoBeverage, bev model.Beverage) {
 		repoBev.Attributes = map[string]string{}
 	}
 	for attr, value := range bev.Attributes() {
-		repoBev.Attributes[attr] = value
+		if value != "" && (overwrite || repoBev.Attributes[attr] == "") {
+			repoBev.Attributes[attr] = value
+		}
+	}
+	if bev.AccuracyScore() > repoBev.AccuracyScore {
+		repoBev.AccuracyScore = bev.AccuracyScore()
 	}
 }
 

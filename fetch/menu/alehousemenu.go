@@ -122,7 +122,7 @@ func findAles(sel *goquery.Selection) []model.Beverage {
 	return res
 }
 
-var rAlehouseAbv = regexp.MustCompile("\u00a0" + `\s*(\d+(?:[.]\d*)?)%`)
+var rAlehouseAbv = regexp.MustCompile(`(\d+(?:[.]\d*)?)%\s*$`)
 
 func findAbv(desc string) float64 {
 	match := rAlehouseAbv.FindStringSubmatch(desc)
@@ -136,7 +136,7 @@ func findAbv(desc string) float64 {
 	return 0.0
 }
 
-var rAlehouseDesc = regexp.MustCompile("(.*?)\u00a0")
+var rAlehouseDesc = regexp.MustCompile(`(.*?)(\d+(?:[.]\d*)?)%\s*$`)
 
 func stripStyleAbv(desc string) string {
 	match := rAlehouseDesc.FindStringSubmatch(desc)

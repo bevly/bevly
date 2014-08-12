@@ -31,4 +31,7 @@ func TestAlehouseMenu(t *testing.T) {
 	assert.Equal(t, 6.5, bev[0].Abv(), "black code ABV")
 	assert.Equal(t, 5, bev[29].Abv(), "allagash white ABV")
 	assert.Equal(t, "Brewed with a generous portion of wheat and spiced with coriander and Curaco orange peel, this beer is refreshing and slightly cloudy in appearance.", bev[29].Description(), "allagash white desc")
+
+	assert.Equal(t, 7.7, bev[1].Abv(), "sentinel ABV")
+	assert.Equal(t, 8.4, bev[2].Abv(), "knight ABV")
 }

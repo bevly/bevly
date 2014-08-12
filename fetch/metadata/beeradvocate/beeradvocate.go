@@ -34,6 +34,8 @@ func FindProfile(bev model.Beverage, s websearch.Search) (string, error) {
 		return "", err
 	}
 	if baUrl == "" {
+		// No results, but we don't want to resync repeatedly anyway:
+		bev.SetNeedSync(true)
 		return "", ErrNoResults
 	}
 	return baUrl, nil

@@ -3,6 +3,7 @@ package menu
 import (
 	"errors"
 	"github.com/bevly/bevly/model"
+	"github.com/bevly/bevly/websearch/google"
 	"log"
 )
 
@@ -18,7 +19,18 @@ func FetchMenu(provider model.MenuProvider) ([]model.Beverage, error) {
 	if fetcher != nil {
 		log.Printf("FetchMenu(%s): start fetch:%s\n",
 			provider.Id(), provider.MenuFormat())
-		return fetcher(provider)
+		beverages, err := fetcher(provider)
+		if err != nil {
+			return nil, err
+		}
+
+		search := google.DefaultSearch()
+		for _, bev := range beverages {
+			if bev.Link() == "" {
+				bev.SetLink(search.SearchURL(bev.DisplayName()))
+			}
+		}
+		return beverages, nil
 	}
 
 	log.Printf("FetchMenu(%s): no fetcher for %s", provider.Id(), provider.MenuFormat())

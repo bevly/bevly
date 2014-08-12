@@ -18,11 +18,6 @@ import (
 func FetchMetadata(beverage model.Beverage) error {
 	log.Printf("FetchMetadata: %s", beverage)
 
-	if beverage.Link() == "" {
-		beverage.SetLink(
-			google.DefaultSearch().SearchURL(beverage.DisplayName()))
-		beverage.SetNeedSync(true)
-	}
 	beverage.SetSyncTime(time.Now())
 	err := beeradvocate.FetchMetadata(beverage, google.DefaultSearch())
 	if err != nil && frisco.IsFrisco(beverage) {

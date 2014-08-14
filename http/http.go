@@ -46,12 +46,20 @@ func simpleRatingScore(beverage model.Beverage) interface{} {
 }
 
 func bevJsonModel(beverage model.Beverage) interface{} {
-	return map[string]interface{}{
+	bevJson := map[string]interface{}{
 		"name":         beverage.DisplayName(),
 		"brewer":       beverage.Brewer(),
 		"type":         beverage.Type(),
 		"abv":          beverage.Abv(),
+		"description":  beverage.Description(),
 		"externalLink": beverage.Link(),
 		"ratingScore":  simpleRatingScore(beverage),
 	}
+
+	// Attributes should be named to not collide:
+	for name, value := range beverage.Attributes() {
+		bevJson[name] = value
+	}
+
+	return bevJson
 }

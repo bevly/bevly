@@ -2,11 +2,20 @@ package mongorepo
 
 import (
 	"github.com/bevly/bevly/model"
+	"github.com/bevly/bevly/repository"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
 
-var repo = DefaultRepository()
+var repo repository.Repository
+
+func init() {
+	var err error
+	repo, err = Repository("localhost", "bevtest")
+	if err != nil {
+		panic(err)
+	}
+}
 
 type beverageInfo struct {
 	name         string

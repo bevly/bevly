@@ -16,6 +16,8 @@ const BeverageDbName = "bevly"
 const BeverageFetchLimit = 1000
 
 type mongoRepo struct {
+	hostname    string
+	database    string
 	session     *mgo.Session
 	db          *mgo.Database
 	providers   *mgo.Collection
@@ -54,11 +56,23 @@ type repoRating struct {
 	PercentageRating int    `bson:"percentageRating"`
 }
 
-var globalSession = mongoRepo{}
+var globalSession = mongoRepo{
+	hostname: mongoServer(),
+	database: BeverageDbName,
+}
 
 func DefaultRepository() repository.Repository {
 	globalSession.MustInit()
 	return &globalSession
+}
+
+func Repository(hostname, database string) (repository.Repository, error) {
+	repo := &mongoRepo{hostname: hostname, database: database}
+	err := repo.Init()
+	if err != nil {
+		return nil, err
+	}
+	return repo, nil
 }
 
 func mongoServer() string {
@@ -85,12 +99,12 @@ func (repo *mongoRepo) Init() error {
 	}
 
 	var err error
-	repo.session, err = mgo.Dial(mongoServer())
+	repo.session, err = mgo.Dial(repo.hostname)
 	if err != nil {
 		return err
 	}
 
-	repo.db = repo.session.DB(BeverageDbName)
+	repo.db = repo.session.DB(repo.database)
 	repo.providers = repo.db.C("providers")
 	repo.beverages = repo.db.C("beverages")
 	repo.initialized = true

@@ -11,6 +11,8 @@ import (
 	"strings"
 )
 
+const AlehouseDescription = "ale_houseDescription"
+
 func init() {
 	menuFetcherRegistry["ale_house"] = alehouseMenu
 }
@@ -114,6 +116,7 @@ func findAles(sel *goquery.Selection) []model.Beverage {
 		bev := model.CreateBeverage(title)
 		bev.SetType(style)
 		bev.SetDescription(desc)
+		bev.SetAttribute(AlehouseDescription, desc)
 		if abv > 0.0 {
 			bev.SetAbv(abv)
 		}

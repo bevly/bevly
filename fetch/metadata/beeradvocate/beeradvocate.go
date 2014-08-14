@@ -121,7 +121,7 @@ func setBADescription(bev model.Beverage, doc *goquery.Document) {
 	}
 
 	desc := cleanseBADescription(match[1])
-	if desc != "" {
+	if desc != "" && desc != "No notes at this time." {
 		log.Printf("setBADescription(%s): desc=%s\n", bev, desc)
 		bev.SetDescription(desc)
 	} else {

@@ -3,6 +3,7 @@ package beeradvocate
 import (
 	"errors"
 	"github.com/PuerkitoBio/goquery"
+	bevHtml "github.com/bevly/bevly/html"
 	"github.com/bevly/bevly/httpagent"
 	"github.com/bevly/bevly/model"
 	"github.com/bevly/bevly/text"
@@ -134,8 +135,8 @@ var rAddedBy = regexp.MustCompile(`\(Beer added by:.*`)
 func cleanseBADescription(desc string) string {
 	desc = rAddedBy.ReplaceAllLiteralString(
 		strings.Replace(desc, "\n", " ", -1), "")
-	return html.UnescapeString(
-		text.NormalizeMultiline(strings.Replace(desc, "<br/>", "\n", -1)))
+	return bevHtml.Text(html.UnescapeString(
+		text.NormalizeMultiline(strings.Replace(desc, "<br/>", "\n", -1))))
 }
 
 func setBARatings(bev model.Beverage, doc *goquery.Document) {

@@ -3,6 +3,7 @@ package sync
 import (
 	"github.com/bevly/bevly/fetch/menu"
 	"github.com/bevly/bevly/fetch/metadata"
+	"github.com/bevly/bevly/model"
 	"github.com/bevly/bevly/repository"
 	"log"
 	"math/rand"
@@ -56,6 +57,9 @@ func Sync(repo repository.Repository) []error {
 			errors = append(errors, err)
 			continue
 		}
+
+		priorBeverages := repo.ProviderBeverages(provider)
+		SetBeverageDiscoverTimes(provider, beverages, priorBeverages)
 		repo.SetBeverageMenu(provider, beverages)
 	}
 
@@ -74,6 +78,27 @@ func Sync(repo repository.Repository) []error {
 		}
 	}
 	return errors
+}
+
+// SetBeverageDiscoverTimes sets the discovery time for each beverage
+// that was not in provider's prior menu.
+func SetBeverageDiscoverTimes(provider model.MenuProvider, bevs []model.Beverage, priorBevs []model.Beverage) {
+	seenBevs := beverageNameMap(priorBevs)
+	syncTimeISO := time.Now().Format(time.RFC3339)
+	for _, bev := range bevs {
+		if !seenBevs[bev.DisplayName()] {
+			// This beverage was just added.
+			bev.SetAttribute(provider.Id()+"MenuAt", syncTimeISO)
+		}
+	}
+}
+
+func beverageNameMap(bevs []model.Beverage) map[string]bool {
+	result := map[string]bool{}
+	for _, bev := range bevs {
+		result[bev.DisplayName()] = true
+	}
+	return result
 }
 
 func randSleepInterval() time.Duration {

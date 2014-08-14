@@ -8,7 +8,7 @@ import (
 func Text(html string) string {
 	doc, err := goquery.NewDocumentFromReader(strings.NewReader(html))
 	if err != nil {
-		return html
+		return ""
 	}
 	return doc.Text()
 }

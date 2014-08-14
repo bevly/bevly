@@ -8,9 +8,14 @@ import (
 
 var rMultispaceRegex = regexp.MustCompile(`\s{2,}`)
 var rWhitespace = regexp.MustCompile(`\s`)
+var rPlainSpace = regexp.MustCompile(` +`)
 
 func Normalize(name string) string {
 	return rMultispaceRegex.ReplaceAllString(strings.TrimSpace(name), " ")
+}
+
+func NormalizeMultiline(name string) string {
+	return rPlainSpace.ReplaceAllString(strings.TrimSpace(name), " ")
 }
 
 var rNonLetter = regexp.MustCompile(`\PL+`)

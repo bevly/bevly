@@ -33,6 +33,7 @@ func TestBAMetadata(t *testing.T) {
 	assert.Equal(t, 94, beer.Ratings()[0].PercentageRating(), "BA rating")
 	assert.Equal(t, 93, beer.Ratings()[1].PercentageRating(), "BA bro rating")
 	assert.Equal(t, "BAbro", beer.Ratings()[1].Source(), "BA bro rating name")
+	assert.Equal(t, "This hoppy American IPA is a full bodied beer brewed with American pale and crystal malts, and heavily hopped with Chinook, Cascade, Columbus and Centennial. There's a trophy in every glass. \n \n2009 Great American Beer Festival® American-Style Strong Pale Ale – GOLD \n2009 Colorado State Fair – Best of Show \n2006 Great American Beer Festival® American-Style Strong Pale Ale – SILVER \n2005 Great American Beer Festival® American-Style Strong Pale Ale – SILVER \n1999 Great American Beer Festival® India Pale Ale - GOLD", beer.Description(), "desc")
 }
 
 func webSearchStub() *httptest.Server {

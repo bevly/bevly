@@ -20,8 +20,10 @@ func FetchMetadata(beverage model.Beverage) error {
 
 	beverage.SetSyncTime(time.Now())
 	err := beeradvocate.FetchMetadata(beverage, google.DefaultSearch())
-	if err != nil && frisco.IsFrisco(beverage) {
-		err = frisco.FetchMetadata(beverage)
+	if frisco.IsFrisco(beverage) {
+		friscoErr := frisco.FetchMetadata(beverage)
+		log.Printf("FetchMetadata(%s): frisco fetch error: %s\n",
+			beverage, friscoErr)
 	}
 	return err
 }

@@ -7,6 +7,7 @@ import (
 	"github.com/bevly/bevly/model"
 	"github.com/bevly/bevly/text"
 	"github.com/bevly/bevly/websearch"
+	"html"
 	"log"
 	"regexp"
 	"strconv"
@@ -99,7 +100,42 @@ func fetchBAMetadata(bev model.Beverage, metaURL string) error {
 	setBATitleBrewer(bev, doc)
 	setBATypeAbv(bev, doc)
 	setBARatings(bev, doc)
+	setBADescription(bev, doc)
 	return nil
+}
+
+var rDescRegexp = regexp.MustCompile(`(?s)Notes/Commercial Description:</b>(.*)`)
+
+func setBADescription(bev model.Beverage, doc *goquery.Document) {
+	parentHtml, err := doc.Find("a[href^=\"/beer/style\"]").First().Parent().Html()
+	if err != nil {
+		log.Printf("setBADescription(%s): error getting description: %s\n",
+			bev, err)
+		return
+	}
+
+	match := rDescRegexp.FindStringSubmatch(parentHtml)
+	if match == nil {
+		log.Printf("setBADescription(%s): no description heading?\n", bev)
+		return
+	}
+
+	desc := cleanseBADescription(match[1])
+	if desc != "" {
+		log.Printf("setBADescription(%s): desc=%s\n", bev, desc)
+		bev.SetDescription(desc)
+	} else {
+		log.Printf("setBADescription(%s): no desc\n", bev)
+	}
+}
+
+var rAddedBy = regexp.MustCompile(`\(Beer added by:.*`)
+
+func cleanseBADescription(desc string) string {
+	desc = rAddedBy.ReplaceAllLiteralString(
+		strings.Replace(desc, "\n", " ", -1), "")
+	return html.UnescapeString(
+		text.NormalizeMultiline(strings.Replace(desc, "<br/>", "\n", -1)))
 }
 
 func setBARatings(bev model.Beverage, doc *goquery.Document) {

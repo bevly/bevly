@@ -12,6 +12,7 @@ import (
 
 const ProfileURLProperty = "friscoProfileUrl"
 const ServingSizeProperty = "friscoServingSize"
+const FriscoDescription = "friscoDescription"
 
 var ErrNoFriscoProfile = errors.New("no frisco profile")
 
@@ -48,26 +49,45 @@ var rDesc = regexp.MustCompile(`(?s)Description: (.*)`)
 
 func setFriscoMetadata(bev model.Beverage, doc *goquery.Document) {
 	desc := doc.Find("[data-role='page'] [data-role='content']").Text()
-	bev.SetAccuracyScore(2)
+
+	overwrite := bev.AccuracyScore() <= 2
+	if bev.AccuracyScore() < 2 {
+		bev.SetAccuracyScore(2)
+	}
 	bev.SetNeedSync(true)
-	setExtractedText(rBrewery, desc, bev.SetBrewer)
-	setExtractedText(rName, desc, bev.SetName)
-	setExtractedFloat64(rAbv, desc, bev.SetAbv)
-	setExtractedText(rServing, desc, func(serving string) {
-		bev.SetAttribute(ServingSizeProperty, serving)
-	})
-	setExtractedText(rDesc, desc, bev.SetDescription)
+
+	setExtractedText(rBrewery, desc, overwrite, bev.Brewer(), bev.SetBrewer)
+	setExtractedText(rName, desc, overwrite, bev.Name(), bev.SetName)
+	setExtractedFloat64(rAbv, desc, overwrite, bev.Abv(), bev.SetAbv)
+	setExtractedText(rServing, desc, overwrite,
+		bev.Attribute(ServingSizeProperty), func(serving string) {
+			bev.SetAttribute(ServingSizeProperty, serving)
+		})
+	setExtractedText(rDesc, desc, true, bev.Description(),
+		func(desc string) {
+			if overwrite {
+				bev.SetDescription(desc)
+			}
+			bev.SetAttribute(FriscoDescription, desc)
+		})
 }
 
-func setExtractedText(reg *regexp.Regexp, haystack string, action func(string)) {
-	match := reg.FindStringSubmatch(haystack)
-	if match != nil {
-		action(text.Normalize(match[1]))
+func setExtractedText(reg *regexp.Regexp, haystack string,
+	overwrite bool, current string, action func(string)) {
+	if overwrite || current == "" {
+		match := reg.FindStringSubmatch(haystack)
+		if match != nil && match[1] != "" {
+			action(text.Normalize(match[1]))
+		}
 	}
 }
 
-func setExtractedFloat64(reg *regexp.Regexp, text string, action func(float64)) {
-	setExtractedText(reg, text, func(abv string) {
+func setExtractedFloat64(reg *regexp.Regexp, text string, overwrite bool, current float64, action func(float64)) {
+	fakeVal := ""
+	if current > 0.0 {
+		fakeVal = "_"
+	}
+	setExtractedText(reg, text, overwrite, fakeVal, func(abv string) {
 		fabv, err := strconv.ParseFloat(abv, 64)
 		if err == nil && fabv > 0.0 {
 			action(fabv)

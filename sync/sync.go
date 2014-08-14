@@ -102,7 +102,7 @@ func beverageNameMap(bevs []model.Beverage) map[string]bool {
 }
 
 func randSleepInterval() time.Duration {
-	return time.Duration(randRange(1500, 12500)) * time.Millisecond
+	return time.Duration(randRange(3500, 18500)) * time.Millisecond
 }
 
 func randRange(low, hi int) int {

@@ -6,7 +6,6 @@ import (
 	"github.com/bevly/bevly/model"
 	"github.com/bevly/bevly/repository"
 	"log"
-	"math/rand"
 	"time"
 )
 
@@ -64,10 +63,6 @@ func Sync(repo repository.Repository) []error {
 	}
 
 	for _, beverage := range repo.BeveragesNeedingSync() {
-		dur := randSleepInterval()
-		log.Printf("Sleeping %dms before metadata fetch for %s\n",
-			int64(dur)/1000, beverage)
-		time.Sleep(dur)
 		beverage.SetNeedSync(false)
 		err := metadata.FetchMetadata(beverage)
 		if err != nil {
@@ -99,12 +94,4 @@ func beverageNameMap(bevs []model.Beverage) map[string]bool {
 		result[bev.DisplayName()] = true
 	}
 	return result
-}
-
-func randSleepInterval() time.Duration {
-	return time.Duration(randRange(3500, 18500)) * time.Millisecond
-}
-
-func randRange(low, hi int) int {
-	return low + rand.Intn(hi-low+1)
 }

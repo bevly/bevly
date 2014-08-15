@@ -4,6 +4,7 @@ import (
 	"github.com/PuerkitoBio/goquery"
 	"github.com/bevly/bevly/httpagent"
 	"github.com/bevly/bevly/text"
+	"github.com/bevly/bevly/throttle"
 	"github.com/bevly/bevly/websearch"
 	"log"
 	"net/url"
@@ -11,12 +12,18 @@ import (
 
 const SearchBaseURL = "https://www.google.com/search"
 
+var GoogleThrottle = throttle.Default(SearchBaseURL)
+
 type GoogleSearch struct {
-	BaseURL string
+	BaseURL  string
+	Throttle *throttle.Throttle
 }
 
 func DefaultSearch() websearch.Search {
-	return &GoogleSearch{BaseURL: SearchBaseURL}
+	return &GoogleSearch{
+		BaseURL:  SearchBaseURL,
+		Throttle: GoogleThrottle,
+	}
 }
 
 func SearchWithURL(baseURL string) websearch.Search {
@@ -24,6 +31,10 @@ func SearchWithURL(baseURL string) websearch.Search {
 }
 
 func (g *GoogleSearch) Search(terms string) ([]websearch.Result, error) {
+	if g.Throttle != nil {
+		g.Throttle.DelayInvocation()
+	}
+
 	url := g.SearchURL(terms)
 	log.Printf("GoogleSearch(%s): GET %s", terms, url)
 	response, err := httpagent.Agent().Get(url)

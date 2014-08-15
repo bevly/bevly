@@ -22,8 +22,12 @@ func FetchMetadata(beverage model.Beverage) error {
 	err := beeradvocate.FetchMetadata(beverage, google.DefaultSearch())
 	if frisco.IsFrisco(beverage) {
 		friscoErr := frisco.FetchMetadata(beverage)
-		log.Printf("FetchMetadata(%s): frisco fetch error: %s\n",
-			beverage, friscoErr)
+		if friscoErr != nil {
+			// Frisco fetch errors are harmless, just log for
+			// investigation:
+			log.Printf("FetchMetadata(%s): frisco fetch error: %s\n",
+				beverage, friscoErr)
+		}
 	}
 	return err
 }

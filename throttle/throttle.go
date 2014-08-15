@@ -3,6 +3,7 @@ package throttle
 import (
 	"log"
 	"math/rand"
+	"sync"
 	"time"
 )
 
@@ -11,6 +12,7 @@ type Throttle struct {
 	MinMillis      int64
 	MaxMillis      int64
 	LastInvocation time.Time
+	Mutex          sync.Mutex
 }
 
 func Default(name string) *Throttle {
@@ -27,6 +29,8 @@ func (t *Throttle) Throttle(action func()) {
 }
 
 func (t *Throttle) DelayInvocation() {
+	t.Mutex.Lock()
+	defer t.Mutex.Unlock()
 	if !t.LastInvocation.IsZero() {
 		sleepDur := t.RandomSleepDuration(time.Now().Sub(t.LastInvocation))
 		if sleepDur > 0 {

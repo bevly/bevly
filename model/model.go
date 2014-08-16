@@ -10,8 +10,10 @@ type MenuProvider interface {
 }
 
 type Beverage interface {
+	SearchName() string
 	DisplayName() string
 	SetDisplayName(name string)
+	SetSearchName(name string)
 	Type() string
 	SetType(bevType string)
 
@@ -106,6 +108,18 @@ func (b *BeverageData) Name() string {
 
 func (b *BeverageData) SetName(name string) {
 	b.name = name
+}
+
+func (b *BeverageData) SearchName() string {
+	searchName := b.Attribute("SearchName")
+	if searchName != "" {
+		return searchName
+	}
+	return b.DisplayName()
+}
+
+func (b *BeverageData) SetSearchName(name string) {
+	b.SetAttribute("SearchName", name)
 }
 
 func (b *BeverageData) AccuracyScore() int {

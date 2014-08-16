@@ -20,7 +20,8 @@ const RateBeerAccuracyScore = 9
 
 func FetchMetadata(bev model.Beverage, search websearch.Search) (err error) {
 	log.Printf("FetchMetadata(%s): Searching for Ratebeer profile", bev)
-	profileURL, err := FindProfile(bev.DisplayName(), search)
+
+	profileURL, err := FindProfile(bev.SearchName(), search)
 	if err != nil {
 		log.Printf("FetchMetadata(%s): Ratebeer profile error: %s",
 			bev, err)

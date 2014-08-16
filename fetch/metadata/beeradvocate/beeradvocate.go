@@ -31,7 +31,7 @@ func FetchMetadata(bev model.Beverage, search websearch.Search) error {
 }
 
 func FindProfile(bev model.Beverage, s websearch.Search) (string, error) {
-	baUrl, err := baSearch(bev.DisplayName(), s)
+	baUrl, err := baSearch(bev.SearchName(), s)
 	if err != nil {
 		return "", err
 	}

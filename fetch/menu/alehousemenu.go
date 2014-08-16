@@ -89,14 +89,14 @@ func alehouseDrafts(doc *goquery.Document) ([]model.Beverage, error) {
 func houseAles(sel *goquery.Selection) []model.Beverage {
 	return aleMapper(findAles(sel), func(bev model.Beverage) {
 		bev.SetDisplayName("Oliver " + bev.DisplayName())
-		bev.SetSearchName("Pratt Street Ale House " + bev.DisplayName())
+		bev.SetSearchName("Olivers " + bev.DisplayName())
 	})
 }
 
 func houseCaskAles(sel *goquery.Selection) []model.Beverage {
 	return aleMapper(findAles(sel), func(bev model.Beverage) {
 		bev.SetDisplayName("Oliver " + bev.DisplayName() + " (cask)")
-		bev.SetSearchName("Pratt Street Ale House " + bev.DisplayName())
+		bev.SetSearchName("Olivers " + bev.DisplayName())
 	})
 }
 

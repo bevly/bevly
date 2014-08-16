@@ -26,8 +26,10 @@ func FetchMenu(provider model.MenuProvider) ([]model.Beverage, error) {
 
 		search := google.DefaultSearch()
 		for _, bev := range beverages {
+			link := search.SearchURL(bev.DisplayName())
+			bev.SetAttribute("googleLink", link)
 			if bev.Link() == "" {
-				bev.SetLink(search.SearchURL(bev.DisplayName()))
+				bev.SetLink(link)
 			}
 		}
 		return beverages, nil

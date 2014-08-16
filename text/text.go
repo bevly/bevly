@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-var rMultispaceRegex = regexp.MustCompile(`\s{2,}`)
+var rMultispaceRegex = regexp.MustCompile(`\s+`)
 var rWhitespace = regexp.MustCompile(`\s`)
 var rPlainSpace = regexp.MustCompile(` +`)
 

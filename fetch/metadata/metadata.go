@@ -3,6 +3,7 @@ package metadata
 import (
 	"github.com/bevly/bevly/fetch/metadata/beeradvocate"
 	"github.com/bevly/bevly/fetch/metadata/frisco"
+	"github.com/bevly/bevly/fetch/metadata/ratebeer"
 	"github.com/bevly/bevly/model"
 	"github.com/bevly/bevly/websearch/google"
 	"log"
@@ -15,19 +16,26 @@ import (
 //
 // The beverage object will be modified in-place. If the fetch fails,
 // a suitable error object will be returned.
-func FetchMetadata(beverage model.Beverage) error {
+func FetchMetadata(beverage model.Beverage) (err error) {
 	log.Printf("FetchMetadata: %s", beverage)
 
 	beverage.SetSyncTime(time.Now())
-	err := beeradvocate.FetchMetadata(beverage, google.DefaultSearch())
+
+	search := google.DefaultSearch()
+	err = ratebeer.FetchMetadata(beverage, search)
+	if err != nil {
+		log.Printf("FetchMetadata(%s): ratebeer fetch error: %s\n",
+			beverage, err)
+	}
+
 	if frisco.IsFrisco(beverage) {
-		friscoErr := frisco.FetchMetadata(beverage)
-		if friscoErr != nil {
-			// Frisco fetch errors are harmless, just log for
-			// investigation:
+		err = frisco.FetchMetadata(beverage)
+		if err != nil {
 			log.Printf("FetchMetadata(%s): frisco fetch error: %s\n",
-				beverage, friscoErr)
+				beverage, err)
 		}
 	}
+
+	err = beeradvocate.FetchMetadata(beverage, search)
 	return err
 }

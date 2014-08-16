@@ -18,9 +18,9 @@ import (
 var ErrNoResults = errors.New("no results for beverage")
 var ErrNotBABeer = errors.New("not a beer on BA")
 
-func FetchMetadata(bev model.Beverage, search websearch.Search) error {
-	bev.SetLink(search.SearchURL(bev.DisplayName()))
+const DescriptionProperty = "baDescription"
 
+func FetchMetadata(bev model.Beverage, search websearch.Search) error {
 	log.Printf("Searching for BA profile for %s", bev)
 	baUrl, err := FindProfile(bev, search)
 	if err != nil {
@@ -53,22 +53,22 @@ func baSearch(name string, search websearch.Search) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	log.Printf("baSearch(%s): %d results\n", search, len(results))
+	log.Printf("baSearch(%s): %d results\n", terms, len(results))
 	if len(results) > 0 {
 		for _, result := range results {
 			urlString := result.URL
 			log.Printf("baSearch(%s): considering %s (%s)\n",
-				search, result.Text, result.URL)
+				terms, result.Text, result.URL)
 			if IsBeerAdvocateProfile(urlString) {
 				cleansedText := stripBAName(result.Text)
 				confidence := text.NameMatchConfidence(cleansedText, name)
 				if confidence < 0.13 {
 					log.Printf("baSearch(%s): rejecting %s (confidence: %.2f%%)\n",
-						search, cleansedText, confidence*100)
+						terms, cleansedText, confidence*100)
 					continue
 				}
 				log.Printf("baSearch(%s): accepting %s (confidence: %.2f%%)\n",
-					search, cleansedText, confidence*100)
+					terms, cleansedText, confidence*100)
 				return urlString, nil
 			}
 		}
@@ -125,6 +125,7 @@ func setBADescription(bev model.Beverage, doc *goquery.Document) {
 	if desc != "" && desc != "No notes at this time." {
 		log.Printf("setBADescription(%s): desc=%s\n", bev, desc)
 		bev.SetDescription(desc)
+		bev.SetAttribute(DescriptionProperty, desc)
 	} else {
 		log.Printf("setBADescription(%s): no desc\n", bev)
 	}

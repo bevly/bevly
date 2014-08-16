@@ -23,4 +23,5 @@ func TestRatebeerFetch(t *testing.T) {
 	assert.Equal(t, 98, bev.Ratings()[1].PercentageRating(), "rating:style")
 	assert.Equal(t, 9.5, bev.Abv(), "abv")
 	assert.Equal(t, "Enchanting and enlightening, this golden, frothy ale boasts an intriguing herbal aroma, warming alcohol esters on the tongue and light, but firm body to finish. Exotic spices add subtle notes to both the aroma and flavor. Strong, sensual and satisfying.", bev.Description(), "desc")
+	assert.Equal(t, "http://res.cloudinary.com/ratebeer/image/upload/w_120,c_limit,q_85,d_no%20image.jpg/beer_630.jpg", bev.Attribute("rbImg"), "image")
 }

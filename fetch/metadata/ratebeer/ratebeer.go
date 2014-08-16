@@ -69,7 +69,24 @@ func FetchRatebeerMetadata(bev model.Beverage, profileURL string) (err error) {
 	set(bev.Description(), desc, bev.SetDescription)
 	bev.SetAttribute("rbDescription", desc)
 
+	image := findImageUrl(doc)
+	if image != "" {
+		bev.SetAttribute("rbImg", image)
+		set(bev.Attribute("img"), image, func(img string) {
+			bev.SetAttribute("img", img)
+		})
+	}
+
 	return nil
+}
+
+func findImageUrl(doc *goquery.Document) string {
+	container := doc.Find("a[href=\"/PictureCredits.asp\"]").Parent().Parent()
+	img, exists := container.Find("img").First().Attr("src")
+	if exists {
+		return img
+	}
+	return ""
 }
 
 const DescriptionHeading = "COMMERCIAL DESCRIPTION"

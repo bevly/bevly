@@ -1,13 +1,15 @@
 package google
 
 import (
+	"log"
+	"net/url"
+
 	"github.com/PuerkitoBio/goquery"
+
 	"github.com/bevly/bevly/httpagent"
 	"github.com/bevly/bevly/text"
 	"github.com/bevly/bevly/throttle"
 	"github.com/bevly/bevly/websearch"
-	"log"
-	"net/url"
 )
 
 const SearchBaseURL = "https://www.google.com/search"
@@ -73,4 +75,8 @@ func addBodySearchResults(doc *goquery.Document, results []websearch.Result) []w
 
 func (g *GoogleSearch) SearchURL(terms string) string {
 	return g.BaseURL + "?" + url.Values{"q": {terms}}.Encode()
+}
+
+func (g *GoogleSearch) String() string {
+	return g.BaseURL
 }

@@ -33,7 +33,7 @@ func FetchMetadata(bev model.Beverage, search websearch.Search) (err error) {
 }
 
 func FetchRatebeerMetadata(bev model.Beverage, profileURL string) (err error) {
-	doc, err := httpagent.Agent().GetDoc(profileURL)
+	doc, err := httpagent.Win1252Agent().GetDoc(profileURL)
 	if err != nil {
 		return
 	}

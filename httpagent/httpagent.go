@@ -20,6 +20,12 @@ type HttpAgent struct {
 	ForceEncoding string
 }
 
+func Win1252Agent() *HttpAgent {
+	agent := Agent()
+	agent.ForceEncoding = "windows-1252"
+	return agent
+}
+
 func Agent() *HttpAgent {
 	return &HttpAgent{
 		UserAgent: DefaultUserAgent,

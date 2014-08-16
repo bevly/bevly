@@ -18,9 +18,7 @@ const FriscoDescription = "friscoDescription"
 var ErrNoFriscoProfile = errors.New("no frisco profile")
 
 func Agent() *httpagent.HttpAgent {
-	agent := httpagent.Agent()
-	agent.ForceEncoding = "latin1"
-	return agent
+	return httpagent.Win1252Agent()
 }
 
 func IsFrisco(bev model.Beverage) bool {

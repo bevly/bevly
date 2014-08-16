@@ -55,22 +55,32 @@ func FetchRatebeerMetadata(bev model.Beverage, profileURL string) (err error) {
 	}
 
 	bev.SetAttribute("rbLink", profileURL)
+	log.Printf("rb(%s): link=%s\n", bev, profileURL)
 	set(bev.Link(), profileURL, bev.SetLink)
-	set(bev.Name(), selFirstText(".user-header h1"), bev.SetName)
-	set(bev.Brewer(), selFirstText("big a"), bev.SetBrewer)
+
+	name := selFirstText(".user-header h1")
+	brewer := selFirstText("big a")
+	set(bev.Name(), name, bev.SetName)
+	set(bev.Brewer(), brewer, bev.SetBrewer)
+
+	log.Printf("rb(%s): name=%s brewer=%s\n", bev, name, brewer)
+
 	addRatings(bev, doc)
 
 	abv := findAbv(doc)
 	if abv > 0.0 && (overwrite || bev.Abv() == 0.0) {
+		log.Printf("rb(%s): abv=%.1f%%\n", bev, abv)
 		bev.SetAbv(abv)
 	}
 
 	desc := findDescription(doc)
+	log.Printf("rb(%s): description: %s\n", bev, desc)
 	set(bev.Description(), desc, bev.SetDescription)
 	bev.SetAttribute("rbDescription", desc)
 
 	image := findImageUrl(doc)
 	if image != "" {
+		log.Printf("rb(%s): image: %s\n", bev, image)
 		bev.SetAttribute("rbImg", image)
 		set(bev.Attribute("img"), image, func(img string) {
 			bev.SetAttribute("img", img)

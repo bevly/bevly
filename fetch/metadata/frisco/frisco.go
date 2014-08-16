@@ -32,7 +32,7 @@ func FetchMetadata(bev model.Beverage) error {
 		return ErrNoFriscoProfile
 	}
 
-	profileDoc, err := httpagent.Agent().GetDoc(friscoProfile)
+	profileDoc, err := Agent().GetDoc(friscoProfile)
 	if err != nil {
 		return err
 	}

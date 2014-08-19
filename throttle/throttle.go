@@ -13,6 +13,7 @@ type Throttle struct {
 	MaxMillis      int64
 	LastInvocation time.Time
 	Mutex          sync.Mutex
+	Disabled       bool
 }
 
 func Default(name string) *Throttle {
@@ -23,6 +24,12 @@ func New(name string, minMillis, maxMillis int64) *Throttle {
 	return &Throttle{Name: name, MinMillis: minMillis, MaxMillis: maxMillis}
 }
 
+func (t *Throttle) SetDisabled(disabled bool) {
+	t.Mutex.Lock()
+	t.Disabled = disabled
+	t.Mutex.Unlock()
+}
+
 func (t *Throttle) Throttle(action func()) {
 	t.DelayInvocation()
 	action()
@@ -31,7 +38,7 @@ func (t *Throttle) Throttle(action func()) {
 func (t *Throttle) DelayInvocation() {
 	t.Mutex.Lock()
 	defer t.Mutex.Unlock()
-	if !t.LastInvocation.IsZero() {
+	if !t.Disabled && !t.LastInvocation.IsZero() {
 		sleepDur := t.RandomSleepDuration(time.Now().Sub(t.LastInvocation))
 		if sleepDur > 0 {
 			log.Printf("Throttle(%s): Sleeping %.2fs", t.Name,

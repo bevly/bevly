@@ -1,12 +1,44 @@
 package ratebeer
 
 import (
+	"net/http"
+	"net/http/httptest"
 	"testing"
 
 	"github.com/bevly/bevly/httpfilestub"
 	"github.com/bevly/bevly/model"
 	"github.com/stretchr/testify/assert"
 )
+
+func init() {
+	Throttle.SetDisabled(true)
+}
+
+func redirectStub(file string, redirectPath string, redirectFile string) *httptest.Server {
+	return httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.URL.Path == redirectPath {
+			httpfilestub.WriteFile(w, redirectFile)
+		} else {
+			httpfilestub.WriteFile(w, file)
+		}
+	}))
+}
+
+func TestRatebeerRedirectFetch(t *testing.T) {
+	ts := redirectStub("woodchuck-hopped-redirect_test.html",
+		"/beer/woodchuck-cellar-series-01--dry-hop/280087/",
+		"woodchuck-hopsation_test.html")
+	defer ts.Close()
+
+	bev := model.CreateBeverage("Woodchuck Hopped Apple")
+	err := FetchRatebeerMetadata(bev, ts.URL)
+	assert.Nil(t, err, "no error from stub")
+	assert.True(t, bev.NeedSync(), "should need sync")
+	assert.Equal(t, "Woodchuck Hopsation", bev.Name(), "name")
+	assert.Equal(t, "Vermont Hard Cider Company, LLC (C&C Group)",
+		bev.Brewer(), "brewer")
+	assert.Equal(t, 6.9, bev.Abv(), "abv")
+}
 
 func TestRatebeerFetch(t *testing.T) {
 	ts := httpfilestub.Server("victory_golden_monkey_test.html")

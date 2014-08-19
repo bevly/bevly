@@ -1,20 +1,24 @@
 package ratebeer
 
 import (
-	"errors"
-	"log"
-	"regexp"
-	"strings"
-
 	"github.com/PuerkitoBio/goquery"
 	"github.com/bevly/bevly/httpagent"
 	"github.com/bevly/bevly/model"
 	"github.com/bevly/bevly/text"
+	"github.com/bevly/bevly/throttle"
 	"github.com/bevly/bevly/websearch"
+
+	"errors"
+	"log"
+	"net/url"
+	"regexp"
 	"strconv"
+	"strings"
 )
 
 var ErrNoResults = errors.New("no results for beverage")
+var ErrTooManyRedirects = errors.New("too many redirects")
+var Throttle = throttle.Default("RateBeer")
 
 const RateBeerAccuracyScore = 9
 
@@ -33,11 +37,53 @@ func FetchMetadata(bev model.Beverage, search websearch.Search) (err error) {
 	return FetchRatebeerMetadata(bev, profileURL)
 }
 
-func FetchRatebeerMetadata(bev model.Beverage, profileURL string) (err error) {
-	doc, err := httpagent.Win1252Agent().GetDoc(profileURL)
-	if err != nil {
-		return
+func RatebeerRedirect(doc *goquery.Document, pageURL string) string {
+	aggregate := doc.Find("[itemtype=\"http://data-vocabulary.org/Review-aggregate\"]")
+	if strings.Index(aggregate.Text(), "Proceed to the aliased") == -1 {
+		return ""
 	}
+
+	redirect, exists := aggregate.Find("a.awesome").Attr("href")
+	if !exists {
+		return ""
+	}
+
+	reqURL, err := url.Parse(pageURL)
+	if err != nil {
+		return ""
+	}
+	redirectURL, err := reqURL.Parse(redirect)
+	if err != nil {
+		return ""
+	}
+	return redirectURL.String()
+}
+
+func FetchRatebeerMetadata(bev model.Beverage, profileURL string) error {
+	seenURLs := map[string]bool{}
+	for {
+		seenURLs[profileURL] = true
+		Throttle.DelayInvocation()
+
+		doc, err := httpagent.Win1252Agent().GetDoc(profileURL)
+		if err != nil {
+			return err
+		}
+
+		redirect := RatebeerRedirect(doc, profileURL)
+		if redirect != "" {
+			if seenURLs[redirect] {
+				return ErrTooManyRedirects
+			}
+			profileURL = redirect
+			continue
+		}
+
+		return fetchRatebeerProfile(bev, profileURL, doc)
+	}
+}
+
+func fetchRatebeerProfile(bev model.Beverage, profileURL string, doc *goquery.Document) (err error) {
 	bev.SetNeedSync(true)
 
 	overwrite := bev.AccuracyScore() < RateBeerAccuracyScore

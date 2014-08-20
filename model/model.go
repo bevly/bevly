@@ -10,6 +10,9 @@ type MenuProvider interface {
 }
 
 type Beverage interface {
+	Id() string
+	SetId(id string)
+
 	SearchName() string
 	DisplayName() string
 	SetDisplayName(name string)
@@ -88,6 +91,7 @@ func CreateRating(source string, rating int) Rating {
 // stats
 
 type BeverageData struct {
+	id            string
 	accuracyScore int
 	displayName   string
 	name          string
@@ -100,6 +104,14 @@ type BeverageData struct {
 	link          string
 	syncTime      time.Time
 	needSync      bool
+}
+
+func (b *BeverageData) Id() string {
+	return b.id
+}
+
+func (b *BeverageData) SetId(id string) {
+	b.id = id
 }
 
 func (b *BeverageData) Name() string {

@@ -2,6 +2,8 @@ package mongorepo
 
 import (
 	"github.com/bevly/bevly/model"
+
+	"encoding/hex"
 )
 
 func repoBeverageModels(repoBevs []repoBeverage) []model.Beverage {
@@ -14,6 +16,7 @@ func repoBeverageModels(repoBevs []repoBeverage) []model.Beverage {
 
 func repoBeverageModel(repoBev *repoBeverage) model.Beverage {
 	bev := model.CreateBeverage(repoBev.DisplayName)
+	bev.SetId(hex.EncodeToString([]byte(repoBev.Id)))
 	bev.SetType(repoBev.BevType)
 	bev.SetName(repoBev.Name)
 	bev.SetDescription(repoBev.Description)

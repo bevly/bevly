@@ -48,6 +48,7 @@ func ratingScores(beverage model.Beverage) map[string]interface{} {
 
 func bevJsonModel(beverage model.Beverage) interface{} {
 	bevJson := map[string]interface{}{
+		"id":           beverage.Id(),
 		"name":         beverage.DisplayName(),
 		"brewer":       beverage.Brewer(),
 		"type":         beverage.Type(),

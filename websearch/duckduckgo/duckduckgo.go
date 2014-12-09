@@ -12,17 +12,21 @@ import (
 
 	"github.com/bevly/bevly/html"
 	"github.com/bevly/bevly/httpagent"
+	"github.com/bevly/bevly/throttle"
 	"github.com/bevly/bevly/websearch"
 )
 
 const SearchBaseURL = "https://duckduckgo.com/d.js"
 
+var Throttle = throttle.Default(SearchBaseURL)
+
 type DuckSearch struct {
-	BaseURL string
+	BaseURL  string
+	Throttle *throttle.Throttle
 }
 
 func DefaultSearch() websearch.Search {
-	return &DuckSearch{BaseURL: SearchBaseURL}
+	return &DuckSearch{BaseURL: SearchBaseURL, Throttle: Throttle}
 }
 
 func SearchWithURL(baseURL string) websearch.Search {
@@ -30,7 +34,9 @@ func SearchWithURL(baseURL string) websearch.Search {
 }
 
 func (s *DuckSearch) Search(terms string) ([]websearch.Result, error) {
-	fmt.Println("Making search request to", s.SearchURL(terms))
+	if s.Throttle != nil {
+		s.Throttle.DelayInvocation()
+	}
 	response, err := httpagent.Agent().Get(s.SearchURL(terms))
 	if err != nil {
 		return nil, err

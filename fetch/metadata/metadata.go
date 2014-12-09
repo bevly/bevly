@@ -1,13 +1,14 @@
 package metadata
 
 import (
+	"log"
+	"time"
+
 	"github.com/bevly/bevly/fetch/metadata/beeradvocate"
 	"github.com/bevly/bevly/fetch/metadata/frisco"
 	"github.com/bevly/bevly/fetch/metadata/ratebeer"
 	"github.com/bevly/bevly/model"
-	"github.com/bevly/bevly/websearch/google"
-	"log"
-	"time"
+	"github.com/bevly/bevly/websearch/duckduckgo"
 )
 
 // FetchMetadata fetches metadata for a beverage, from whatever
@@ -21,7 +22,7 @@ func FetchMetadata(beverage model.Beverage) (err error) {
 
 	beverage.SetSyncTime(time.Now())
 
-	search := google.DefaultSearch()
+	search := duckduckgo.DefaultSearch()
 	err = ratebeer.FetchMetadata(beverage, search)
 	if err != nil {
 		log.Printf("FetchMetadata(%s): ratebeer fetch error: %s\n",

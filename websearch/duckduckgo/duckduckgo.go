@@ -4,14 +4,15 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/bevly/bevly/html"
-	"github.com/bevly/bevly/httpagent"
-	"github.com/bevly/bevly/websearch"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"net/url"
 	"regexp"
+
+	"github.com/bevly/bevly/html"
+	"github.com/bevly/bevly/httpagent"
+	"github.com/bevly/bevly/websearch"
 )
 
 const SearchBaseURL = "https://duckduckgo.com/d.js"
@@ -29,6 +30,7 @@ func SearchWithURL(baseURL string) websearch.Search {
 }
 
 func (s *DuckSearch) Search(terms string) ([]websearch.Result, error) {
+	fmt.Println("Making search request to", s.SearchURL(terms))
 	response, err := httpagent.Agent().Get(s.SearchURL(terms))
 	if err != nil {
 		return nil, err
@@ -37,8 +39,11 @@ func (s *DuckSearch) Search(terms string) ([]websearch.Result, error) {
 }
 
 func (s *DuckSearch) SearchURL(terms string) string {
-	return s.BaseURL + "?" +
-		url.Values{"q": {terms}, "l": {"us-en"}, "p": {"1"}, "s": {"0"}}.Encode()
+	p := func(name, value string) string {
+		return url.Values{name: {value}}.Encode()
+	}
+	return s.BaseURL + "?" + p("q", terms) + "&" + p("l", "us-en") + "&" +
+		p("p", "1") + "&" + p("s", "0")
 }
 
 func extractJsonResults(res *http.Response) ([]websearch.Result, error) {

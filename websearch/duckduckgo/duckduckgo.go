@@ -37,7 +37,9 @@ func (s *DuckSearch) Search(terms string) ([]websearch.Result, error) {
 	if s.Throttle != nil {
 		s.Throttle.DelayInvocation()
 	}
-	response, err := httpagent.Agent().Get(s.SearchURL(terms))
+	url := s.SearchURL(terms)
+	log.Printf("Duckduckgo search: %s / %s\n", terms, url)
+	response, err := httpagent.Agent().Get(url)
 	if err != nil {
 		return nil, err
 	}

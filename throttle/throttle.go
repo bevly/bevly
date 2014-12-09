@@ -17,7 +17,7 @@ type Throttle struct {
 }
 
 func Default(name string) *Throttle {
-	return New(name, 4500, 18000)
+	return New(name, 25000, 60000)
 }
 
 func New(name string, minMillis, maxMillis int64) *Throttle {

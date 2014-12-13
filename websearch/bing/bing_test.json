@@ -1,0 +1,117 @@
+{
+   "d" : {
+      "__next" : "https://api.datamarket.azure.com/Data.ashx/Bing/Search/Web?Query='%7Bfirestone%20walker%20union%20jack%7D'&$skip=10&$top=10",
+      "results" : [
+         {
+            "Description" : "Union Jack India Pale Ale. An aggressively hopped West Coast-style IPA. Union Jack showcases exceptional dry hop character with stunning pineapple, citrus and piney ...",
+            "Title" : "Firestone Walker Brewing Company - Union Jack",
+            "__metadata" : {
+               "uri" : "https://api.datamarket.azure.com/Data.ashx/Bing/Search/Web?Query='{firestone walker union jack}'&$skip=0&$top=1",
+               "type" : "WebResult"
+            },
+            "DisplayUrl" : "www.firestonebeer.com/beers/products/union-jack",
+            "ID" : "96af266a-b6e3-4629-aa22-f98d78508123",
+            "Url" : "http://www.firestonebeer.com/beers/products/union-jack"
+         },
+         {
+            "Url" : "http://www.beeradvocate.com/beer/profile/2210/38180/",
+            "ID" : "8412dbe0-a6d5-4063-b668-4ec1831e2352",
+            "DisplayUrl" : "www.beeradvocate.com/beer/profile/2210/38180",
+            "__metadata" : {
+               "type" : "WebResult",
+               "uri" : "https://api.datamarket.azure.com/Data.ashx/Bing/Search/Web?Query='{firestone walker union jack}'&$skip=1&$top=1"
+            },
+            "Description" : "Union Jack India Pale Ale is a American IPA style beer brewed by Firestone Walker Brewing Co. in Paso Robles, CA. 95 out of 100 with 5237 ratings, reviews and opinions.",
+            "Title" : "Union Jack India Pale Ale | Firestone Walker Brewing Co ..."
+         },
+         {
+            "Url" : "http://www.ratebeer.com/beer/firestone-walker-union-jack-ipa/76883/",
+            "Description" : "Firestone Walker Union Jack IPA a India Pale Ale (IPA) beer by Firestone Walker Brewing Co., a brewery in Paso Robles, California",
+            "__metadata" : {
+               "type" : "WebResult",
+               "uri" : "https://api.datamarket.azure.com/Data.ashx/Bing/Search/Web?Query='{firestone walker union jack}'&$skip=2&$top=1"
+            },
+            "Title" : "Firestone Walker Union Jack IPA - RateBeer: Great beer ...",
+            "DisplayUrl" : "www.ratebeer.com/beer/firestone-walker-union-jack-ipa/76883",
+            "ID" : "5df209e3-bc97-41ca-8e46-41700c759b4b"
+         },
+         {
+            "Url" : "http://www.firestonebeer.com/beers/products/easy-jack",
+            "DisplayUrl" : "www.firestonebeer.com/beers/products/easy-jack",
+            "ID" : "6bbe3b34-807e-4cbf-ac8d-429436cb1d13",
+            "__metadata" : {
+               "uri" : "https://api.datamarket.azure.com/Data.ashx/Bing/Search/Web?Query='{firestone walker union jack}'&$skip=3&$top=1",
+               "type" : "WebResult"
+            },
+            "Description" : "And so the newest member of our Jack IPA family was born. Seasonal Beers. Easy Jack ... this ensures freshness and ultimately a great Firestone Walker beer! ...",
+            "Title" : "Firestone Walker Brewing Company - Easy Jack"
+         },
+         {
+            "Url" : "http://www.firestonebeer.com/index.php?c=our_pale_ales",
+            "DisplayUrl" : "www.firestonebeer.com/index.php?c=our_pale_ales",
+            "ID" : "dd2e292b-d23c-4421-91af-05f6a28284e9",
+            "Description" : "Firestone Walker Brewing Company is committed to responsible drinking. You must be of the legal purchase age for alcohol (21 or over) to enter this site.",
+            "Title" : "Firestone Walker Brewing Co. - Craft Beer",
+            "__metadata" : {
+               "uri" : "https://api.datamarket.azure.com/Data.ashx/Bing/Search/Web?Query='{firestone walker union jack}'&$skip=4&$top=1",
+               "type" : "WebResult"
+            }
+         },
+         {
+            "Url" : "http://www.homebrewtalk.com/f12/can-you-brew-recipe-firestone-walker-union-jack-188929/",
+            "ID" : "64c570a1-be21-495f-9682-6830b4b4382b",
+            "DisplayUrl" : "www.homebrewtalk.com/...brew-recipe-firestone-walker-union-jack-188929",
+            "__metadata" : {
+               "uri" : "https://api.datamarket.azure.com/Data.ashx/Bing/Search/Web?Query='{firestone walker union jack}'&$skip=5&$top=1",
+               "type" : "WebResult"
+            },
+            "Description" : "Kegged: Belgian Dark Strong (8.9%abv) Fermenting: Arrogant Bastard Clone, BCS Dry stout Planned: Rye IPA, ESB, Oatmeal Pale Ale, Rye Amber Can You Brew It Recipe Database",
+            "Title" : "Can you Brew It recipe for Firestone Walker Union Jack ..."
+         },
+         {
+            "Url" : "http://beersmithrecipes.com/viewrecipe/8756/union-jack-ipa-by-firestone-walker-clone",
+            "ID" : "8fe5e045-1553-47d2-8e0a-e12897a979b0",
+            "DisplayUrl" : "beersmithrecipes.com/.../8756/union-jack-ipa-by-firestone-walker-clone",
+            "Description" : "Union Jack IPA by Firestone Walker Clone Recipe on the Beer Recipe Cloud by BeerSmith",
+            "Title" : "Union Jack IPA by Firestone Walker Clone - Recipe ...",
+            "__metadata" : {
+               "uri" : "https://api.datamarket.azure.com/Data.ashx/Bing/Search/Web?Query='{firestone walker union jack}'&$skip=6&$top=1",
+               "type" : "WebResult"
+            }
+         },
+         {
+            "Url" : "http://www.firestonebeer.com/beers/products/union-jack‎",
+            "Description" : "Find Firestone; Facebook; YouTube; Twitter; Instagram © 2014 Firestone Walker Brewing Company. All Rights Reserved. ...",
+            "Title" : "Firestone Walker Brewing Company -",
+            "__metadata" : {
+               "type" : "WebResult",
+               "uri" : "https://api.datamarket.azure.com/Data.ashx/Bing/Search/Web?Query='{firestone walker union jack}'&$skip=7&$top=1"
+            },
+            "DisplayUrl" : "www.firestonebeer.com/beers/products/union-jack‎",
+            "ID" : "56206d22-00ee-4d30-8041-aab3db90327f"
+         },
+         {
+            "Description" : "Firestone Walker Union Jack from Firestone Walker is an India Pale Ale IPA style beer, medium amber in color, is more than moderately hoppy, has an ABV of 7.5% and is ...",
+            "Title" : "Firestone Walker Union Jack - Firestone Walker - Buy Beer ...",
+            "__metadata" : {
+               "type" : "WebResult",
+               "uri" : "https://api.datamarket.azure.com/Data.ashx/Bing/Search/Web?Query='{firestone walker union jack}'&$skip=8&$top=1"
+            },
+            "ID" : "8c2a59c1-0544-4305-81c4-30ae424f5237",
+            "DisplayUrl" : "www.halftimebeverage.com/firestone-walker-union-jack-12oz-7991.html",
+            "Url" : "http://www.halftimebeverage.com/firestone-walker-union-jack-12oz-7991.html"
+         },
+         {
+            "DisplayUrl" : "coed.com/2014/07/25/firestone-walkers-union-jack-ipa-is-whats-on-tap",
+            "ID" : "dec19e6d-87bd-405e-bf9e-ef0d8989b50d",
+            "__metadata" : {
+               "type" : "WebResult",
+               "uri" : "https://api.datamarket.azure.com/Data.ashx/Bing/Search/Web?Query='{firestone walker union jack}'&$skip=9&$top=1"
+            },
+            "Description" : "Sometimes when you drink a beer that you've never tired or one you have not had in a while right on the first sip your immediate reaction is, “Wow! This beer is it!”",
+            "Title" : "Craft Beer: Firestone Walker’s Union Jack IPA Review",
+            "Url" : "http://coed.com/2014/07/25/firestone-walkers-union-jack-ipa-is-whats-on-tap/"
+         }
+      ]
+   }
+}

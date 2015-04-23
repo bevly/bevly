@@ -1,37 +1,57 @@
 package menu
 
 import (
+	"fmt"
+	"net/http"
+	"net/http/httptest"
+	"os"
+	"regexp"
+	"strings"
+	"testing"
+
 	"github.com/bevly/bevly/httpfilestub"
 	"github.com/bevly/bevly/model"
 	"github.com/stretchr/testify/assert"
-	"net/http/httptest"
-	"testing"
 )
 
 func alehouseStub() *httptest.Server {
-	return httpfilestub.Server("alehouse_test.html")
+	return httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.URL.Path == "/menu/" {
+			rehost := "http://" + r.Host + "/"
+			fmt.Fprintf(os.Stderr, "Serving alehouse_test.html, rehosted as: %s\n", rehost)
+			httpfilestub.WriteFileMunged(w, "alehouse_test.html",
+				regexp.MustCompile(`http://www[.]thealehousecolumbia[.]com/`),
+				rehost)
+			return
+		}
+		if strings.HasSuffix(r.URL.Path, ".pdf") {
+			httpfilestub.WriteFile(w, "alemenu_test.pdf")
+			return
+		}
+	}))
 }
 
 func TestAlehouseMenu(t *testing.T) {
 	ts := alehouseStub()
 
 	prov := model.CreateMenuProvider(
-		"ale_house", "Ale House", ts.URL, "ale_house")
+		"ale_house", "Ale House", ts.URL+"/menu/", "ale_house")
 	bev, err := alehouseMenu(prov)
 	assert.Nil(t, err, "stub fetch must succeed")
-	assert.Equal(t, 30, len(bev), "must find all beers")
-	assert.Equal(t, "Oliver “The Black Code”", bev[0].DisplayName(), "black code")
-	assert.Equal(t, "Oliver King of the Knight Time World", bev[2].DisplayName(), "knight time")
-	assert.Equal(t, "Oliver “The Black Code” (cask)", bev[15].DisplayName(), "black code cask")
-	assert.Equal(t, "Allagash White Ale", bev[29].DisplayName(), "allagash white")
+	assert.Equal(t, 32, len(bev), "must find all beers")
+	assert.Equal(t, "Jailbreak - Desserted", bev[0].DisplayName())
+	assert.Equal(t, "Jailbreak - Feed The Monkey", bev[2].DisplayName())
+	assert.Equal(t, "Lagunitas - Undercover Investigation Shut-Down", bev[15].DisplayName())
+	assert.Equal(t, "Oliver 3 Lions", bev[29].DisplayName())
 
-	assert.Equal(t, "Black Ale", bev[0].Type(), "black code type")
-	assert.Equal(t, "Belgian Style White Ale", bev[29].Type(), "allagash white type")
+	assert.Equal(t, "Chocolate Coconut Porter", bev[0].Type())
+	assert.Equal(t, "Strong Brown Ale", bev[29].Type())
 
-	assert.Equal(t, 6.5, bev[0].Abv(), "black code ABV")
-	assert.Equal(t, 5, bev[29].Abv(), "allagash white ABV")
-	assert.Equal(t, "Brewed with a generous portion of wheat and spiced with coriander and Curaco orange peel, this beer is refreshing and slightly cloudy in appearance.", bev[29].Description(), "allagash white desc")
+	assert.Equal(t, 6.9, bev[0].Abv())
+	assert.Equal(t, 7.5, bev[29].Abv())
+	assert.Equal(t, "A strong English style brown ale, full-bodied with underlying hints of caramel sweetness.",
+		bev[29].Description())
 
-	assert.Equal(t, 7.7, bev[1].Abv(), "sentinel ABV")
-	assert.Equal(t, 8.4, bev[2].Abv(), "knight ABV")
+	assert.Equal(t, 8.5, bev[1].Abv())
+	assert.Equal(t, 6, bev[2].Abv())
 }

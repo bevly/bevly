@@ -2,12 +2,13 @@ package frisco
 
 import (
 	"errors"
+	"regexp"
+	"strconv"
+
 	"github.com/PuerkitoBio/goquery"
 	"github.com/bevly/bevly/httpagent"
 	"github.com/bevly/bevly/model"
 	"github.com/bevly/bevly/text"
-	"regexp"
-	"strconv"
 )
 
 const IBUProperty = "IBU"
@@ -17,7 +18,7 @@ const FriscoDescription = "friscoDescription"
 
 var ErrNoFriscoProfile = errors.New("no frisco profile")
 
-func Agent() *httpagent.HttpAgent {
+func Agent() *httpagent.Agent {
 	return httpagent.Win1252Agent()
 }
 

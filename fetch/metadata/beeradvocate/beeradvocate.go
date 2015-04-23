@@ -2,17 +2,18 @@ package beeradvocate
 
 import (
 	"errors"
+	"html"
+	"log"
+	"regexp"
+	"strconv"
+	"strings"
+
 	"github.com/PuerkitoBio/goquery"
 	bevHtml "github.com/bevly/bevly/html"
 	"github.com/bevly/bevly/httpagent"
 	"github.com/bevly/bevly/model"
 	"github.com/bevly/bevly/text"
 	"github.com/bevly/bevly/websearch"
-	"html"
-	"log"
-	"regexp"
-	"strconv"
-	"strings"
 )
 
 var ErrNoResults = errors.New("no results for beverage")
@@ -84,7 +85,7 @@ func IsBeerAdvocateProfile(url string) bool {
 
 func fetchBAMetadata(bev model.Beverage, metaURL string) error {
 	log.Printf("fetchBAMetadata(%s, %s)", bev, metaURL)
-	doc, err := httpagent.Agent().GetDoc(metaURL)
+	doc, err := httpagent.New().GetDoc(metaURL)
 	if err != nil {
 		log.Printf("fetchBAMetadata(%s, %s) failed: %s", bev, metaURL, err)
 		return err

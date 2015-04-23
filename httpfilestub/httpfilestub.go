@@ -4,6 +4,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
+	"regexp"
 )
 
 func WriteFile(w http.ResponseWriter, file string) {
@@ -13,6 +14,16 @@ func WriteFile(w http.ResponseWriter, file string) {
 		w.Write([]byte(err.Error()))
 	} else {
 		w.Write(bytes)
+	}
+}
+
+func WriteFileMunged(w http.ResponseWriter, file string, re *regexp.Regexp, repl string) {
+	bytes, err := ioutil.ReadFile(file)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		w.Write([]byte(err.Error()))
+	} else {
+		w.Write([]byte(re.ReplaceAllString(string(bytes), repl)))
 	}
 }
 

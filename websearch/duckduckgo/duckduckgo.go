@@ -39,7 +39,7 @@ func (s *DuckSearch) Search(terms string) ([]websearch.Result, error) {
 	}
 	url := s.SearchURL(terms)
 	log.Printf("Duckduckgo search: %s / %s\n", terms, url)
-	response, err := httpagent.Agent().Get(url)
+	response, err := httpagent.New().Get(url)
 	if err != nil {
 		return nil, err
 	}

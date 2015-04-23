@@ -25,7 +25,7 @@ type BingSearch struct {
 	BaseURL     string
 	ApiKey      string
 	ResultCount int
-	agent       *httpagent.HttpAgent
+	agent       *httpagent.Agent
 	auth        string
 }
 
@@ -34,7 +34,7 @@ func DefaultSearch() websearch.Search {
 		BaseURL:     SearchBaseURL,
 		ApiKey:      DefaultApiKey(),
 		ResultCount: 10,
-		agent:       httpagent.Agent(),
+		agent:       httpagent.New(),
 	}
 	bing.init()
 	return bing
@@ -45,7 +45,7 @@ func SearchWithURLKey(url, apiKey string) websearch.Search {
 		BaseURL:     url,
 		ApiKey:      apiKey,
 		ResultCount: 10,
-		agent:       httpagent.Agent(),
+		agent:       httpagent.New(),
 	}
 	bing.init()
 	return bing

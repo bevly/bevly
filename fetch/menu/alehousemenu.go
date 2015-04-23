@@ -1,14 +1,15 @@
 package menu
 
 import (
+	"fmt"
+	"io/ioutil"
+	"log"
+	"os"
+
 	"github.com/PuerkitoBio/goquery"
+	"github.com/bevly/bevly/fetch/menu/alepdf"
 	"github.com/bevly/bevly/httpagent"
 	"github.com/bevly/bevly/model"
-	"github.com/bevly/bevly/text"
-	"log"
-	"regexp"
-	"strconv"
-	"strings"
 )
 
 const AlehouseDescription = "ale_houseDescription"
@@ -18,7 +19,7 @@ func init() {
 }
 
 func alehouseMenu(provider model.MenuProvider) ([]model.Beverage, error) {
-	agent := httpagent.Agent()
+	agent := httpagent.New()
 	doc, err := agent.GetDoc(provider.Url())
 	if err != nil {
 		log.Printf("alehouseMenu: Get(%s) failed: %s\n",
@@ -26,7 +27,7 @@ func alehouseMenu(provider model.MenuProvider) ([]model.Beverage, error) {
 		return nil, err
 	}
 
-	beverages, err := alehouseDrafts(doc)
+	beverages, err := alehouseDrafts(agent, doc)
 	if err != nil {
 		log.Printf("alehouseMenu: Failed to parse menu: %s\n", err)
 		return nil, err
@@ -37,124 +38,33 @@ func alehouseMenu(provider model.MenuProvider) ([]model.Beverage, error) {
 	return beverages, nil
 }
 
-type beverageFinder func(sel *goquery.Selection) []model.Beverage
-
-var aleHandlers = map[string]beverageFinder{
-	"House Ales":        houseAles,
-	"House Ales / Cask": houseCaskAles,
-	"Guest Drafts":      guestDrafts,
-}
-
-func alehouseDrafts(doc *goquery.Document) ([]model.Beverage, error) {
-	ales := doc.Find("section#ales").First().Children()
-	if ales.Size() == 0 {
-		return nil, ErrEmptyMenu
+func alehouseDrafts(agent *httpagent.Agent, doc *goquery.Document) ([]model.Beverage, error) {
+	pdfHref, ok := doc.Find("#ales a").Attr("href")
+	if !ok {
+		return nil, fmt.Errorf("no PDF link in alehouse HTML")
 	}
 
-	res := []model.Beverage{}
-	var handler beverageFinder
-	ales.Each(func(_ int, sel *goquery.Selection) {
-		if sel.Is("h3") {
-			sectionHeader := sel.Text()
-			handler = aleHandlers[strings.TrimSpace(sectionHeader)]
-			if handler != nil {
-				log.Printf("alehouseDrafts: Activating handler for %s\n",
-					sectionHeader)
-			} else {
-				log.Printf("alehouseDrafts: No handler for \"%s\"\n",
-					sectionHeader)
-			}
-		} else if handler != nil {
-			if sel.Is("div.columns-2") {
-				newBevs := handler(sel)
-				res = append(res, newBevs...)
-			} else {
-				html, err := sel.Html()
-				if err != nil {
-					log.Printf("alehouseDrafts: unexpected non-div.column-2 follows h3: err %s\n", err)
-				} else {
-					log.Printf("alehouseDrafts: unexpected non-div.column-2 follows h3: %s\n", html)
-				}
-			}
-		}
-	})
-
-	if len(res) == 0 {
-		return nil, ErrEmptyMenu
+	pdfFile, err := fetchPDF(agent, pdfHref)
+	if err != nil {
+		return nil, fmt.Errorf("couldn't fetch PDF for Ale House: %s", err)
 	}
+	defer os.Remove(pdfFile)
 
-	return res, nil
+	return alepdf.Parse(pdfFile)
 }
 
-func houseAles(sel *goquery.Selection) []model.Beverage {
-	return aleMapper(findAles(sel), func(bev model.Beverage) {
-		bev.SetDisplayName("Oliver " + bev.DisplayName())
-		bev.SetSearchName("Olivers " + bev.DisplayName())
-	})
-}
-
-func houseCaskAles(sel *goquery.Selection) []model.Beverage {
-	return aleMapper(findAles(sel), func(bev model.Beverage) {
-		bev.SetDisplayName("Oliver " + bev.DisplayName() + " (cask)")
-		bev.SetSearchName("Olivers " + bev.DisplayName())
-	})
-}
-
-func guestDrafts(sel *goquery.Selection) []model.Beverage {
-	return aleMapper(findAles(sel), func(bev model.Beverage) {
-		bev.SetDisplayName(strings.Replace(bev.DisplayName(), " - ", " ", 1))
-	})
-}
-
-func findAles(sel *goquery.Selection) []model.Beverage {
-	res := []model.Beverage{}
-	sel.Find("li").Each(func(_ int, item *goquery.Selection) {
-		title := text.Normalize(item.Find("span").First().Text())
-		log.Printf("findAles: Found ale titled: %s\n", title)
-		style := text.Normalize(item.Find("p > strong").First().Text())
-		desc := text.Normalize(strings.Replace(item.Find("p").First().Text(), style, "", 1))
-		abv := findAbv(desc)
-		desc = stripStyleAbv(desc)
-		bev := model.CreateBeverage(title)
-		bev.SetType(style)
-		bev.SetDescription(desc)
-		bev.SetAttribute(AlehouseDescription, desc)
-		if abv > 0.0 {
-			bev.SetAbv(abv)
-		}
-		res = append(res, bev)
-	})
-	return res
-}
-
-var rAlehouseAbv = regexp.MustCompile(`(\d+(?:[.]\d*)?)%\s*$`)
-
-func findAbv(desc string) float64 {
-	match := rAlehouseAbv.FindStringSubmatch(desc)
-	if match != nil {
-		abv, err := strconv.ParseFloat(match[1], 64)
-		if err != nil {
-			return 0.0
-		}
-		return abv
+func fetchPDF(agent *httpagent.Agent, href string) (string, error) {
+	pdfTempF, err := ioutil.TempFile("", "alepdf")
+	if err != nil {
+		return "", err
 	}
-	return 0.0
-}
+	pdfPath := pdfTempF.Name()
+	pdfTempF.Close()
 
-var rAlehouseDesc = regexp.MustCompile(`(.*?)(\d+(?:[.]\d*)?)%\s*$`)
-
-func stripStyleAbv(desc string) string {
-	match := rAlehouseDesc.FindStringSubmatch(desc)
-	if match != nil {
-		return text.Normalize(match[1])
-	} else {
-		return text.Normalize(desc)
+	_, err = agent.GetFile(href, pdfPath)
+	if err != nil {
+		os.Remove(pdfPath)
+		return "", err
 	}
-}
-
-func aleMapper(beverages []model.Beverage, mapper func(model.Beverage)) []model.Beverage {
-	for _, bev := range beverages {
-		mapper(bev)
-	}
-	return beverages
+	return pdfPath, nil
 }

@@ -39,7 +39,7 @@ func (g *GoogleSearch) Search(terms string) ([]websearch.Result, error) {
 
 	url := g.SearchURL(terms)
 	log.Printf("GoogleSearch(%s): GET %s\n", terms, url)
-	response, err := httpagent.Agent().Get(url)
+	response, err := httpagent.New().Get(url)
 	if err != nil {
 		return nil, err
 	}

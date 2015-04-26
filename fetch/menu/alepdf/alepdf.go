@@ -8,7 +8,7 @@ import (
 	"github.com/bevly/bevly/pdftext"
 )
 
-const ServingProperty = "alehouseServingSize"
+const ServingProperty = "ale_houseServingSize"
 
 var SectionHeadingFont = pdftext.Font{Name: "Duke-Fill", Size: 22}
 var BevTitleFont = pdftext.Font{Name: "Stag-Semibold", Size: 11}

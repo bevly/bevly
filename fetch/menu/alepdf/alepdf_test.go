@@ -16,7 +16,7 @@ var bevTests = []struct {
 	pours   string
 }{
 	{
-		name:    "Jailbreak - Desserted",
+		name:    "Jailbreak Desserted",
 		bevtype: "Chocolate Coconut Porter",
 		desc:    "Easy sipping body with a surprising but pleasantly long, rich finish. Lots of coconut aroma but a pretty traditional palate.",
 		abv:     6.9,
@@ -28,10 +28,14 @@ var bevTests = []struct {
 		abv:     7,
 	},
 	{
-		name:    "Jailbreak - Cafe Kavorka",
+		name:    "Jailbreak Cafe Kavorka",
 		bevtype: "Porter",
 		abv:     5.5,
 		desc:    "A lightly roasted porter fermented with sweet cherries and a late addition of tart, black cherries. The result is a semisweet & slightly tart perfectly dark porter with loads of complexity & depth of \"avor.",
+	},
+	{
+		name: "Firestone Easy Jack",
+		abv:  4.5,
 	},
 }
 

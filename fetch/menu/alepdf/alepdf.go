@@ -45,11 +45,18 @@ func (r *alehouseReader) knownSection(name string) bool {
 	return ok
 }
 
+var rBogusHyphenMatch = regexp.MustCompile(`(?:\s+-\s+|-\s+|\s+-)`)
+
+func fixName(name string) string {
+	return rBogusHyphenMatch.ReplaceAllString(name, " ")
+}
+
 func (r *alehouseReader) newBeverage(frag *pdftext.Fragment) model.Beverage {
 	if frag.Font != BevTitleFont {
 		return nil
 	}
-	return model.CreateBeverage(sectionMap[r.section].modifyName(frag.Text()))
+	name := fixName(sectionMap[r.section].modifyName(frag.Text()))
+	return model.CreateBeverage(name)
 }
 
 func (r *alehouseReader) emitBev() model.Beverage {
@@ -105,7 +112,7 @@ func (r *alehouseReader) setBevType(frag *pdftext.Fragment) {
 	r.bev.SetType(frag.Text())
 }
 
-var rABVSuffix = regexp.MustCompile(`\s+(\d+(?:[.]\d+)?)%`)
+var rABVSuffix = regexp.MustCompile(`\s*(\d+(?:[.]\d+)?)%`)
 
 func (r *alehouseReader) setBevDescriptionABV(frag *pdftext.Fragment) {
 	if frag.Font != BevBodyFont {

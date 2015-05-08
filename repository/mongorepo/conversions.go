@@ -82,7 +82,7 @@ func updateRepoBev(repoBev *repoBeverage, bev model.Beverage) {
 		repoBev.Attributes = map[string]string{}
 	}
 	for attr, value := range bev.Attributes() {
-		if value != "" && (overwrite || repoBev.Attributes[attr] == "") {
+		if value != "" {
 			repoBev.Attributes[attr] = value
 		}
 	}

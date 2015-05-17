@@ -8,9 +8,9 @@ The server will eventually have two parts:
 
 ## Running the server
 
-To run the server, install the dependencies, then
+To run the server:
 
-     $ go install github.com/bevly/bevly/bevly-server
+     $ go get github.com/bevly/bevly/cmd/bevly-server
      $ bevly-server
 
 The server binds to localhost:3000 by default, you may alter this by

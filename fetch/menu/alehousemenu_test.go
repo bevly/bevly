@@ -39,9 +39,9 @@ func TestAlehouseMenu(t *testing.T) {
 	bev, err := alehouseMenu(prov)
 	assert.Nil(t, err, "stub fetch must succeed")
 	assert.Equal(t, 32, len(bev), "must find all beers")
-	assert.Equal(t, "Jailbreak - Desserted", bev[0].DisplayName())
-	assert.Equal(t, "Jailbreak - Feed The Monkey", bev[2].DisplayName())
-	assert.Equal(t, "Lagunitas - Undercover Investigation Shut-Down", bev[15].DisplayName())
+	assert.Equal(t, "Jailbreak Desserted", bev[0].DisplayName())
+	assert.Equal(t, "Jailbreak Feed The Monkey", bev[2].DisplayName())
+	assert.Equal(t, "Lagunitas Undercover Investigation Shut-Down", bev[15].DisplayName())
 	assert.Equal(t, "Oliver 3 Lions", bev[29].DisplayName())
 
 	assert.Equal(t, "Chocolate Coconut Porter", bev[0].Type())

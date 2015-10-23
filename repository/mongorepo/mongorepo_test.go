@@ -1,17 +1,18 @@
 package mongorepo
 
 import (
+	"testing"
+
 	"github.com/bevly/bevly/model"
 	"github.com/bevly/bevly/repository"
 	"github.com/stretchr/testify/assert"
-	"testing"
 )
 
 var repo repository.Repository
 
 func init() {
 	var err error
-	repo, err = Repository("localhost", "bevtest")
+	repo, err = Repository("127.0.0.1", "bevtest")
 	if err != nil {
 		panic(err)
 	}
@@ -99,14 +100,14 @@ func TestSaveBeverageUpdate(t *testing.T) {
 
 func TestSaveMenu(t *testing.T) {
 	repo.Purge()
-	frisco := repo.ProviderById("frisco")
+	frisco := repo.ProviderByID("frisco")
 	bevs := make([]model.Beverage, len(beverageInfos))
 	for i, bevInfo := range beverageInfos {
 		bevs[i] = bevInfo.Model()
 	}
 	repo.SetBeverageMenu(frisco, bevs)
 
-	savedBevs := repo.ProviderIdBeverages("frisco")
+	savedBevs := repo.ProviderIDBeverages("frisco")
 	assert.Equal(t, 3, len(savedBevs), "three beverages should be saved")
 	assert.Equal(t, "Bear Republic Racer V", savedBevs[1].DisplayName())
 }

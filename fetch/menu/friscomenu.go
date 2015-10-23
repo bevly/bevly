@@ -3,7 +3,7 @@ package menu
 import (
 	"log"
 	"net/url"
-	"strings"
+	"strconv"
 
 	"github.com/PuerkitoBio/goquery"
 	"github.com/bevly/bevly/fetch/metadata/frisco"
@@ -33,19 +33,53 @@ func friscoMenu(provider model.MenuProvider) ([]model.Beverage, error) {
 	return beverages, err
 }
 
+func friscoPourClassSize(pourClass string) (oz string) {
+	switch pourClass {
+	case "eightounce":
+		return "8oz"
+	case "tenounce":
+		return "10oz"
+	case "twelveounce":
+		return "12oz"
+	case "sixteenounce":
+		return "16oz"
+	default:
+		return ""
+	}
+}
+
+func friscoPourSize(s *goquery.Selection) (oz string) {
+	pourNode := s.Children().First()
+	if pourClass, exists := pourNode.Attr("class"); exists {
+		return friscoPourClassSize(pourClass)
+	}
+	return ""
+}
+
+func parseABV(abv string) float64 {
+	abv = text.StripNonNumeric(abv)
+	fabv, err := strconv.ParseFloat(abv, 64)
+	if err != nil {
+		return 0
+	}
+	return fabv
+}
+
 func friscoDrafts(doc *goquery.Document, url *url.URL) ([]model.Beverage, error) {
 	beers := []model.Beverage{}
-	doc.Find("#drafts a").Each(func(i int, s *goquery.Selection) {
-		href, _ := s.Attr("href")
-		beerName := text.Normalize(s.Text())
-		if strings.Contains(href, "beer_details") && beerName != "" {
-			beer := model.CreateBeverage(beerName)
-			hrefURL, err := url.Parse(href)
-			if err == nil {
-				beer.SetAttribute(frisco.ProfileURLProperty, hrefURL.String())
-			}
-			beers = append(beers, beer)
+	doc.Find(".row").Each(func(i int, s *goquery.Selection) {
+		beerName := text.Normalize(s.Find(".name").Text())
+		abv := s.Find(".abv").Text()
+		pour := friscoPourSize(s)
+		beer := model.CreateBeverage(beerName)
+		beer.SetAttribute(frisco.ProfileURLProperty, url.String())
+		if pour != "" {
+			beer.SetAttribute(frisco.ServingSizeProperty, pour)
 		}
+		if abv != "" {
+			beer.SetAbv(parseABV(abv))
+		}
+		beers = append(beers, beer)
 	})
 	if len(beers) == 0 {
 		return nil, ErrEmptyMenu

@@ -24,10 +24,18 @@ func StripNonAlpha(text string) string {
 	return Normalize(rNonLetter.ReplaceAllString(text, " "))
 }
 
-// Returns a confidence level that two names match. Given two names,
-// splits them into a set of words, then returns the fraction of the
-// words in A that are in the set multiplied by the fraction of the
-// words in B that are in the set.
+var rNonDigitDot = regexp.MustCompile(`[^0-9.+-]`)
+
+// StripNonNumeric removes all characters from text that are not in the set
+// "0-9.+-"
+func StripNonNumeric(text string) string {
+	return rNonDigitDot.ReplaceAllString(text, "")
+}
+
+// NameMatchConfidence returns a confidence level that two names match. Given
+// two names, splits them into a set of words, then returns the fraction of the
+// words in A that are in the set multiplied by the fraction of the words in B
+// that are in the set.
 //
 // Empty strings never match any other string, including other empty
 // strings.

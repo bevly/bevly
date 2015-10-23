@@ -1,239 +1,138 @@
 
-<!DOCTYPE html> 
 <html>
-	<head> 
-	<title>Frisco Tap House Beer List</title> 
-	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.0a4.1/jquery.mobile-1.0a4.1.min.css" />
-	<script type="text/javascript" src="http://code.jquery.com/jquery-1.5.2.min.js"></script>
-	<script type="text/javascript" src="http://code.jquery.com/mobile/1.0a4.1/jquery.mobile-1.0a4.1.min.js"></script>
-	<script type="text/javascript">
+<head>
 
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-103265-5']);
-  _gaq.push(['_trackPageview']);
+  <title>Columbia Frisco Grille Beer Page</title>
 
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="description" content="Home of the Frisco Tap and Brewhouse">
+  <meta name="keywords" content="Frisco Burrito, Beer, Microbrew, Craft Brew, Baltimore, Columbia, Maryland">
 
-</script>
-</head> 
-<body> 
+  <style>
+  
+  	@font-face {
+		font-family: 'robotoregular';
+		src: url('fonts/roboto-regular-webfont.eot');
+		src: url('fonts/roboto-regular-webfont.eot?#iefix') format('embedded-opentype'),
+			 url('fonts/roboto-regular-webfont.woff2') format('woff2'),
+			 url('fonts/roboto-regular-webfont.woff') format('woff'),
+			 url('fonts/roboto-regular-webfont.ttf') format('truetype'),
+			 url('fonts/roboto-regular-webfont.svg#robotoregular') format('svg');
+		font-weight: normal;
+		font-style: normal;
+	}
+	@font-face {
+		font-family: 'chunkfiveroman';
+		src: url('fonts/chunkfive-webfont.eot');
+		src: url('fonts/chunkfive-webfont.eot?#iefix') format('embedded-opentype'),
+			 url('fonts/chunkfive-webfont.woff2') format('woff2'),
+			 url('fonts/chunkfive-webfont.woff') format('woff'),
+			 url('fonts/chunkfive-webfont.ttf') format('truetype'),
+			 url('fonts/chunkfive-webfont.svg#chunkfiveroman') format('svg');
+		font-weight: normal;
+		font-style: normal;
+	}
+	@font-face {
+		font-family: 'nexa_rust_sansblack';
+		src: url('fonts/nexarustsans-black-free-webfont.eot');
+		src: url('fonts/nexarustsans-black-free-webfont.eot?#iefix') format('embedded-opentype'),
+			 url('fonts/nexarustsans-black-free-webfont.woff2') format('woff2'),
+			 url('fonts/nexarustsans-black-free-webfont.woff') format('woff'),
+			 url('fonts/nexarustsans-black-free-webfont.ttf') format('truetype'),
+			 url('fonts/nexarustsans-black-free-webfont.svg#nexa_rust_sansblack') format('svg');
+		font-weight: normal;
+		font-style: normal;
+	}
+	@font-face {
+		font-family: 'nexa_rust_script_l0regular';
+		src: url('fonts/nexarustscriptl-0-free-webfont.eot');
+		src: url('fonts/nexarustscriptl-0-free-webfont.eot?#iefix') format('embedded-opentype'),
+			 url('fonts/nexarustscriptl-0-free-webfont.woff2') format('woff2'),
+			 url('fonts/nexarustscriptl-0-free-webfont.woff') format('woff'),
+			 url('fonts/nexarustscriptl-0-free-webfont.ttf') format('truetype'),
+			 url('fonts/nexarustscriptl-0-free-webfont.svg#nexa_rust_script_l0regular') format('svg');
+		font-weight: normal;
+		font-style: normal;
+	}
+	@font-face {
+		font-family: 'bebas_neueregular';
+		src: url('fonts/bebasneue-webfont.eot');
+		src: url('fonts/bebasneue-webfont.eot?#iefix') format('embedded-opentype'),
+			 url('fonts/bebasneue-webfont.woff2') format('woff2'),
+			 url('fonts/bebasneue-webfont.woff') format('woff'),
+			 url('fonts/bebasneue-webfont.ttf') format('truetype'),
+			 url('fonts/bebasneue-webfont.svg#bebas_neueregular') format('svg');
+		font-weight: normal;
+		font-style: normal;
+	}
 
-<div data-role="page" id="drafts">
-
-	<div data-role="header">
-		<center><img src="./images/logo.gif" /></center>
-		<h1>Available Beers</h1>
-		<div data-role="navbar">
-		<ul>
-			<li><a class="ui-btn-active">Drafts</a></li>
-			<li><a href="#bottles">Bottles</a></li>
-		</ul>
-	</div><!-- /navbar -->
-	</div><!-- /header -->
-
-	<div data-role="content">	
-
-<a href="/beer_details.php?beer_id=3039">Anchor California Lager</a><br />
-<a href="/beer_details.php?beer_id=907">Bear Republic Crazy Ivan</a><br />
-<a href="/beer_details.php?beer_id=2854">Bold Rock Virginia Apple</a><br />
-<a href="/beer_details.php?beer_id=1077">Boulder Cold Hop English IPA (N2)</a><br />
-<a href="/beer_details.php?beer_id=3373">Boulevard Imperial Stout</a><br />
-<a href="/beer_details.php?beer_id=1526">Breckenridge SummerBright Ale</a><br />
-<a href="/beer_details.php?beer_id=2901">Devils Backbone Striped Bass Pale Ale</a><br />
-<a href="/beer_details.php?beer_id=3476">Dieu Du Ciel Péché Mortel Imperial Stout </a><br />
-<a href="/beer_details.php?beer_id=1697">eVolution Summer Session Ale</a><br />
-<a href="/beer_details.php?beer_id=1031">Flying Dog Gonzo Imperial Porter (N2)</a><br />
-<a href="/beer_details.php?beer_id=438">Great Divide Titan IPA</a><br />
-<a href="/beer_details.php?beer_id=527">Green Flash West Coast IPA</a><br />
-<a href="/beer_details.php?beer_id=2601">Hofbräu  Münchner Weisse</a><br />
-<a href="/beer_details.php?beer_id=3080">Iron Fist Renegade Blonde</a><br />
-<a href="/beer_details.php?beer_id=3688">Jailbreak Berry'd Blackberry Wheat Ale</a><br />
-<a href="/beer_details.php?beer_id=3743">Jennings Cumberland Ale CASK</a><br />
-<a href="/beer_details.php?beer_id=1515">Jolly Pumpkin Bam Bière</a><br />
-<a href="/beer_details.php?beer_id=1267">Jolly Pumpkin Calabaza Blanca</a><br />
-<a href="/beer_details.php?beer_id=3327">Jolly Pumpkin Fuego Del Otono</a><br />
-<a href="/beer_details.php?beer_id=1817">Jolly Pumpkin Luciérnaga, The Firefly</a><br />
-<a href="/beer_details.php?beer_id=1500">Jolly Pumpkin Madrugada Obscura</a><br />
-<a href="/beer_details.php?beer_id=1588">Jolly Pumpkin Maracaibo Especial</a><br />
-<a href="/beer_details.php?beer_id=2107">Jolly Pumpkin Noel de Calabaza </a><br />
-<a href="/beer_details.php?beer_id=1816">Jolly Pumpkin Oro de Calabaza</a><br />
-<a href="/beer_details.php?beer_id=3748">Jolly Pumpkin/Anchorage Calabaza Boreal</a><br />
-<a href="/beer_details.php?beer_id=3377">Left Coast The Wedge Black IPA</a><br />
-<a href="/beer_details.php?beer_id=3410">Lonerider Sweet Josie Brown Ale</a><br />
-<a href="/beer_details.php?beer_id=3617">Maine Beer Weez</a><br />
-<a href="/beer_details.php?beer_id=3711">Marstons Pedigree CASK</a><br />
-<a href="/beer_details.php?beer_id=3745">Mikkeller Black &#40657; </a><br />
-<a href="/beer_details.php?beer_id=3720">New Belgium/3 Floyds Grätzer</a><br />
-<a href="/beer_details.php?beer_id=2699">Nøgne Ø/Terrapin Imperial Rye Porter</a><br />
-<a href="/beer_details.php?beer_id=534">Ommegang Three Philosophers</a><br />
-<a href="/beer_details.php?beer_id=627">Oskar Blues Old Chub (N2)</a><br />
-<a href="/beer_details.php?beer_id=3768">Push  Bomb'd Irish Stout</a><br />
-<a href="/beer_details.php?beer_id=3747">Push  Ob"session"</a><br />
-<a href="/beer_details.php?beer_id=3592">Push  Reckless Ascension IPA</a><br />
-<a href="/beer_details.php?beer_id=3746">Push  Sour Power Blood Orange Weisse</a><br />
-<a href="/beer_details.php?beer_id=3596">Rooie Dop The Daily Grind</a><br />
-<a href="/beer_details.php?beer_id=1885">Schlafly Pumpkin Ale</a><br />
-<a href="/beer_details.php?beer_id=762">Southern Tier Choklat</a><br />
-<a href="/beer_details.php?beer_id=759">Southern Tier Gemini</a><br />
-<a href="/beer_details.php?beer_id=2906">Southern Tier Imperial Compass</a><br />
-<a href="/beer_details.php?beer_id=705">Stone Arrogant Bastard Ale</a><br />
-<a href="/beer_details.php?beer_id=3674">Stone Collective Distortion IPA</a><br />
-<a href="/beer_details.php?beer_id=3479">Stone Go To IPA</a><br />
-<a href="/beer_details.php?beer_id=828">Stone Imperial Russian Stout &#9773;</a><br />
-<a href="/beer_details.php?beer_id=2947">Stone RuinTen IPA</a><br />
-<a href="/beer_details.php?beer_id=3756">Stone Smoked Porter (Chipotle Peppers)</a><br />
-<a href="/beer_details.php?beer_id=3590">Stone Spröcket Bier</a><br />
-<a href="/beer_details.php?beer_id=3757">Stone/Heretic/Beachwood Unapologetic IPA</a><br />
-<a href="/beer_details.php?beer_id=3364">Struise  Black Damnation III-Black Mes</a><br />
-<a href="/beer_details.php?beer_id=3740">Terrapin Guano Loco</a><br />
-<a href="/beer_details.php?beer_id=2806">Terrapin Moo-Hoo Chocolate Milk Stout</a><br />
-<a href="/beer_details.php?beer_id=3468">Union  Double Duckpin</a><br />
-<a href="/beer_details.php?beer_id=2475">Yards General Washington's Tavern Porter</a><br />
+    body {
+        font-family: 'robotoregular';
+		margin: 0px;
+		padding: 0px;
+		background: #fff;
+		color: #000;
+		width: 100%;
+		height: 100%;
+		overflow: hidden;
+    }
+    .row {
+        padding: 0px 0px 0px 0px;
+		margin: 0px 0px 0px 0px;
+ 		font-family: 'robotoregular';
+ 		font-size: 16px;
+		font-weight: 400 !important;
+		line-height: 9px !important;
+		display: table;
+		width: 100%;
+    }
+	.row:nth-child(odd) {
+		background: #fff2d4;
+		overflow: auto;
+	}
+    .name {
+		padding:10px 5px 0 10px;
+	}
+    .abv {
+		text-align: right;
+		padding:10px 10px 0 10px;
+    }
+    .eightounce {
+        color: lime;
+    }
+    .tenounce {
+		color: rgb(238, 169, 4);
+	}
+    .twelveounce {
+    	color: red;
+    }
+    .sixteenounce {
+    	color: #000;
+    }
 	
-	</div><!-- /content -->
-
-	<div data-role="footer">
-		<h4><a href="http://www.friscogrille.com">Full Website</a></h4>
-	</div><!-- /footer -->
-</div><!-- /page -->
-
-<div data-role="page" id="bottles">
-
-	<div data-role="header">
-		<center><img src="./images/logo.gif" /></center>
-		<h1>Available Bottle Beers</h1>
-		<div data-role="navbar">
-		<ul>
-			<li><a href="#drafts">Drafts</a></li>
-			<li><a class="ui-btn-active">Bottles</a></li>
-		</ul>
-	</div><!-- /navbar -->
-	</div><!-- /header -->
-
-	<div data-role="content">	
-
-<a href="/beer_details.php?beer_id=3492">Against The Grain Rico Sauvin</a><br />
-<a href="/beer_details.php?beer_id=3313">Allagash Midnight Brett</a><br />
-<a href="/beer_details.php?beer_id=3498">Anchorage/Mikkeller Beer Geek BreAKfast</a><br />
-<a href="/beer_details.php?beer_id=3210">Anderson Valley Brother David's Triple Abbey Style Ale</a><br />
-<a href="/beer_details.php?beer_id=2453">B. Nektar Margarita Style Melomel</a><br />
-<a href="/beer_details.php?beer_id=3451">B. Nektar Yo Mamma's Strawberry Pizzazz</a><br />
-<a href="/beer_details.php?beer_id=1630">Baird Kurofune Porter</a><br />
-<a href="/beer_details.php?beer_id=1574">Birrificio Le Baladin Nora</a><br />
-<a href="/beer_details.php?beer_id=1702">Birrificio Le Baladin Wayan</a><br />
-<a href="/beer_details.php?beer_id=1575">Bosteels DeuS (Brut Des Flandres)</a><br />
-<a href="/beer_details.php?beer_id=2830">Boulevard Dark Truth Stout</a><br />
-<a href="/beer_details.php?beer_id=2831">Boulevard Long Strange Tripel</a><br />
-<a href="/beer_details.php?beer_id=2393">Boulevard The Sixth Glass</a><br />
-<a href="/beer_details.php?beer_id=633">Brooklyn Local 1</a><br />
-<a href="/beer_details.php?beer_id=1864">Brooklyn Local 2</a><br />
-<a href="/beer_details.php?beer_id=2206">Caracole Saxo</a><br />
-<a href="/beer_details.php?beer_id=3677">Celestial Meads Gingerly</a><br />
-<a href="/beer_details.php?beer_id=3678">Celestial Meads Raizin d'Etre</a><br />
-<a href="/beer_details.php?beer_id=299">Chimay Grande Réserve (Blue)</a><br />
-<a href="/beer_details.php?beer_id=1736">Chimay Grande Réserve (Jeroboam)</a><br />
-<a href="/beer_details.php?beer_id=298">Chimay Première (Red)</a><br />
-<a href="/beer_details.php?beer_id=3315">Cisco Lady Of The Woods</a><br />
-<a href="/beer_details.php?beer_id=3314">Cisco Pechish Woods</a><br />
-<a href="/beer_details.php?beer_id=2331">Corsendonk Pater (Jeroboam)</a><br />
-<a href="/beer_details.php?beer_id=1489">Del Ducato Verdi Imperial Stout</a><br />
-<a href="/beer_details.php?beer_id=3673">Delirium Red </a><br />
-<a href="/beer_details.php?beer_id=3714">Devils Backbone/Green Flash East West India Pale Lager</a><br />
-<a href="/beer_details.php?beer_id=3496">Drie Fonteinen Zwet.Be</a><br />
-<a href="/beer_details.php?beer_id=3393">eVolution Nouveau Rouge</a><br />
-<a href="/beer_details.php?beer_id=3645">Fantôme de Noël</a><br />
-<a href="/beer_details.php?beer_id=3497">Fantôme Hiver</a><br />
-<a href="/beer_details.php?beer_id=3295">Fifty Fifty Imperial Eclipse Stout (Silver) </a><br />
-<a href="/beer_details.php?beer_id=2458">Firestone Walker Double Double Barrel Ale</a><br />
-<a href="/beer_details.php?beer_id=3772">Firestone Walker Opal</a><br />
-<a href="/beer_details.php?beer_id=3248">Goose Island Halia</a><br />
-<a href="/beer_details.php?beer_id=2341">Goose Island Juliet</a><br />
-<a href="/beer_details.php?beer_id=3639">Goose Island Lolita</a><br />
-<a href="/beer_details.php?beer_id=1703">Hitachino Nest Extra High (XH)</a><br />
-<a href="/beer_details.php?beer_id=1705">Hitachino Nest Japanese Classic Ale</a><br />
-<a href="/beer_details.php?beer_id=1456">Hitachino Nest Lacto Sweet Stout</a><br />
-<a href="/beer_details.php?beer_id=2303">Hitachino Nest Real Ginger Brew</a><br />
-<a href="/beer_details.php?beer_id=1534">Ise Kadoya Genmai Ale</a><br />
-<a href="/beer_details.php?beer_id=1533">Ise Kadoya Stout</a><br />
-<a href="/beer_details.php?beer_id=2142">J.K.'s Scrumpy's Orchard Gate Gold Hard Cider</a><br />
-<a href="/beer_details.php?beer_id=1481">Jolly Pumpkin Bam Bière</a><br />
-<a href="/beer_details.php?beer_id=2201">Jolly Pumpkin Bam Noire</a><br />
-<a href="/beer_details.php?beer_id=1672">Jolly Pumpkin Baudelaire IO</a><br />
-<a href="/beer_details.php?beer_id=3715">Jolly Pumpkin Bière de Mars</a><br />
-<a href="/beer_details.php?beer_id=1673">Jolly Pumpkin E.S. Bam</a><br />
-<a href="/beer_details.php?beer_id=2232">Jolly Pumpkin Fuego Del Otono, Autumn Fire</a><br />
-<a href="/beer_details.php?beer_id=1818">Jolly Pumpkin Luciérnaga, The Firefly </a><br />
-<a href="/beer_details.php?beer_id=1536">Jolly Pumpkin Madrugada Obscura</a><br />
-<a href="/beer_details.php?beer_id=1674">Jolly Pumpkin Maracaibo Especial</a><br />
-<a href="/beer_details.php?beer_id=3271">Jolly Pumpkin Noel De Calabaza</a><br />
-<a href="/beer_details.php?beer_id=1819">Jolly Pumpkin Oro De Calabaza</a><br />
-<a href="/beer_details.php?beer_id=3716">Jolly Pumpkin/Anchorage Calabaza Boreal</a><br />
-<a href="/beer_details.php?beer_id=3206">Lagunitas DayTime</a><br />
-<a href="/beer_details.php?beer_id=3284">Lagunitas The Hairy Eyeball Ale</a><br />
-<a href="/beer_details.php?beer_id=1479">Lefèbvre Hopus</a><br />
-<a href="/beer_details.php?beer_id=126">Lindeman's Framboise</a><br />
-<a href="/beer_details.php?beer_id=3329">Lindemans Kriek</a><br />
-<a href="/beer_details.php?beer_id=3069">Lindemans Pêche</a><br />
-<a href="/beer_details.php?beer_id=2379">Lindemans Pomme</a><br />
-<a href="/beer_details.php?beer_id=1485">Malheur Bière Brut</a><br />
-<a href="/beer_details.php?beer_id=2504">Marble Barley Wine</a><br />
-<a href="/beer_details.php?beer_id=1929">Mikkeller Frelser</a><br />
-<a href="/beer_details.php?beer_id=3644">Mikkeller George (Cognac Barrel Aged)</a><br />
-<a href="/beer_details.php?beer_id=3454">Moonlight Meadery Desire</a><br />
-<a href="/beer_details.php?beer_id=3453">Moonlight Meadery Kurt's Apple Pie</a><br />
-<a href="/beer_details.php?beer_id=3455">Moonlight Meadery Sensual </a><br />
-<a href="/beer_details.php?beer_id=3334">Nebraska  Sexy Betty</a><br />
-<a href="/beer_details.php?beer_id=3712">New Belgium Le Terroir </a><br />
-<a href="/beer_details.php?beer_id=3713">New Belgium Transatlantique Kriek</a><br />
-<a href="/beer_details.php?beer_id=3499">Nøgne Ø/Mikkeller/BrewDog Horizon Tokyo Black</a><br />
-<a href="/beer_details.php?beer_id=2506">Omission Lager (Gluten-Free)</a><br />
-<a href="/beer_details.php?beer_id=2505">Omission Pale Ale (Gluten-Free)</a><br />
-<a href="/beer_details.php?beer_id=1547">Orval Trappist Ale</a><br />
-<a href="/beer_details.php?beer_id=1465">Oud Beersel Kriek Vieille</a><br />
-<a href="/beer_details.php?beer_id=3761">Perennial Woodside</a><br />
-<a href="/beer_details.php?beer_id=1576">Piccolo Birrifico Chiostro</a><br />
-<a href="/beer_details.php?beer_id=1938">Saint Somewhere Lectio Divina</a><br />
-<a href="/beer_details.php?beer_id=1939">Saint Somewhere Pays Du Soleil</a><br />
-<a href="/beer_details.php?beer_id=280">Samuel Smith's Imperial Stout</a><br />
-<a href="/beer_details.php?beer_id=281">Samuel Smith's India Pale Ale</a><br />
-<a href="/beer_details.php?beer_id=289">Samuel Smith's Nut Brown Ale</a><br />
-<a href="/beer_details.php?beer_id=279">Samuel Smith's Oatmeal Stout</a><br />
-<a href="/beer_details.php?beer_id=948">Samuel Smith's Organic Cider</a><br />
-<a href="/beer_details.php?beer_id=92">Samuel Smith's Taddy Porter</a><br />
-<a href="/beer_details.php?beer_id=3764">Siren/Mikkeller/Hill Farmstead Limoncello IPA</a><br />
-<a href="/beer_details.php?beer_id=2670">The Bruery 5 Golden Rings</a><br />
-<a href="/beer_details.php?beer_id=2372">The Bruery Fruet</a><br />
-<a href="/beer_details.php?beer_id=2528">The Bruery Oude Tart</a><br />
-<a href="/beer_details.php?beer_id=2669">The Bruery Smoking Wood</a><br />
-<a href="/beer_details.php?beer_id=2450">The Bruery Tart Of Darkness</a><br />
-<a href="/beer_details.php?beer_id=3335">The Bruery White Oak</a><br />
-<a href="/beer_details.php?beer_id=3718">Trappist Achel 8° Blond</a><br />
-<a href="/beer_details.php?beer_id=1670">Trappist Achel 8° Bruin</a><br />
-<a href="/beer_details.php?beer_id=1487">Trappistes Rochefort 10</a><br />
-<a href="/beer_details.php?beer_id=1400">Trappistes Rochefort 6</a><br />
-<a href="/beer_details.php?beer_id=1401">Trappistes Rochefort 8</a><br />
-<a href="/beer_details.php?beer_id=1642">Traquair Jacobite Ale</a><br />
-<a href="/beer_details.php?beer_id=3615">Tröegs LaGrave</a><br />
-<a href="/beer_details.php?beer_id=1194">Unibroue La Terrible</a><br />
-<a href="/beer_details.php?beer_id=3646">Upright Four</a><br />
-<a href="/beer_details.php?beer_id=3638">Victory Oak Horizontal </a><br />
-<a href="/beer_details.php?beer_id=2825">Victory White Monkey</a><br />
-<a href="/beer_details.php?beer_id=1569">Westmalle Trappist Dubbel</a><br />
-<a href="/beer_details.php?beer_id=1568">Westmalle Trappist Tripel</a><br />
-<a href="/beer_details.php?beer_id=3707">Wexford Irish Cream Ale</a><br />
-<a href="/beer_details.php?beer_id=2202">Woodchuck Farmhouse Select Original 91</a><br />
-<a href="/beer_details.php?beer_id=3605">Woodchuck Mint</a><br />
+	.name,
+	.abv {
+		margin: 0px;
+		display: table-cell;
+	}
 	
-	</div><!-- /content -->
+	.eightounce,
+	.tenounce,
+	.twelveounce,
+	.sixteenounce {
+		display: table-row;
+		line-height: 16px !important;
+	}
+	
+	@media (max-width: 600px) {
+		.row {
+			font-size: 14px;
+		}
+	}
+	
+  </style>
+</head>
 
-	<div data-role="footer">
-		<h4><a href="http://www.friscogrille.com">Full Website</a></h4>
-	</div><!-- /footer -->
-</div><!-- /page -->
-
-</body>
+<body>
+<div class="row"><div class="tenounce"><div class="name">Abita Bourbon Street Maple Pecan</div><div class="abv">8.5%</div></div><br></div><div class="row"><div class="sixteenounce"><div class="name">Bell's Hell Hath No Fury</div><div class="abv">7.7%</div></div><br></div><div class="row"><div class="sixteenounce"><div class="name">Breckenridge Avalanche Ale</div><div class="abv">5.41%</div></div><br></div><div class="row"><div class="sixteenounce"><div class="name">Crispin Natural Hard Apple Cider</div><div class="abv">5%</div></div><br></div><div class="row"><div class="tenounce"><div class="name">Evil Twin Fire Water</div><div class="abv">5.5%</div></div><br></div><div class="row"><div class="sixteenounce"><div class="name">Flying Dog Bloodline Blood Orange IPA</div><div class="abv">7%</div></div><br></div><div class="row"><div class="sixteenounce"><div class="name">Flying Dog Counter Culture Ale</div><div class="abv">6%</div></div><br></div><div class="row"><div class="sixteenounce"><div class="name">Flying Dog Dogtoberfest</div><div class="abv">5.8%</div></div><br></div><div class="row"><div class="sixteenounce"><div class="name">Flying Dog Doppelbock </div><div class="abv">8.3%</div></div><br></div><div class="row"><div class="sixteenounce"><div class="name">Flying Dog Earl Grey Black Wheat</div><div class="abv">6.3%</div></div><br></div><div class="row"><div class="tenounce"><div class="name">Flying Dog Imperial IPA (Apollo)</div><div class="abv">10%</div></div><br></div><div class="row"><div class="tenounce"><div class="name">Flying Dog Imperial IPA (Columbus)</div><div class="abv">10%</div></div><br></div><div class="row"><div class="sixteenounce"><div class="name">Flying Dog India Pale Lager</div><div class="abv">6.3%</div></div><br></div><div class="row"><div class="sixteenounce"><div class="name">Flying Dog Raging Bitch Belgian IPA</div><div class="abv">8.3%</div></div><br></div><div class="row"><div class="sixteenounce"><div class="name">Flying Dog Snake Dog IPA</div><div class="abv">7.1%</div></div><br></div><div class="row"><div class="sixteenounce"><div class="name">Flying Dog Spiced Pear Ale</div><div class="abv">6.8%</div></div><br></div><div class="row"><div class="tenounce"><div class="name">Flying Dog The Fear Imperial Pumpkin CASK</div><div class="abv">9%</div></div><br></div><div class="row"><div class="sixteenounce"><div class="name">Flying Dog The Truth Imperial IPA </div><div class="abv">8.7%</div></div><br></div><div class="row"><div class="sixteenounce"><div class="name">Goose Island India Pale Ale</div><div class="abv">5.7%</div></div><br></div><div class="row"><div class="tenounce"><div class="name">Goose Island Matilda</div><div class="abv">7%</div></div><br></div><div class="row"><div class="tenounce"><div class="name">Goose Island The Muddy</div><div class="abv">9%</div></div><br></div><div class="row"><div class="tenounce"><div class="name">Goose Island The Ogden</div><div class="abv">9%</div></div><br></div><div class="row"><div class="tenounce"><div class="name">Green Flash Anniversary Strong Ale</div><div class="abv">8.9%</div></div><br></div><div class="row"><div class="tenounce"><div class="name">Heavy Seas Red Sky At Morning</div><div class="abv">10%</div></div><br></div><div class="row"><div class="tenounce"><div class="name">Iron Fist The Uprising Tripel IPA</div><div class="abv">12%</div></div><br></div><div class="row"><div class="sixteenounce"><div class="name">New Belgium Pumpkick</div><div class="abv">6%</div></div><br></div><div class="row"><div class="sixteenounce"><div class="name">Otter Creek Couch Surfer (N2)</div><div class="abv">5.4%</div></div><br></div><div class="row"><div class="twelveounce"><div class="name">Push  72° & Sunny Wheat Ale</div><div class="abv">5.5%</div></div><br></div><div class="row"><div class="twelveounce"><div class="name">Push Centennial Amber IPA</div><div class="abv">7.3%</div></div><br></div><div class="row"><div class="twelveounce"><div class="name">Push  HoCo Pale Ale</div><div class="abv">4.3%</div></div><br></div><div class="row"><div class="twelveounce"><div class="name">Push  Pumpkin Jack</div><div class="abv">7.2%</div></div><br></div><div class="row"><div class="twelveounce"><div class="name">Push Thank You Ray! IPA</div><div class="abv">7.6%</div></div><br></div><div class="row"><div class="tenounce"><div class="name">Sierra Nevada Hoptimum Imperial IPA</div><div class="abv">10.4%</div></div><br></div><div class="row"><div class="sixteenounce"><div class="name">Sierra Nevada Kellerweis Hefeweizen</div><div class="abv">4.8%</div></div><br></div><div class="row"><div class="sixteenounce"><div class="name">Sierra Nevada Nooner Pilsner</div><div class="abv">5.2%</div></div><br></div><div class="row"><div class="sixteenounce"><div class="name">Sierra Nevada Pale Ale</div><div class="abv">5.6%</div></div><br></div><div class="row"><div class="sixteenounce"><div class="name">Smuttynose Rouge De'Shire</div><div class="abv">4.9%</div></div><br></div><div class="row"><div class="sixteenounce"><div class="name">Smuttynose Schmutzig Hopfen Weisse</div><div class="abv">5.8%</div></div><br></div><div class="row"><div class="tenounce"><div class="name">Smuttynose Spank</div><div class="abv">7.8%</div></div><br></div><div class="row"><div class="tenounce"><div class="name">Southern Tier Pumking </div><div class="abv">8.6%</div></div><br></div><div class="row"><div class="sixteenounce"><div class="name">Stone Smoked Porter-Chocolate & Orange</div><div class="abv">5.9%</div></div><br></div><div class="row"><div class="sixteenounce"><div class="name">Tröegs Perpetual IPA</div><div class="abv">7.5%</div></div><br></div><div class="row"><div class="sixteenounce"><div class="name">Unibroue Blanche de Chambly</div><div class="abv">5%</div></div><br></div><div class="row"><div class="sixteenounce"><div class="name">Victory Hop Ticket - Dry Hopped Saison</div><div class="abv">6%</div></div><br></div><div class="row"><div class="tenounce"><div class="name">Victory Moonglow Weizenbock</div><div class="abv">8.7%</div></div><br></div><div class="row"><div class="sixteenounce"><div class="name">Victory Prima Pils</div><div class="abv">5.3%</div></div><br></div><div class="row"><div class="sixteenounce"><div class="name">Victory Saison Du BUFF</div><div class="abv">6.8%</div></div><br></div><div class="row"><div class="tenounce"><div class="name">Victory Storm King Stout</div><div class="abv">9.1%</div></div><br></div><div class="row"><div class="sixteenounce"><div class="name">Weihenstephaner Festbier</div><div class="abv">5.8%</div></div><br></div><div class="row"><div class="sixteenounce"><div class="name">Weihenstephaner Hefeweissbier</div><div class="abv">5.4%</div></div><br></div><div class="row"><div class="sixteenounce"><div class="name">Weyerbacher Imperial Pumpkin Ale</div><div class="abv">8%</div></div><br></div></body>
 </html>

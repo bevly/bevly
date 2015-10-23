@@ -1,8 +1,9 @@
 package text
 
 import (
-	"github.com/stretchr/testify/assert"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestStripNonAlpha(t *testing.T) {
@@ -34,4 +35,20 @@ func TestMatchConfidence(t *testing.T) {
 			"marstons pedigree CASK",
 			"Pedigree | Marston, Thompson & Evershed, Plc. | Burton-on ...") > 0.25,
 		"marston")
+}
+
+func TestStripNonNumeric(t *testing.T) {
+	tests := []struct {
+		in       string
+		expected string
+	}{
+		{"5.3%", "5.3"},
+		{"a-53c", "-53"},
+	}
+	for _, test := range tests {
+		actual := StripNonNumeric(test.in)
+		if actual != test.expected {
+			t.Errorf("StripNonNumeric(%#v) == %#v, want %#v", test.in, actual, test.expected)
+		}
+	}
 }

@@ -36,7 +36,7 @@ var _ Repository = &stubRepository{}
 
 func (s *stubRepository) MenuProviders() []model.MenuProvider {
 	return []model.MenuProvider{
-		model.CreateMenuProvider("frisco", "Frisco", "http://beer.friscogrille.com/", "frisco"),
+		model.CreateMenuProvider("frisco", "Frisco", "http://www.friscogrille.com/cmobile-alt.php", "frisco"),
 		model.CreateMenuProvider("ale_house", "Ale House", "http://www.thealehousecolumbia.com/menu/", "ale_house"),
 	}
 }

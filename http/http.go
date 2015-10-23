@@ -1,12 +1,13 @@
 package http
 
 import (
+	"net/http"
+
 	"github.com/bevly/bevly/model"
 	"github.com/bevly/bevly/repository"
 	"github.com/go-martini/martini"
 	"github.com/martini-contrib/gzip"
 	"github.com/martini-contrib/render"
-	"net/http"
 )
 
 func BeverageServerBlocking(repo repository.Repository) {
@@ -16,7 +17,7 @@ func BeverageServerBlocking(repo repository.Repository) {
 
 	m.Get("/:source/drink/", func(par martini.Params, r render.Render, res http.ResponseWriter) {
 		NoCache(res)
-		r.JSON(http.StatusOK, bevListJsonModel(repo.ProviderIdBeverages(par["source"])))
+		r.JSON(http.StatusOK, bevListJsonModel(repo.ProviderIDBeverages(par["source"])))
 	})
 	m.Run()
 }
@@ -48,7 +49,7 @@ func ratingScores(beverage model.Beverage) map[string]interface{} {
 
 func bevJsonModel(beverage model.Beverage) interface{} {
 	bevJson := map[string]interface{}{
-		"id":           beverage.Id(),
+		"id":           beverage.ID(),
 		"name":         beverage.DisplayName(),
 		"brewer":       beverage.Brewer(),
 		"type":         beverage.Type(),

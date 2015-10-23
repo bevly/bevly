@@ -37,12 +37,12 @@ func New() *Agent {
 }
 
 func (h *Agent) Get(requrl string) (*http.Response, error) {
-	parsedUrl, err := url.Parse(requrl)
+	parsedURL, err := url.Parse(requrl)
 	if err != nil {
 		return nil, err
 	}
 	req := http.Request{
-		URL: parsedUrl,
+		URL: parsedURL,
 		Header: http.Header{
 			"User-Agent": {h.UserAgent},
 		},

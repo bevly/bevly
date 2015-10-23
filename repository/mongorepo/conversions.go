@@ -16,7 +16,7 @@ func repoBeverageModels(repoBevs []repoBeverage) []model.Beverage {
 
 func repoBeverageModel(repoBev *repoBeverage) model.Beverage {
 	bev := model.CreateBeverage(repoBev.DisplayName)
-	bev.SetId(hex.EncodeToString([]byte(repoBev.Id)))
+	bev.SetID(hex.EncodeToString([]byte(repoBev.ID)))
 	bev.SetType(repoBev.BevType)
 	bev.SetName(repoBev.Name)
 	bev.SetDescription(repoBev.Description)

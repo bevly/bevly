@@ -1,12 +1,13 @@
 package sync
 
 import (
+	"log"
+	"time"
+
 	"github.com/bevly/bevly/fetch/menu"
 	"github.com/bevly/bevly/fetch/metadata"
 	"github.com/bevly/bevly/model"
 	"github.com/bevly/bevly/repository"
-	"log"
-	"time"
 )
 
 type Syncer struct {
@@ -83,7 +84,7 @@ func SetBeverageDiscoverTimes(provider model.MenuProvider, bevs []model.Beverage
 	for _, bev := range bevs {
 		if !seenBevs[bev.DisplayName()] {
 			// This beverage was just added.
-			bev.SetAttribute(provider.Id()+"MenuAt", syncTimeISO)
+			bev.SetAttribute(provider.ID()+"MenuAt", syncTimeISO)
 		}
 	}
 }

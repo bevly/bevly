@@ -1,15 +1,16 @@
 package mongorepo
 
 import (
+	"log"
+	"os"
+	"sync"
+	"time"
+
 	"github.com/bevly/bevly/model"
 	"github.com/bevly/bevly/policy"
 	"github.com/bevly/bevly/repository"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
-	"log"
-	"os"
-	"sync"
-	"time"
 )
 
 const BeverageDbName = "bevly"
@@ -27,16 +28,16 @@ type mongoRepo struct {
 }
 
 type repoProvider struct {
-	Id          bson.ObjectId   `bson:"_id"`
-	ProviderId  string          `bson:"providerId"`
+	ID          bson.ObjectId   `bson:"_id"`
+	ProviderID  string          `bson:"providerId"`
 	Name        string          `bson:"name"`
-	Url         string          `bson:"url"`
+	URL         string          `bson:"url"`
 	MenuFormat  string          `bson:"menuFormat"`
-	BeverageIds []bson.ObjectId `bson:"beverageIds"`
+	BeverageIDs []bson.ObjectId `bson:"beverageIds"`
 }
 
 type repoBeverage struct {
-	Id            bson.ObjectId     `bson:"_id"`
+	ID            bson.ObjectId     `bson:"_id"`
 	DisplayName   string            `bson:"displayName"`
 	Name          string            `bson:"name"`
 	Description   string            `bson:"description"`
@@ -141,8 +142,8 @@ func (repo *mongoRepo) MenuProviders() []model.MenuProvider {
 	return repository.StubRepository().MenuProviders()
 }
 
-func (repo *mongoRepo) ProviderById(id string) model.MenuProvider {
-	return repository.StubRepository().ProviderById(id)
+func (repo *mongoRepo) ProviderByID(id string) model.MenuProvider {
+	return repository.StubRepository().ProviderByID(id)
 }
 
 func (repo *mongoRepo) ProviderBeverages(prov model.MenuProvider) []model.Beverage {
@@ -150,16 +151,16 @@ func (repo *mongoRepo) ProviderBeverages(prov model.MenuProvider) []model.Bevera
 	if err != nil {
 		return []model.Beverage{}
 	}
-	result, err := repo.lookupBeveragesByIds(provider.BeverageIds)
+	result, err := repo.lookupBeveragesByIDs(provider.BeverageIDs)
 	if err != nil {
 		log.Printf("Could not look up beverages for provider %s (%s) with ids: %v\n",
-			prov.Name(), prov.Id(), provider.BeverageIds)
+			prov.Name(), prov.ID(), provider.BeverageIDs)
 	}
 	return result
 }
 
-func (repo *mongoRepo) ProviderIdBeverages(id string) []model.Beverage {
-	return repo.ProviderBeverages(repo.ProviderById(id))
+func (repo *mongoRepo) ProviderIDBeverages(id string) []model.Beverage {
+	return repo.ProviderBeverages(repo.ProviderByID(id))
 }
 
 func (repo *mongoRepo) BeveragesNeedingSync() []model.Beverage {
@@ -208,23 +209,22 @@ func (repo *mongoRepo) BeverageByName(name string) model.Beverage {
 	return repoBeverageModel(repoBev)
 }
 
-func (repo *mongoRepo) saveProviderMenu(prov model.MenuProvider, beverageIds []bson.ObjectId) error {
+func (repo *mongoRepo) saveProviderMenu(prov model.MenuProvider, beverageIDs []bson.ObjectId) error {
 	provider, err := repo.findProvider(prov)
 	if err == nil { // menu exists
-		provider.BeverageIds = beverageIds
-		_, err = repo.providers.UpsertId(provider.Id, provider)
+		provider.BeverageIDs = beverageIDs
+		_, err = repo.providers.UpsertId(provider.ID, provider)
 		return err
-	} else {
-		provider = &repoProvider{
-			Id:          bson.NewObjectId(),
-			ProviderId:  prov.Id(),
-			Name:        prov.Name(),
-			Url:         prov.Url(),
-			MenuFormat:  prov.MenuFormat(),
-			BeverageIds: beverageIds,
-		}
-		return repo.providers.Insert(provider)
 	}
+	provider = &repoProvider{
+		ID:          bson.NewObjectId(),
+		ProviderID:  prov.ID(),
+		Name:        prov.Name(),
+		URL:         prov.URL(),
+		MenuFormat:  prov.MenuFormat(),
+		BeverageIDs: beverageIDs,
+	}
+	return repo.providers.Insert(provider)
 }
 
 func (repo *mongoRepo) saveBeverages(beverages []model.Beverage) ([]bson.ObjectId, error) {
@@ -253,25 +253,25 @@ func (repo *mongoRepo) saveBeverage(beverage model.Beverage) (bson.ObjectId, err
 	if err == nil { // found existing object
 		updateRepoBev(repoBev, beverage)
 		log.Printf("Updating beverage %s with id %s",
-			repoBev.DisplayName, repoBev.Id)
+			repoBev.DisplayName, repoBev.ID)
 		repoBev.UpdatedAt = updateTime
-		_, err := repo.beverages.UpsertId(repoBev.Id, repoBev)
+		_, err := repo.beverages.UpsertId(repoBev.ID, repoBev)
 		if err != nil {
 			return bson.ObjectId(""), err
 		}
-		return repoBev.Id, nil
-	} else {
-		repoBev = beverageModelToRepo(beverage)
-		repoBev.Id = bson.NewObjectId()
-		repoBev.UpdatedAt = updateTime
-		log.Printf("Inserting beverage %s with id %s",
-			repoBev.DisplayName, repoBev.Id)
-		err = repo.beverages.Insert(repoBev)
-		if err != nil {
-			return bson.ObjectId(""), err
-		}
-		return repoBev.Id, nil
+		return repoBev.ID, nil
 	}
+
+	repoBev = beverageModelToRepo(beverage)
+	repoBev.ID = bson.NewObjectId()
+	repoBev.UpdatedAt = updateTime
+	log.Printf("Inserting beverage %s with id %s",
+		repoBev.DisplayName, repoBev.ID)
+	err = repo.beverages.Insert(repoBev)
+	if err != nil {
+		return bson.ObjectId(""), err
+	}
+	return repoBev.ID, nil
 }
 
 func (repo *mongoRepo) findBeverageByName(name string) (*repoBeverage, error) {
@@ -283,7 +283,7 @@ func (repo *mongoRepo) findBeverageByName(name string) (*repoBeverage, error) {
 	return repoBev, nil
 }
 
-func (repo *mongoRepo) lookupBeveragesByIds(ids []bson.ObjectId) ([]model.Beverage, error) {
+func (repo *mongoRepo) lookupBeveragesByIDs(ids []bson.ObjectId) ([]model.Beverage, error) {
 	var beverages []repoBeverage
 	err := repo.beverages.Find(bson.M{"_id": bson.M{"$in": ids}}).Limit(BeverageFetchLimit).All(&beverages)
 	if err != nil {
@@ -299,21 +299,21 @@ func (repo *mongoRepo) findProvider(prov model.MenuProvider) (*repoProvider, err
 }
 
 func providerQuery(prov model.MenuProvider) bson.M {
-	return bson.M{"providerId": prov.Id()}
+	return bson.M{"providerId": prov.ID()}
 }
 
 func (repo *mongoRepo) beverageIdsReferencedInMenus() []bson.ObjectId {
 	providerIter := repo.providers.Find(nil).Iter()
 	provider := repoProvider{}
-	referencedBeverageIds := map[bson.ObjectId]bool{}
+	referencedBeverageIDs := map[bson.ObjectId]bool{}
 	for providerIter.Next(&provider) {
-		for _, beverageId := range provider.BeverageIds {
-			referencedBeverageIds[beverageId] = true
+		for _, beverageID := range provider.BeverageIDs {
+			referencedBeverageIDs[beverageID] = true
 		}
 	}
 
-	result := make([]bson.ObjectId, 0, len(referencedBeverageIds))
-	for id, _ := range referencedBeverageIds {
+	result := make([]bson.ObjectId, 0, len(referencedBeverageIDs))
+	for id, _ := range referencedBeverageIDs {
 		result = append(result, id)
 	}
 	return result

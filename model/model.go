@@ -3,15 +3,15 @@ package model
 import "time"
 
 type MenuProvider interface {
-	Id() string
+	ID() string
 	Name() string
-	Url() string
+	URL() string
 	MenuFormat() string
 }
 
 type Beverage interface {
-	Id() string
-	SetId(id string)
+	ID() string
+	SetID(id string)
 
 	SearchName() string
 	DisplayName() string
@@ -106,11 +106,11 @@ type BeverageData struct {
 	needSync      bool
 }
 
-func (b *BeverageData) Id() string {
+func (b *BeverageData) ID() string {
 	return b.id
 }
 
-func (b *BeverageData) SetId(id string) {
+func (b *BeverageData) SetID(id string) {
 	b.id = id
 }
 
@@ -290,7 +290,7 @@ func CreateMenuProvider(id string, name string, url string, format string) MenuP
 	return &menuProvider{id: id, name: name, url: url, menuFormat: format}
 }
 
-func (m *menuProvider) Id() string {
+func (m *menuProvider) ID() string {
 	return m.id
 }
 
@@ -298,7 +298,7 @@ func (m *menuProvider) Name() string {
 	return m.name
 }
 
-func (m *menuProvider) Url() string {
+func (m *menuProvider) URL() string {
 	return m.url
 }
 

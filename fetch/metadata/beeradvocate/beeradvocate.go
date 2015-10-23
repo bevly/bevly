@@ -16,32 +16,34 @@ import (
 	"github.com/bevly/bevly/websearch"
 )
 
-var ErrNoResults = errors.New("no results for beverage")
-var ErrNotBABeer = errors.New("not a beer on BA")
+var (
+	ErrNoResults = errors.New("no results for beverage")
+	ErrNotBABeer = errors.New("not a beer on BA")
+)
 
 const DescriptionProperty = "baDescription"
 
 func FetchMetadata(bev model.Beverage, search websearch.Search) error {
 	log.Printf("Searching for BA profile for %s", bev)
-	baUrl, err := FindProfile(bev, search)
+	baURL, err := FindProfile(bev, search)
 	if err != nil {
 		log.Printf("BA profile error for %s: %s", bev, err)
 		return err
 	}
-	return fetchBAMetadata(bev, baUrl)
+	return fetchBAMetadata(bev, baURL)
 }
 
 func FindProfile(bev model.Beverage, s websearch.Search) (string, error) {
-	baUrl, err := baSearch(bev.SearchName(), s)
+	baURL, err := baSearch(bev.SearchName(), s)
 	if err != nil {
 		return "", err
 	}
-	if baUrl == "" {
+	if baURL == "" {
 		// No results, but we don't want to resync repeatedly anyway:
 		bev.SetNeedSync(true)
 		return "", ErrNoResults
 	}
-	return baUrl, nil
+	return baURL, nil
 }
 
 func stripBAName(text string) string {

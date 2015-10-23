@@ -20,10 +20,10 @@ func init() {
 
 func alehouseMenu(provider model.MenuProvider) ([]model.Beverage, error) {
 	agent := httpagent.New()
-	doc, err := agent.GetDoc(provider.Url())
+	doc, err := agent.GetDoc(provider.URL())
 	if err != nil {
 		log.Printf("alehouseMenu: Get(%s) failed: %s\n",
-			provider.Url(), err)
+			provider.URL(), err)
 		return nil, err
 	}
 
@@ -34,7 +34,7 @@ func alehouseMenu(provider model.MenuProvider) ([]model.Beverage, error) {
 	}
 
 	log.Printf("alehouseMenu: parsed %d beverages from %s\n",
-		len(beverages), provider.Url())
+		len(beverages), provider.URL())
 	return beverages, nil
 }
 

@@ -1,15 +1,16 @@
 package repository
 
 import (
-	"github.com/bevly/bevly/model"
 	"log"
+
+	"github.com/bevly/bevly/model"
 )
 
 type Repository interface {
 	MenuProviders() []model.MenuProvider
-	ProviderById(id string) model.MenuProvider
+	ProviderByID(id string) model.MenuProvider
 	ProviderBeverages(provider model.MenuProvider) []model.Beverage
-	ProviderIdBeverages(providerName string) []model.Beverage
+	ProviderIDBeverages(providerName string) []model.Beverage
 	BeveragesNeedingSync() []model.Beverage
 	BeverageByName(name string) model.Beverage
 
@@ -40,10 +41,10 @@ func (s *stubRepository) MenuProviders() []model.MenuProvider {
 	}
 }
 
-func (s *stubRepository) ProviderById(id string) model.MenuProvider {
+func (s *stubRepository) ProviderByID(id string) model.MenuProvider {
 	log.Printf("Looking for provider named \"%s\"\n", id)
 	for _, prov := range s.MenuProviders() {
-		if prov.Id() == id {
+		if prov.ID() == id {
 			return prov
 		}
 	}
@@ -74,8 +75,8 @@ func (s *stubRepository) ProviderBeverages(prov model.MenuProvider) []model.Beve
 	}
 }
 
-func (s *stubRepository) ProviderIdBeverages(provId string) []model.Beverage {
-	return s.ProviderBeverages(s.ProviderById(provId))
+func (s *stubRepository) ProviderIDBeverages(provID string) []model.Beverage {
+	return s.ProviderBeverages(s.ProviderByID(provID))
 }
 
 func (s *stubRepository) BeveragesNeedingSync() []model.Beverage {

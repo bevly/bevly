@@ -125,7 +125,7 @@ func fetchRatebeerProfile(bev model.Beverage, profileURL string, doc *goquery.Do
 	set(bev.Description(), desc, bev.SetDescription)
 	bev.SetAttribute("rbDescription", desc)
 
-	image := findImageUrl(doc)
+	image := findImageURL(doc)
 	if image != "" {
 		log.Printf("rb(%s): image: %s\n", bev, image)
 		bev.SetAttribute("rbImg", image)
@@ -137,7 +137,7 @@ func fetchRatebeerProfile(bev model.Beverage, profileURL string, doc *goquery.Do
 	return nil
 }
 
-func findImageUrl(doc *goquery.Document) string {
+func findImageURL(doc *goquery.Document) string {
 	container := doc.Find("a[href=\"/PictureCredits.asp\"]").Parent().Parent()
 	img, exists := container.Find("img").First().Attr("src")
 	if exists {

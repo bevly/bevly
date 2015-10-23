@@ -58,6 +58,33 @@ func TestRatebeerFetch(t *testing.T) {
 	assert.Equal(t, "http://res.cloudinary.com/ratebeer/image/upload/w_120,c_limit,q_85,d_no%20image.jpg/beer_630.jpg", bev.Attribute("rbImg"), "image")
 }
 
+func beverage(beerName, file string) (model.Beverage, error) {
+	ts := httpfilestub.Server(file)
+	defer ts.Close()
+	bev := model.CreateBeverage(beerName)
+	err := FetchRatebeerMetadata(bev, ts.URL)
+	return bev, err
+}
+
+func TestRatebeerRating(t *testing.T) {
+	name := "Abita Bourbon Street Maple Pecan"
+	bev, err := beverage(name, "abita-maple-pecan_test.html")
+	if err != nil {
+		t.Errorf("error creating beverage: %#v: %s", name, err)
+		return
+	}
+	if len(bev.Ratings()) != 2 {
+		t.Errorf("Abita Bourbon: expected 2 ratings (overall and style), got: %d", len(bev.Ratings()))
+		return
+	}
+	if bev.Ratings()[0].PercentageRating() != 75 {
+		t.Errorf("Abita Bourbon: expected overall rating == 75, got %d", bev.Ratings()[0].PercentageRating())
+	}
+	if bev.Ratings()[1].PercentageRating() != 85 {
+		t.Errorf("Abita Bourbon: expected overall rating == 85, got %d", bev.Ratings()[1].PercentageRating())
+	}
+}
+
 func TestRatebeerEncoding(t *testing.T) {
 	ts := httpfilestub.Server("southern_tier_pumking_test.html")
 	defer ts.Close()

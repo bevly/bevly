@@ -179,20 +179,48 @@ func findAbv(doc *goquery.Document) float64 {
 
 func addRatings(bev model.Beverage, doc *goquery.Document) {
 	ratings := doc.Find("[itemtype=\"http://data-vocabulary.org/Rating\"]").First().Children()
-	log.Printf("rating text: %s\n", ratings.Text())
-
-	parseNum := func(word, desc string) int {
-		log.Printf("Parsing rating from %s (- %s)\n", desc, word)
-		stripped := text.Normalize(strings.Replace(desc, word, "", 1))
-		if stripped != "" {
-			res, err := strconv.ParseInt(stripped, 10, 32)
-			if err != nil {
-				return 0
-			}
-			return int(res)
-		}
-		return 0
+	if ratings.Length() == 0 {
+		addV2Ratings(bev, doc)
+		return
 	}
+
+	addV1Ratings(bev, ratings)
+}
+
+func parseNum(word, desc string) int {
+	log.Printf("Parsing rating from %s (- %s)\n", desc, word)
+	stripped := text.Normalize(strings.Replace(desc, word, "", 1))
+	if stripped != "" {
+		res, err := strconv.ParseInt(stripped, 10, 32)
+		if err != nil {
+			return 0
+		}
+		return int(res)
+	}
+	return 0
+}
+
+func findMatchingContent(sel *goquery.Selection, content string) *goquery.Selection {
+	return sel.FilterFunction(func(i int, s *goquery.Selection) bool {
+		return s.Text() == content
+	})
+}
+
+func addV2Ratings(bev model.Beverage, doc *goquery.Document) {
+	ratingSpans := doc.Find("div > div > span")
+	overall := findMatchingContent(ratingSpans, "overall").Parent()
+	if r := parseNum("overall", overall.Text()); r != 0 {
+		bev.AddRating(model.CreateRating("rb", r))
+	}
+
+	style := findMatchingContent(ratingSpans, "style").Parent()
+	if r := parseNum("style", style.Text()); r != 0 {
+		bev.AddRating(model.CreateRating("rb:style", r))
+	}
+}
+
+func addV1Ratings(bev model.Beverage, ratings *goquery.Selection) {
+	log.Printf("rating text: %s\n", ratings.Text())
 
 	overall := parseNum("overall", ratings.First().Text())
 	style := parseNum("style", ratings.First().Next().Text())

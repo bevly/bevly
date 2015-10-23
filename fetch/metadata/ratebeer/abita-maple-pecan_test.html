@@ -1,0 +1,326 @@
+<html lang="en">
+<head>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="/ratings/beer/score.js"></script>
+
+<link rel="stylesheet" href="/css/user.css" type="text/css">
+
+    <script type="text/javascript">  
+        $(document).ready(function(){
+            $("#report tr:odd").addClass("odd");
+            $("#report tr:not(.odd)").hide();
+            $("#report tr:first-child").show();
+            $("#report tr.odd").click(function(){
+                $(this).next("tr").toggle();
+                $(this).find(".arrow").toggleClass("up");
+            });
+            //$("#report").jExpand();
+			
+			// compare to top 10 of style
+			var result = $.grep(top10, function(e){ return e.styleID == 15; })
+			var styleTopTen = result[0]["avg"];
+			// compare score to top 50 for style
+			var result = $.grep(top50, function(e){ return e.styleID == 15; })
+			var styleTopFifty = result[0]["avg"];
+			console.log(parseFloat(styleTopFifty));
+			//console.log(styleTopFifty);
+			console.log(3.331227);
+			if ( 3.331227 >=parseFloat(styleTopFifty)) {
+				$("#styleTopFifty").html("Top 50");
+			}
+			
+			
+        });
+		
+    </script>
+	<script type="text/javascript">
+function recordOutboundLink(link, category, action) {
+try {
+var myTracker=_gat._getTrackerByName();
+_gaq.push(['myTracker._trackEvent', category , action ]);
+setTimeout('document.location = "' + link.href + '"', 100)
+}catch(err){}
+}
+</script>
+<link rel="canonical" href="http://www.ratebeer.com/beer/abita-bourbon-street-maple-pecan/355886/"/>
+<TITLE>Abita Bourbon Street Maple Pecan</TITLE><meta name="Description" content="Abita Bourbon Street Maple Pecan a Brown Ale beer by Abita Brewing Company, a brewery in Abita Springs, Louisiana                       ">
+<meta name="Keywords" content="Abita Bourbon Street Maple Pecan, Brown Ale, Abita Brewing Company, beer, Abita Springs, Louisiana                       ">
+<link rel="image_src" href="http://res.cloudinary.com/ratebeer/image/upload/w_50,h_50,c_fill,d_ratebeer_def.png/beer_355886.jpg" />
+<meta property="og:image" content="http://res.cloudinary.com/ratebeer/image/upload/w_50,h_50,c_fill,d_ratebeer_def.png/beer_355886.jpg" />
+<link rel="stylesheet" href="/css/jquery-ui-1.9.2.custom.css" type="text/css">
+<script language="javascript" type="text/javascript">
+function PopUpWho(BeerID,wat)
+{
+	if (wat == 1) {
+    RedirPage = "/Ratings-Who.asp?BeerID=" + BeerID;
+    window.open(RedirPage, "WhoRatedThis", "toolbar=0,menubar=0,left=337,top=209,resizable=1,height=375,width=375,scrollbars=1");
+	} else {
+    RedirPage = "/Ticks-Who.asp?BeerID=" + BeerID;
+    window.open(RedirPage, "WhoTickedThis", "toolbar=0,menubar=0,left=337,top=209,resizable=1,height=375,width=375,scrollbars=1");	
+	}
+}
+function vIE(){return (navigator.appName=='Microsoft Internet Explorer')?parseFloat((new RegExp("MSIE ([0-9]{1,}[.0-9]{0,})")).exec(navigator.userAgent)[1]):-1;}
+</script>
+
+<script type="text/javascript" src="/ratings/beer/rating.js"></script>
+<link type="text/css" rel="stylesheet" href="/ratings/beer/rating.css" />
+<script type="text/javascript" src="/javascript/modal.js"></script>
+<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
+<style type="text/css">
+a.ballno:link, a.ballno:visited {
+	background-color: #4d90fe;
+	border-radius: 25px;
+	color: #fff;
+	min-width: 30px;
+	padding: 5px 10px;
+	font-size: 22px;
+	margin: 5px 3px;
+}
+</style>
+<link rel="stylesheet" href="/css_core.css?v=201407" type="text/css">
+<meta http-equiv="content-language" content="EN">
+<link rel="shortcut icon" href="/favicon.ico">
+
+<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="/javascript/jquery.tablesorter.min.js"></script> 
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-1881232-1', 'ratebeer.com');
+  ga('require', 'displayfeatures');  
+  ga('send', 'pageview');
+</script>
+<script type='text/javascript' src='http://partner.googleadservices.com/gampad/google_service.js'>
+</script>
+<script type='text/javascript'>
+GS_googleAddAdSenseService("ca-pub-4822594167621467");
+GS_googleEnableAllServices();
+</script>
+<script type='text/javascript'>
+GA_googleAddSlot("ca-pub-4822594167621467", "header-leaderboard");
+GA_googleAddSlot("ca-pub-4822594167621467", "beerpage468");
+</script>
+<script type='text/javascript'>
+GA_googleFetchAds();
+</script>
+<!--link rel="stylesheet" href="/css/fa/css/font-awesome.min.css"-->
+</head>
+
+<body alink="#CC3300" link="#003388" vlink="#330044" text="#333333" marginheight="14" marginwidth="0" topmargin="0" leftmargin="0" >
+<div id="rbbody">
+<table align="center" width="1000" cellpadding="0" cellspacing="0" border="0" style="height: 80px; z-index:5;">
+        <tr>
+        <td rowspan="2">
+
+		<a href="/"><img src="/images/logos/rblogo072016.png" alt="RateBeer" border="0" width="261" height="60" style="padding-left: 20px; padding-top: 0px;"></a>
+
+        </td>
+        <td valign="top" align="right" style="padding: 14px 12px 0px 0px;">
+	
+			<div class="no-print">
+                <FORM action="/findbeer.asp" method=POST name=search>
+                <span style="color:#666"><a href="/NewUser.asp">Sign Up</a> or <a href="/login.asp">Login</a></span>  
+                <span style="color:#666">:</span> <A HREF="/search.php"><span style="color:#666">Advanced Search</span></A> &nbsp; <input type="text" name="BeerName" value="" size="3" STYLE="padding: 0px 6px;width: 230px; height: 25px; font-size: 12px; background-color:#e0e0e0; border: 0px; border-radius: 28px;"><input type="submit" style="margin-left: 3px; height: 25px; width: 26px; border: 0px; position: relative; top: -1px;background-color:#4d90fe; border-radius: 20px;font-size:10px;color:#fff;cursor: pointer;padding-top: 1px;" value="GO" />
+				</FORM>
+			</div>
+        </td></tr>
+
+        <tr><td align="right" valign="bottom"><table border=0 cellpadding=0 cellspacing=0><tr><td align="right">
+                <ul id="nav" class="no-print">
+                <li><a  href="/places/mylocal.asp">Local</a></li>
+                    <li ><a id="current" href="/beer-ratings/">Ratings</a>
+					
+				
+                    <li><a  href="/users">People</a></li>
+
+
+                
+                    <li><a  href="/shop">Shop</a></li>
+					
+					                
+                    <li><a  href="/events">Events</a></li>
+					
+					
+                
+                    <li><a  href="/places/browse/">Places</a></li>
+                
+                    <li><a  href="/forums/">Forums</a></li>
+
+
+                </ul></td></tr></table></td></tr></table></td></tr></table>
+
+<div class="fums" style="border-bottom: 1px solid #e0e0e0 !important; border-color: #f0f0f0; background: #f4f4f4; width: 1000px; margin: auto; text-align: center; white-space:nowrap;height: 100px;padding-top:10px;"><!-- header-leaderboard -->
+<script type='text/javascript'>
+GA_googleFillSlot("header-leaderboard");
+</script></div>
+<div id="container">
+
+
+<!-- Content begins -->
+<TABLE width="100%" cellpadding=0 cellspacing=0 border=0>
+<TR><TD></TD>
+<TD colspan=2>
+<div style="margin: 20px 10px 10px 20px;"><a href="/"><IMG border=0 src="/images/icons/home.png"> Home</a> &gt; <div itemscope itemtype="http://data-vocabulary.org/Breadcrumb" style="display: inline;"><a href="http://www.ratebeer.com/breweries/" itemprop="url"><span itemprop="title">Breweries</span></a> › </div><div itemscope itemtype="http://data-vocabulary.org/Breadcrumb" style="display: inline;"><a href="http://www.ratebeer.com/breweries/louisiana/18/213/" itemprop="url"><span itemprop="title">United States: Louisiana</span></a> › </div>  <div itemscope itemtype="http://data-vocabulary.org/Breadcrumb" style="display: inline;"><a href="http://www.ratebeer.com/brewers/abita-brewing-company/1/" itemprop="url"><span itemprop="title">Abita Brewing Company</span></a></div><br><br><span itemscope itemtype="http://schema.org/Thing"><div class="user-header"><h1 itemprop="name">Abita Bourbon Street Maple Pecan</h1></div></div></TD></TR><TR><TD valign="top" id="tdL"><div style="padding: 10px 0px 10px 20px"><a href="/test/post.asp?m=1&Id=355886"><IMG class="curvy" id="beerImg" border="0" SRC="http://res.cloudinary.com/ratebeer/image/upload/w_120,c_limit,q_85,d_beer_def.gif/beer_def.gif" style="max-height: 300px; max-width: 120px; height: auto; width: auto;"  ALT="Abita Bourbon Street Maple Pecan"></a><br> &nbsp;&nbsp;&nbsp;&nbsp; <a href="/test/post.asp?m=1&Id=355886"><b>click to upload</b></a><br></div></TD><TD width="650" valign="top"><div style="margin: 0px 10px 10px 10px"><table width=100% cellpadding=0 cellspacing=10 border=0><tr><td width="150" valign="top" align=center><div style="background-color: #036; width: 100px; height: 100px; border-radius: 130px;z-index: 5;text-align: center; "><div style="font-size: 48px; font-weight: bold; color: #fff; padding: 7px 10px;" title="74.906: This figure represents a beer’s performance relative to all beers on an adjusted percentile basis. Find out more in the FAQ."><span style="font-size: 11px; font-weight: normal;line-height: 1.5;">overall</span><br>75<br></div></div><div style="background-color: #66A212; position: relative; left: 0px; top: -20px; width: 67px; height: 67px; border-radius: 67px; z-index: -1;text-align: center;" title="85.367: This figure represents a beer’s performance relative to its peers in the same beer style category on an adjusted percentile basis. Find out more in the FAQ."><div style="font-size: 25px; font-weight: bold; color: #fff; padding: 20px 0px; ">85<br><span style="font-size: 10px;font-weight: normal;">style</span></div></div></td><td width="80%" valign="top"><div style="padding-bottom: 7px; line-height: 1.5;"><big>Brewed by <b><a href="/brewers/abita-brewing-company/1/">Abita Brewing Company</A></b></big><br>Style: <a href="/beerstyles/brown-ale/15/">Brown Ale</a><br><a href="/Places/State/Cities/abita-springs/18.htm">Abita Springs</a>, <a href="/places/states/18/">Louisiana                       </a> USA</div><div style="padding: 0px 0px;">Serve in <div id="modal" style="border:3px solid #999; background: #fff; display:none;border-radius: 15px;width: 460px;"><div id="glass"></div><div><br></div></div><a href="/ShowGlassware.asp?GWID=6" rel="modal:open">Dimpled mug</a>, <div id="modal" style="border:3px solid #999; background: #fff; display:none;border-radius: 15px;width: 460px;"><div id="glass"></div><div><br></div></div><a href="/ShowGlassware.asp?GWID=4" rel="modal:open">Shaker</a></div><br><table bgcolor=#666666 cellpadding=0 cellspacing=0 border=0><tr><td valign=top align=center bgcolor=#FFFFFF><IMG border=0 SRC=/images/icons/avail_bottle_green.gif></td><td valign=top><p style="font-size: 11px; color: #fff; line-height: .95; margin: 5px 8px 5px 8px;">bottled<br>common</p></td><td valign=top align=center bgcolor=#FFFFFF><IMG border=0 SRC=/images/icons/avail_tap_black.gif></td><td valign=top><p style="font-size: 11px; color: #fff; line-height: .95; margin: 5px 8px 5px 8px;">on tap<br>unknown</p></td><td valign=top align=center bgcolor=#FFFFFF><IMG border=0 SRC=/images/icons/avail_map_brown.gif></td><td valign=top><p style="color: #fff; font-size: 11px; line-height: .95; margin: 5px 8px 5px 8px;"><a href=/beer/distribution/355886/><span style="color: #fff;">Regional Distribution</span></a></p></td><td bgcolor=#FFFFFF><a href="/beer/distribution/355886/"><IMG alt="Add Distribution Data" border=0 SRC=/images/icons/avail_add.gif></a></td></tr></table><div style="color: #999; padding: 5px 0px;"><A HREF="/CorrectBeer.asp?BeerID=355886">send corrections</a> &nbsp; | &nbsp; <a href=/shelftag.asp?beerid=355886>shelftag <img style="margin-top: 2px;" src=/images/icons/st.gif border=0></a> <a href=/shelftag.asp?BeerID=355886&style=1><img src=/images/icons/st2.gif border=0></a> &nbsp; | &nbsp; <A HREF="/editbeerupcs.asp?bid=355886">edit barcodes</a> &nbsp; </div></td><td width=120 valign="top"></td></tr></table><div style="padding: 0px 10px; font-weight: bold; font-size: 12px;"><small><abbr title="Total number of reviews of this beer">RATINGS: </abbr><big style="color: #777;"><b><span itemprop="reviewCount">28</span></b></big></big>&nbsp;&nbsp; <a name="real average" title="The real average is the arithmetic mean of all qualified ratings for this beer" >MEAN: <big style="color: #777;"><strong>3.39/5.0</strong></big></a>&nbsp;&nbsp; <a name="real average" title="The weighted average, 3.331227, is the Bayesian mean of all qualified ratings for this beer" >WEIGHTED AVG: <big style="color: #777;"><strong><span itemprop="ratingValue">3.33</span>/<span itemprop="bestRating">5</span></strong></big></a>&nbsp;&nbsp; SEASONAL: <big style="color: #777;"><strong>Special</strong></big>&nbsp;&nbsp; <abbr title="International Bittering Units - Normally from hops">IBU</abbr>: <big style="color: #777;">18</strong></big>&nbsp;&nbsp; <abbr title="Estimated calories for a 12 fluid ounce serving">EST. CALORIES</abbr>: <big style="color: #777;">255</strong></big>&nbsp;&nbsp; <abbr title="Alcohol By Volume">ABV</abbr>: <big style="color: #777;"><strong>8.5%</strong></big></small></div></span><div style="padding: 10px;"><div style="border: 1px solid #e0e0e0; background: #fff; padding: 14px; color: #777;"><small>COMMERCIAL DESCRIPTION</small><br>Bourbon Street Maple Pecan is a nut brown ale that is aged in Bourbon barrels. Our Maple Pecan is brewed with a combination of pale, munich, biscuit, and caramel malts. Roasted pecans are also added to the brew for a nutty flavor and aroma. We add maple syrup in the brewhouse as well to give the beer a sweet flavor and full body. After fermentation and aging the beer is transferred into the bourbon barrels. It is then aged for another 8 weeks to absorb all of the flavors from the barrels. The result is  brown ale that blends the light flavors of nuts, maple syrup, and baking bread from the beer with the warming flavors of wood and vanilla from the bourbon barrels.</div></div><br>
+
+
+<table cellpadding=0 cellspacing=0 border=0 style="margin: 0px 0px 20px 0px;"><tr><td width="600" align="center">
+<div style="width: 468px;padding: 0px 10px 14px 10px;">
+<!-- beerpage468 -->
+<script type='text/javascript'>
+GA_googleFillSlot("beerpage468");
+</script>
+</div>
+</td></tr>
+</table>
+	
+<div style="width: 100%;border-bottom: 1px solid #e2e2e2;height: 19px;padding-left: 10px;">
+<span class="statsHeader selected"><a href="/beer/abita-bourbon-street-maple-pecan/355886/">Most Recent</a></span>
+<span class="statsHeader "><a href="/beer/abita-bourbon-street-maple-pecan/355886/2/1/">Top Raters</a></span>
+<span class="statsHeader "><a href="/beer/abita-bourbon-street-maple-pecan/355886/3/1/">Highest Score</a></span>
+<span class="statsHeader "><a href="/beer/abita-bourbon-street-maple-pecan/355886/5/1/">My Friends</a></span>
+<span class="statsHeader"><a href="javascript:PopUpWho(355886,1);">Rated By <img src="/images/icons/open.gif" border="0" height="10"></a></span>
+<span class="statsHeader"><a href="javascript:PopUpWho(355886,2);">Ticked By <img src="/images/icons/open.gif" border="0" height="10"></a></span>
+<!-- Add Beer Ticks Here ' JT sp_Ticks @Mode = G1 @BeerID -->
+</div>
+	<br><table cellpadding=0 cellspacing=0 border=0  style="padding: 10px;"><tr><td><div style="padding: 0px 0px 0px 0px;"><div style="width: 60px; float: left; padding-right: 10px;"><IMG style="max-width: 60px; max-height: 60px; height: auto; width: auto;" width= "60" src="http://res.cloudinary.com/ratebeer/image/upload/w_50,c_limit,q_80,d_user_def.gif/user_monk191.jpg" class="curvy"></div><div style="display:inline; padding: 0px 0px; font-size: 24px; font-weight: bold; color: #036;" title="3.1 out of 5.0">3.1</div><strong>&nbsp;&nbsp;<small> AROMA </small><big style="color: #999;">7/10</big>&nbsp;&nbsp;<small> APPEARANCE </small><big style="color: #999;">4/5</big>&nbsp;&nbsp;<small> TASTE </small><big style="color: #999;">6/10</big>&nbsp;&nbsp;<small> PALATE </small><big style="color: #999;">3/5</big>&nbsp;&nbsp;<small> OVERALL </small><big style="color: #999;">11/20</big></strong></div><small style="color: #666666; font-size: 12px; font-weight: bold;"><A HREF="/user/137198/">monk191&nbsp;(1387)</A></I> - California, USA - OCT 22, 2015</small><BR><div style="padding: 20px 10px 20px 0px; border-bottom: 1px solid #e0e0e0; line-height: 1.5;">A little boring actually. Pours a very nice red with a tan head. Smells good, bourbon, maple syrup and pecans. Taste is simple though, and a bit muddy. Disappointing. Had in the bottle. </div><br><div style="padding: 0px 0px 0px 0px;"><div style="width: 60px; float: left; padding-right: 10px;"><IMG style="max-width: 60px; max-height: 60px; height: auto; width: auto;" width= "60" src="http://res.cloudinary.com/ratebeer/image/upload/w_50,c_limit,q_80,d_user_def.gif/user_TheBeerGod.jpg" class="curvy"></div><div style="display:inline; padding: 0px 0px; font-size: 24px; font-weight: bold; color: #036;" title="3.7 out of 5.0">3.7</div><strong>&nbsp;&nbsp;<small> AROMA </small><big style="color: #999;">7/10</big>&nbsp;&nbsp;<small> APPEARANCE </small><big style="color: #999;">4/5</big>&nbsp;&nbsp;<small> TASTE </small><big style="color: #999;">8/10</big>&nbsp;&nbsp;<small> PALATE </small><big style="color: #999;">3/5</big>&nbsp;&nbsp;<small> OVERALL </small><big style="color: #999;">15/20</big></strong></div><small style="color: #666666; font-size: 12px; font-weight: bold;"><A HREF="/user/5099/">TheBeerGod&nbsp;(5649)</A></I> - Newport News, Virginia, USA - OCT 22, 2015</small><BR><div style="padding: 20px 10px 20px 0px; border-bottom: 1px solid #e0e0e0; line-height: 1.5;">Bottle. Hazy copper with a medium, dense tan head. Aroma is maple and vanilla with soft pecan notes and brown sugar. Taste is big maple and vanilla, light caramel, pecan, toasted nuts, sweet malt and light coconut. Body is medium with a touch of warmth on the back end and a moderate bubbly carbonation overall. Ends with more maple, vanilla, caramel, pecan, toasted malt, sweet malt, light coconut and toasted nuts. </div><br><div style="padding: 0px 0px 0px 0px;"><div style="width: 60px; float: left; padding-right: 10px;"><IMG style="max-width: 60px; max-height: 60px; height: auto; width: auto;" width= "60" src="http://res.cloudinary.com/ratebeer/image/upload/w_50,c_limit,q_80,d_user_def.gif/user_jcos.jpg" class="curvy"></div><div style="display:inline; padding: 0px 0px; font-size: 24px; font-weight: bold; color: #036;" title="3.6 out of 5.0">3.6</div><strong>&nbsp;&nbsp;<small> AROMA </small><big style="color: #999;">7/10</big>&nbsp;&nbsp;<small> APPEARANCE </small><big style="color: #999;">4/5</big>&nbsp;&nbsp;<small> TASTE </small><big style="color: #999;">7/10</big>&nbsp;&nbsp;<small> PALATE </small><big style="color: #999;">4/5</big>&nbsp;&nbsp;<small> OVERALL </small><big style="color: #999;">14/20</big></strong></div><small style="color: #666666; font-size: 12px; font-weight: bold;"><A HREF="/user/89456/">jcos&nbsp;(1736)</A></I> - Maryland, USA - OCT 21, 2015</small><BR><div style="padding: 20px 10px 20px 0px; border-bottom: 1px solid #e0e0e0; line-height: 1.5;">Bottle shared with Kevin during Dick’s 2015 watching party. Bours a murky brown. Bourbony aroma, lightly sweet and a little bourbony. Name indicates it could be a mess, but it was quite solid. </div><br><div style="padding: 0px 0px 0px 0px;"><div style="width: 60px; float: left; padding-right: 10px;"><IMG style="max-width: 60px; max-height: 60px; height: auto; width: auto;" width= "60" src="http://res.cloudinary.com/ratebeer/image/upload/w_50,c_limit,q_80,d_user_def.gif/user_arkurzynski.jpg" class="curvy"></div><div style="display:inline; padding: 0px 0px; font-size: 24px; font-weight: bold; color: #036;" title="3.7 out of 5.0">3.7</div><strong>&nbsp;&nbsp;<small> AROMA </small><big style="color: #999;">8/10</big>&nbsp;&nbsp;<small> APPEARANCE </small><big style="color: #999;">4/5</big>&nbsp;&nbsp;<small> TASTE </small><big style="color: #999;">7/10</big>&nbsp;&nbsp;<small> PALATE </small><big style="color: #999;">3/5</big>&nbsp;&nbsp;<small> OVERALL </small><big style="color: #999;">15/20</big></strong></div><small style="color: #666666; font-size: 12px; font-weight: bold;"><A HREF="/user/63469/">arkurzynski&nbsp;(1866)</A></I> - Combined Locks, Wisconsin, USA - OCT 18, 2015</small><BR><div style="padding: 20px 10px 20px 0px; border-bottom: 1px solid #e0e0e0; line-height: 1.5;">Deep red amber with brown hues. Nose of light woody bourbon with maple sugar pecan, toasted malt, caramel, and a touch of chocolate. Flavor is sweet bourbon and light maple pecan with dry woodsy oak. Lingering oaky bourbon, bitter chocolate, and toasted malt. The only dissapointment was that the body was thin as was the flavor to a certain extent. Regardless, this was good. </div><br><div style="padding: 0px 0px 0px 0px;"><div style="width: 60px; float: left; padding-right: 10px;"><IMG style="max-width: 60px; max-height: 60px; height: auto; width: auto;" width= "60" src="http://res.cloudinary.com/ratebeer/image/upload/w_50,c_limit,q_80,d_user_def.gif/user_tnkw01.jpg" class="curvy"></div><div style="display:inline; padding: 0px 0px; font-size: 24px; font-weight: bold; color: #036;" title="3.9 out of 5.0">3.9</div><strong>&nbsp;&nbsp;<small> AROMA </small><big style="color: #999;">8/10</big>&nbsp;&nbsp;<small> APPEARANCE </small><big style="color: #999;">4/5</big>&nbsp;&nbsp;<small> TASTE </small><big style="color: #999;">8/10</big>&nbsp;&nbsp;<small> PALATE </small><big style="color: #999;">3/5</big>&nbsp;&nbsp;<small> OVERALL </small><big style="color: #999;">16/20</big></strong></div><small style="color: #666666; font-size: 12px; font-weight: bold;"><A HREF="/user/70263/">tnkw01&nbsp;(1464)</A></I> - Knoxville, Tennessee, USA - OCT 16, 2015</small><BR><div style="padding: 20px 10px 20px 0px; border-bottom: 1px solid #e0e0e0; line-height: 1.5;">Bottle. Another really good beer from the boys of Louisiana. Slightly cloudy, medium brown ale with a large white head. Aroma is roasted bouts with hints of maple and caramel. Taste is maple, caramel roasted nuts with just a touch of sweetness. </div><br><table cellpadding=0 cellspacing=0 border=0 style="margin: 0px 0px 20px 0px;border-bottom: 1px solid #e0e0e0;"><tr><td width="600" align="center"><div style="width: 468px;padding: 0px 10px 14px 10px;"><!-- beerpage468 -->
+<script type='text/javascript'>
+GA_googleFillSlot("beerpage468");
+</script>
+</div>
+</td></tr>
+</table>
+<div style="padding: 0px 0px 0px 0px;"><div style="width: 60px; float: left; padding-right: 10px;"><IMG style="max-width: 60px; max-height: 60px; height: auto; width: auto;" width= "60" src="http://res.cloudinary.com/ratebeer/image/upload/w_50,c_limit,q_80,d_user_def.gif/user_jandd1983.jpg" class="curvy"></div><div style="display:inline; padding: 0px 0px; font-size: 24px; font-weight: bold; color: #036;" title="3.4 out of 5.0">3.4</div><strong>&nbsp;&nbsp;<small> AROMA </small><big style="color: #999;">7/10</big>&nbsp;&nbsp;<small> APPEARANCE </small><big style="color: #999;">3/5</big>&nbsp;&nbsp;<small> TASTE </small><big style="color: #999;">8/10</big>&nbsp;&nbsp;<small> PALATE </small><big style="color: #999;">4/5</big>&nbsp;&nbsp;<small> OVERALL </small><big style="color: #999;">12/20</big></strong></div><small style="color: #666666; font-size: 12px; font-weight: bold;"><A HREF="/user/121903/">jandd1983&nbsp;(3268)</A></I> - Florissant, Missouri, USA - OCT 12, 2015</small><BR><div style="padding: 20px 10px 20px 0px; border-bottom: 1px solid #e0e0e0; line-height: 1.5;">Bottle. It poured a brown color with a tan head. The aroma was of malts, some maple, bourbon and nuts. The taste was similar to the aroma with more malts, bourbon and nuts. Good stuff. </div><br><div style="padding: 0px 0px 0px 0px;"><div style="width: 60px; float: left; padding-right: 10px;"><IMG style="max-width: 60px; max-height: 60px; height: auto; width: auto;" width= "60" src="http://res.cloudinary.com/ratebeer/image/upload/w_50,c_limit,q_80,d_user_def.gif/user_ttroha.jpg" class="curvy"></div><div style="display:inline; padding: 0px 0px; font-size: 24px; font-weight: bold; color: #036;" title="3.2 out of 5.0">3.2</div><strong>&nbsp;&nbsp;<small> AROMA </small><big style="color: #999;">6/10</big>&nbsp;&nbsp;<small> APPEARANCE </small><big style="color: #999;">5/5</big>&nbsp;&nbsp;<small> TASTE </small><big style="color: #999;">6/10</big>&nbsp;&nbsp;<small> PALATE </small><big style="color: #999;">5/5</big>&nbsp;&nbsp;<small> OVERALL </small><big style="color: #999;">10/20</big></strong></div><small style="color: #666666; font-size: 12px; font-weight: bold;"><A HREF="/user/207710/">ttroha&nbsp;(438)</A></I> - Americus, Georgia, USA - OCT 4, 2015</small><BR><div style="padding: 20px 10px 20px 0px; border-bottom: 1px solid #e0e0e0; line-height: 1.5;">Bomber from Hop City Birmingham. Pours hazy amber with white head. Aroma of bourbon, pecans and sweet maples. Tastes of whiskey bourbon and sweet maple syrup. Almost too sweet. But not too shabby. </div><br><div style="padding: 0px 0px 0px 0px;"><div style="width: 60px; float: left; padding-right: 10px;"><IMG style="max-width: 60px; max-height: 60px; height: auto; width: auto;" width= "60" src="http://res.cloudinary.com/ratebeer/image/upload/w_50,c_limit,q_80,d_user_def.gif/user_ICEatALAMO.jpg" class="curvy"></div><div style="display:inline; padding: 0px 0px; font-size: 24px; font-weight: bold; color: #036;" title="2.7 out of 5.0">2.7</div><strong>&nbsp;&nbsp;<small> AROMA </small><big style="color: #999;">6/10</big>&nbsp;&nbsp;<small> APPEARANCE </small><big style="color: #999;">3/5</big>&nbsp;&nbsp;<small> TASTE </small><big style="color: #999;">5/10</big>&nbsp;&nbsp;<small> PALATE </small><big style="color: #999;">2/5</big>&nbsp;&nbsp;<small> OVERALL </small><big style="color: #999;">11/20</big></strong></div><small style="color: #666666; font-size: 12px; font-weight: bold;"><A HREF="/user/124169/">ICEatALAMO&nbsp;(1154)</A></I> - Troy, Michigan, USA - OCT 3, 2015</small><BR><div style="padding: 20px 10px 20px 0px; border-bottom: 1px solid #e0e0e0; line-height: 1.5;">Bottle. The pour is a deep amber. The aroma is has some pecan, not much bourbon. The taste is light overall. Slight maple and pecan, no bourbon at all. 
+
+&#045;&#045;-Rated via Beer Buddy for iPhone </div><br><div style="padding: 0px 0px 0px 0px;"><div style="width: 60px; float: left; padding-right: 10px;"><IMG style="max-width: 60px; max-height: 60px; height: auto; width: auto;" width= "60" src="http://res.cloudinary.com/ratebeer/image/upload/w_50,c_limit,q_80,d_user_def.gif/user_nearbeer.jpg" class="curvy"></div><div style="display:inline; padding: 0px 0px; font-size: 24px; font-weight: bold; color: #036;" title="3.6 out of 5.0">3.6</div><strong>&nbsp;&nbsp;<small> AROMA </small><big style="color: #999;">7/10</big>&nbsp;&nbsp;<small> APPEARANCE </small><big style="color: #999;">4/5</big>&nbsp;&nbsp;<small> TASTE </small><big style="color: #999;">7/10</big>&nbsp;&nbsp;<small> PALATE </small><big style="color: #999;">4/5</big>&nbsp;&nbsp;<small> OVERALL </small><big style="color: #999;">14/20</big></strong></div><small style="color: #666666; font-size: 12px; font-weight: bold;"><A HREF="/user/48884/">nearbeer&nbsp;(4312)</A></I> - Knoxville, Tennessee, USA - OCT 2, 2015</small><BR><div style="padding: 20px 10px 20px 0px; border-bottom: 1px solid #e0e0e0; line-height: 1.5;">650 ml. Light haze on the copper body with a persistent thin film of bubbles above. Nose is cherry hard candy, vanilla, raisins and whiskey. Taste is bread pudding with some cherry tartness and toasted oak that help cut the sweetness a bit. Medium body has medium-high carbonation and a definite whiskey dessert slant.  </div><br><div style="padding: 0px 0px 0px 0px;"><div style="width: 60px; float: left; padding-right: 10px;"><IMG style="max-width: 60px; max-height: 60px; height: auto; width: auto;" width= "60" src="http://res.cloudinary.com/ratebeer/image/upload/w_50,c_limit,q_80,d_user_def.gif/user_airrick2003.jpg" class="curvy"></div><div style="display:inline; padding: 0px 0px; font-size: 24px; font-weight: bold; color: #036;" title="3.3 out of 5.0">3.3</div><strong>&nbsp;&nbsp;<small> AROMA </small><big style="color: #999;">6/10</big>&nbsp;&nbsp;<small> APPEARANCE </small><big style="color: #999;">3/5</big>&nbsp;&nbsp;<small> TASTE </small><big style="color: #999;">7/10</big>&nbsp;&nbsp;<small> PALATE </small><big style="color: #999;">3/5</big>&nbsp;&nbsp;<small> OVERALL </small><big style="color: #999;">14/20</big></strong></div><small style="color: #666666; font-size: 12px; font-weight: bold;"><A HREF="/user/230389/">airrick2003&nbsp;(746)</A></I> - Louisiana, USA - SEP 30, 2015</small><BR><div style="padding: 20px 10px 20px 0px; border-bottom: 1px solid #e0e0e0; line-height: 1.5;">Appearance: pours with a smaller tan head that dissipates quickly, hazy dark amber color, almost brown Aroma: strong whisky, alcohol, some maple sugar, Taste: whisky, medium maple sugar sweetness, alcohol warmth, pecan, Palate: heavy mouthfeel, average carbonation, whisky aftertaste Overall: this beer picks up a very large whisky essence from the aging process, the aroma and taste are all like whiskey, this is like a whisky beer, very good but has to be sipped slow, gets a lot better as it warms &#045;&#045;-Rated via Beer Buddy for iPhone </div><br></td></tr></table>
+					<br>
+					<div style="width: 510px; padding: 10px;">
+			
+					<h2><a href=/NewUser.asp>We Want To Hear From You</a></h2><br><br>
+					<big>
+					Join us! RateBeer is made by beer enthusiasts for the craft beer community. 
+                    Your basic membership is free and allows you to read all beer ratings.
+					Click here to create your account... and give your opinion!<br>
+<br>
+
+					<a href="/NewUser.asp" class="large awesome orange"><span style="color: #fff;">Join Us &raquo;</span></a><br>
+					<br>
+
+					<br>
+				<div style="width: 560px; text-align: center; padding: 10px;">
+<!-- beerpage468 -->
+<script type='text/javascript'>
+GA_googleFillSlot("beerpage468");
+</script>
+					</div>
+					</big></div><br>
+                            
+Page &nbsp; <b><big><big>&nbsp;1&nbsp;</big></big></b> <a href="/beer/abita-bourbon-street-maple-pecan/355886/1/2/" class="ballno">2</a> <a href="/beer/abita-bourbon-street-maple-pecan/355886/1/3/" class="ballno">3</a> </div><br><br></TD><TD valign=top style="width: 250px; background-color: #fff;">
+		<div style="padding-top: 20px;">
+		<div id="star-rating">
+<div id="tickMsg" style="padding: 0px 0px 0px 7px;height: 20px;"><h3>Tick this beer</h3> for your profile</div>
+<ul>
+<li class="current-rating" style="width:0px;">Currently 0/5 Stars.</li>
+<li><a href="#" onclick="document.location.href = '/newuser.asp?m=1';" title="Rate this 1 stars out of 5" class="star-1">1</a></li>
+<li><a href="#" onclick="document.location.href = '/newuser.asp?m=1';" title="Rate this 2 stars out of 5" class="star-2">2</a></li>
+<li><a href="#" onclick="document.location.href = '/newuser.asp?m=1';" title="Rate this 3 stars out of 5" class="star-3">3</a></li>
+<li><a href="#" onclick="document.location.href = '/newuser.asp?m=1';" title="Rate this 4 stars out of 5" class="star-4">4</a></li>
+<li><a href="#" onclick="document.location.href = '/newuser.asp?m=1';" title="Rate this 5 stars out of 5" class="star-5">5</a></li>
+</ul>
+</div>
+
+		</div>
+<ul class="rightnav"><li style="padding: 2px 10px; font-size: 20px; "><a href="/login.asp" class="large orange awesome"><span style="color: #fff;">Rate This</span></a></li><li style="padding: 2px 10px; font-size: 16px;"><a href="/beer/statistics/355886/" class="large orange awesome"><span style="color: #fff;">Statistics</span></a></li><li style="padding: 2px 10px; font-size: 16px;"><a href="/beer/distribution/355886/" class="large orange awesome"><span style="color: #fff;">Locate Sellers</span></a></li>
+<div style="padding: 5px 8px;">
+<!-- AddToAny BEGIN -->
+<div class="a2a_kit a2a_default_style">
+<a class="a2a_dd" href="https://www.addtoany.com/share_save">Share</a>
+<span class="a2a_divider"></span>
+<a class="a2a_button_facebook"></a>
+<a class="a2a_button_twitter"></a>
+<a class="a2a_button_google_plus"></a>
+<a class="a2a_button_flipboard"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<!-- AddToAny END --></div>
+
+		
+		<br>
+		
+		</div>
+		<br>
+<div style="padding: 0px 10px; font-size:12px;"><div></div></div><br><div style="padding: 10px 14px; font-size: 12px; line-height: 1.5;"><strong>More Brown Ales By Style</strong><br><A HREF="/beer/blue-lobster-brown-eyed-girl/237952/">Blue Lobster Brown Eyed Girl</A> 87<br><A HREF="/beer/st-george-american-brown-ale/34279/">St. George American Brown Ale</A> 90<br><A HREF="/beer/stadin-american-brown-ale/167864/">Stadin American Brown Ale</A> 62<br><A HREF="/beer/legend-brown-ale/2353/">Legend Brown Ale</A> 63<br><A HREF="/beer/blank-slate-shroominous/205680/">Blank Slate Shroominous</A> 96<br><A HREF="/beer/evil-twin-wet-dream/182660/">Evil Twin Wet Dream</A> 99<br><A HREF="/beer/american-river-coloma-brown/167277/">American River Coloma Brown</A> 96<br><A HREF="/beer/mother-road-twin-arrows-brown-ale/154157/">Mother Road Twin Arrows Brown Ale</A> 70<br></div>
+<br>
+<br>
+
+
+</td></tr></table>
+
+
+</TD></TR></TABLE>
+</div>
+<!-- Content ends -->
+<!-- Footer begins -->
+</div>
+<center>
+<style type="text/css">#foota a {color: #003366;}
+</style>
+<div style="width: 1000px; vertical-align: middle; color: #666;z-index: 5; border-top: 1px solid #f0f0f0;">
+<div style="float: left; width: 200px;  padding: 14px 0px 20px 0px; text-align: left; color: #999;z-index: 5;">
+<small>Copyright &copy; 2000-2015,<br />
+RateBeer LLC. All rights<br />
+reserved.</small>
+</div>
+
+<div style="float: right; width: 200px; padding: 14px 0px 0px 0px; text-align: right;z-index: 5;"><img src="/images/logos/footer999.png" /></div>
+
+<table cellpadding=14 cellspacing=0 border=0 id="foota">
+<tr><td valign=top style="border-right: 1px solid #f0f0f0; font-size: 12px; text-align: left;">
+<big><strong style="color: #a7bbcc;">about us</strong></big><br />
+<a href="/About.asp">About RateBeer</a><br />
+<a href="/FAQ.asp">FAQ</a><br />
+<a href="/Feedback.asp">Contact/Feedback</a><br />
+<a href="/newbeers.asp">New Beers</a><br />
+
+
+</td><td valign=top style="border-right: 1px solid #f0f0f0; font-size: 12px; text-align: left;">
+<big><strong style="color: #a7bbcc;">add</strong></big><br />
+<a href="/search.php">Advanced Search</a><br />
+<a href="/AddBeer.asp">Add A Beer</a> <br />
+<a href="/AddBrewer.asp">Add A Brewer</a><br /> 
+<a href="/Places/AddAPlace.asp">Add A Place</a> <br />
+<a href="/events.asp">Events</a><br />
+
+</td><td valign=top style="border-right: 1px solid #f0f0f0; font-size: 12px; text-align: left;">
+<big><strong style="color: #a7bbcc;">membership</strong></big><br />
+<a href="/login.asp">Log In</a><br />
+<a href="/EditUser.asp">Edit Personal Info</a><br />
+<a href="/AboutPremium_Join.asp">Buy Premium Membership</a><br />
+<a href="/Messages.asp">Your Messages</a><br />
+
+</td><td valign=top style="font-size: 12px; text-align: left;">
+<big><strong style="color: #a7bbcc;">the best</strong></big><br />
+<a href="/ratebeerbest/">RateBeer Best</a><br />
+<a href="/Ratings/beerClub.asp">100 Beer Club</a><br />
+<a href="/beer/top-50/">The Top 50</a><br />
+
+</td>
+</tr>
+</table>
+
+<br />
+
+<div style="clear:both;"></div>
+</div>
+</center>
+
+
+
+<!-- Footer ends -->
+</span>
+</body>
+</html>
